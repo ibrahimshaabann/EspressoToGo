@@ -1,5 +1,5 @@
 from django.db import models
-
+from .validators import validate_price
 class Menu(models.Model):
 
     class Categories(models.TextChoices):
@@ -15,7 +15,8 @@ class Menu(models.Model):
                                 max_digits=6,
                                 null=False,
                                 blank=False,
-                                verbose_name="price")
+                                verbose_name="price",
+                                validators=[validate_price])
     available = models.BooleanField(default=True,
                                     null=False,
                                     blank=False,
@@ -28,9 +29,9 @@ class Menu(models.Model):
     
 
     class Meta:
-        db_table = "Menu"
+        db_table = "menu items"
         verbose_name = "Menu"
-        verbose_name_plural = "Menu"
+        verbose_name_plural = "menu items"
 
 
     def __str__(self) :
