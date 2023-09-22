@@ -6,6 +6,8 @@ from .managers import PersonManager
 
 from .validators import valid_phone_number
 
+# from django_extensions.db.models import TimeStampedModel
+
 
 class Person(AbstractBaseUser, PermissionsMixin):
     class Role(models.TextChoices):

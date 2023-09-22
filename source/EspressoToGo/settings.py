@@ -27,6 +27,8 @@ INSTALLED_APPS = [
 
     "rest_framework", #
 
+    "django_extensions", #
+
     "users", #
     "products", #
     "orders", #
@@ -37,7 +39,11 @@ INSTALLED_APPS = [
 ]
 
 
-# AUTH_USER_MODEL = "users.Person"
+AUTH_USER_MODEL = "users.Person"
+
+AUTHENTICATION_BACKENDS = [
+    'users.authentication.CustomUserAuthBackend',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
