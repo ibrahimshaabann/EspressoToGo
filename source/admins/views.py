@@ -1,0 +1,58 @@
+from django.shortcuts import render
+from rest_framework.permissions import AllowAny
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
+from rest_framework import views, status
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+
+from users.authentication import CustomUserAuthenticationBackend
+
+
+
+class AdminLoginView(views.APIView):
+    
+    """
+    This view is used to login an admin.
+    Using the email, phone_number, or username and the password.
+    Admins get thier access and refresh tokens at this endpoint.
+    """
+
+    permission_classes = [AllowAny]
+    throttle_classes = [UserRateThrottle, AnonRateThrottle]
+
+
+    def post(self, request):
+
+        """
+        This method is used to login an admin.
+        Simply by providing the email, phone_number, or username and the password.
+        We get them from only post requests.
+        We check by our custom authentication backend if the admin exists and the password is correct.
+        If so, we return the access and refresh tokens.
+        """
+
+        email_or_phone_or_username = request.data.get("email_or_phone_or_username")
+        password = request.data.get("password")
+
+        admin = CustomUserAuthenticationBackend().authenticate(
+            request=request, username=email_or_phone_or_username, password=password
+        )
+
+        if admin:
+                access_token = AccessToken.for_user(admin)
+                refresh_token = RefreshToken.for_user(admin)
+                return Response(
+                    {
+                        "access": str(access_token),
+                        "refresh": str(refresh_token),
+                    }
+                )
+        else:
+            return Response(
+                {
+                    "error": "Invalid credentials",
+                },
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        
+

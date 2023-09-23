@@ -10,6 +10,13 @@ from .validators import valid_phone_number
 
 
 class Person(AbstractBaseUser, PermissionsMixin):
+    """
+    This is the Person model.
+    It is used to create a Person instance.
+    And it is used as a base model for all app users.
+    Simulates an abstract class that have all common properties of all users.
+    """
+    
     class Role(models.TextChoices):
         ADMIN = "ADMIN", "Admin"
         CUSTOMER = "CUSTOMER", "Customer"
@@ -44,20 +51,29 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
     objects = PersonManager()
 
-    # Add related_name to avoid clashes with auth.User
-    groups = models.ManyToManyField(
-        'auth.Group',
-        blank=True,
-        related_name='person_set',
-    )
+    is_staff = models.BooleanField(default=False)    
     
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        blank=True,
-        related_name='person_set',
-    )
+    USERNAME_FIELD = "email"
     
-    USERNAME_FIELD = "username"
+    EMAIL_FIELD = 'username'
+
+    REQUIRED_FIELDS = ["username"]
+
+    def save(self, force_update=True, commit=True, *args, **kwargs):
+        """
+        This method is used to set the role of the user to the base_role of the model.
+        """
+        if not self.pk:
+            self.role = self.base_role
+            return super().save(*args, **kwargs)
+        super(Person, self).save(*args, **kwargs)
+
+
+    def __str__(self):
+        return self.full_name
 
     class Meta:
         db_table = "users"
+
+
+        
