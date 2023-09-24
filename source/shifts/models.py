@@ -11,9 +11,8 @@ class Shift(models.Model):
                                     verbose_name='وقت النهايه',
                                     auto_now=True) ########################3
     responsible_employee = models.ForeignKey(Employee, 
-                                             null=False,
-                                             blank=False,
-                                             on_delete=models.PROTECT)
+                                             null=True,
+                                             on_delete=models.SET_NULL,)
     
     class Meta:
         db_table = 'shifts'
@@ -51,7 +50,8 @@ class ShiftReport(models.Model):
     related_shift = models.OneToOneField(Shift,
                                         null=False,
                                         blank=False,
-                                        on_delete=models.PROTECT)
+                                        on_delete=models.PROTECT,
+                                        verbose_name='الشيفت')
     
     class Meta:
         db_table = 'shifts_reports'
