@@ -19,8 +19,9 @@ from .filters import EmployeeFilter
 class EmployeeViewSetForAdmins(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAdmin, IsAuthenticated,)
+    # authentication_classes = (JWTAuthentication,)
+    # permission_classes = (IsAdmin, IsAuthenticated,)
+    permission_classes = (AllowAny,)
     
     
     filter_backends = [

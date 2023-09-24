@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 from .managers import PersonManager
 
-from .validators import valid_phone_number
+from .validators import valid_phone_number, is_valid_email
 
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
@@ -35,7 +35,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
         ("F", "Female"),
     ]
     
-    full_name = models.CharField(max_length=50, blank=True, null=True)
+    full_name = models.CharField(max_length=50, blank=False, null=False)
 
     username = models.CharField(
         validators = [UnicodeUsernameValidator()],
@@ -43,11 +43,12 @@ class Person(AbstractBaseUser, PermissionsMixin):
         db_index=True, null=True, blank=True
     )
 
-    email = models.EmailField(unique=True, db_index=True, null=True, blank=True)
+    email = models.EmailField(unique=True, db_index=True, null=True, blank=True,
+                              validators=[is_valid_email])
 
     phone_number = models.CharField(
-        max_length=20, blank=True, 
-        null=True, unique=True, db_index=True,
+        max_length=20, blank=False, 
+        null=False, unique=True, db_index=True,
         validators=[valid_phone_number]
     )
     

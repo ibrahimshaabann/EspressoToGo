@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from django.contrib.auth.hashers import make_password
 from .models import Employee
 
 
@@ -20,14 +20,31 @@ class EmployeeSerializer(serializers.ModelSerializer):
     
     """
 
+       
+
     def create(self, validated_data):
-        password = validated_data.pop("password")
-        employee = Employee(**validated_data)
-        employee.set_password(password)
-        employee.save()
-        return employee
-    
+        validated_data["password"] = make_password(validated_data["password"] )
+        return super().create(validated_data)
     
     class Meta:
         model = Employee
         exclude = ("is_superuser", "is_staff", "groups", "user_permissions",)
+
+
+
+
+class EmployeeSerializerOnShifts(serializers.ModelSerializer):
+
+    """
+    This serializer class is used to display Employees data when getting shifts and shifts reports.
+    
+    """
+
+    class Meta:
+        model = Employee
+        exclude = (
+            "id", "username", "email",
+            "is_superuser", "is_staff", "groups", 
+            "user_permissions", 'last_login', 
+            'birth_date', 'salary', 'password', 'gender', 'role'
+        )
