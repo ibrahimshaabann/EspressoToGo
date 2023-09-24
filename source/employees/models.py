@@ -6,6 +6,8 @@ from .managers import EmployeeManager
 
 import uuid
 
+from .validators import valid_salary
+
 
 class EmployeeBridge(Person):
 
@@ -30,7 +32,11 @@ class Employee(EmployeeBridge):
     # deductions = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)
 
     
-    salary = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)
+    salary = models.DecimalField(
+        max_digits=10, decimal_places=2, 
+        null=False, blank=False, 
+        validators=[valid_salary]
+        )
 
 
     class Meta:

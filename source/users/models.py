@@ -6,6 +6,8 @@ from .managers import PersonManager
 
 from .validators import valid_phone_number
 
+from django.contrib.auth.validators import UnicodeUsernameValidator
+
 # from django_extensions.db.models import TimeStampedModel
 
 
@@ -35,7 +37,11 @@ class Person(AbstractBaseUser, PermissionsMixin):
     
     full_name = models.CharField(max_length=50, blank=True, null=True)
 
-    username = models.CharField(max_length=50, unique=True, db_index=True, null=True, blank=True)
+    username = models.CharField(
+        validators = [UnicodeUsernameValidator()],
+        max_length=50, unique=True, 
+        db_index=True, null=True, blank=True
+    )
 
     email = models.EmailField(unique=True, db_index=True, null=True, blank=True)
 

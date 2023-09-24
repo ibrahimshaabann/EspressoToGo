@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 
     "rest_framework", #
     'rest_framework_simplejwt', #
+    'django_filters',
 
     "users", #
     "employees", #
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     "orders", #
     "shifts", #
     "financials", #
-
+    
 ]
 
 
@@ -62,6 +63,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_BACKENDS': [
         'django.contrib.auth.backends.ModelBackend',
     ],
+    
     # "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 
     'DEFAULT_THROTTLE_CLASSES': [

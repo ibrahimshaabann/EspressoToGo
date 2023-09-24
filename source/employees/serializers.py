@@ -19,6 +19,13 @@ class EmployeeSerializer(serializers.ModelSerializer):
     "role", "employee", "password", "salary" 
     
     """
+
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+        employee = Employee(**validated_data)
+        employee.set_password(password)
+        employee.save()
+        return employee
     
     
     class Meta:
