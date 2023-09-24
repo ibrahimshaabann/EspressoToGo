@@ -8,4 +8,3 @@ router.register(r'^costs', CostViewSet, basename='costs')
 urlpatterns=[
     path('', include(router.urls))
 ]
-

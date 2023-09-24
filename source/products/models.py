@@ -1,7 +1,7 @@
 from django.db import models
 from .validators import validate_price
-
 class Menu(models.Model):
+
     class Categories(models.TextChoices):
         PIZZA = 'pizza', 'Pizza'
         FOOD = 'food', 'Food'
