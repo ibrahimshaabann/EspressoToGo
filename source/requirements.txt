@@ -1,5 +1,12 @@
 asgiref==3.7.2
 backports.zoneinfo==0.2.1
 Django==4.2.5
+django-filter==23.2
+djangorestframework==3.14.0
+gunicorn==21.2.0
+packaging==23.1
+psycopg2==2.9.7
+python-dotenv==1.0.0
+pytz==2023.3.post1
 sqlparse==0.4.4
 typing_extensions==4.8.0
