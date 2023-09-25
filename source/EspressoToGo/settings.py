@@ -45,13 +45,13 @@ INSTALLED_APPS = [
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        'rest_framework.permissions.AllowAny',
-        "rest_framework.permissions.IsAuthenticated",
-    ],
+    # "DEFAULT_AUTHENTICATION_CLASSES": [
+    #     "rest_framework_simplejwt.authentication.JWTAuthentication",
+    # ],
+    # "DEFAULT_PERMISSION_CLASSES": [
+    #     'rest_framework.permissions.AllowAny',
+    #     "rest_framework.permissions.IsAuthenticated",
+    # ],
     # "DEFAULT_RENDERER_CLASSES": [
         # "rest_framework.renderers.JSONRenderer",
     # ],
@@ -117,9 +117,9 @@ SIMPLE_JWT = {
 
 AUTH_USER_MODEL = "users.Person"
 
-AUTHENTICATION_BACKENDS = [
-    'users.authentication.CustomUserAuthenticationBackend',
-]
+# AUTHENTICATION_BACKENDS = [
+#     'users.authentication.CustomUserAuthenticationBackend',
+# ]
 
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
