@@ -31,3 +31,21 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         exclude = ("is_superuser", "is_staff", "groups", "user_permissions",)
+
+
+
+class EmployeeSerializerOnShifts(serializers.ModelSerializer):
+
+    """
+    This serializer class is used to display Employees data when getting shifts and shifts reports.
+    
+    """
+
+    class Meta:
+        model = Employee
+        exclude = (
+            "id", "username", "email",
+            "is_superuser", "is_staff", "groups", 
+            "user_permissions", 'last_login', 
+            'birth_date', 'salary', 'password', 'gender', 'role'
+        )
