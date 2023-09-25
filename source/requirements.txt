@@ -1,7 +1,10 @@
 asgiref==3.7.2
 backports.zoneinfo==0.2.1
 Django==4.2.5
+<<<<<<< HEAD
 django-cors-headers==4.2.0
+=======
+>>>>>>> 48036aea5806be0ebcc7ccaf6e729392b715fcc4
 django-extensions==3.2.3
 django-filter==23.2
 djangorestframework==3.14.0
