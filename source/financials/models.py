@@ -13,7 +13,8 @@ class Cost(models.Model):
                                 validators=[validate_price])
     date = models.DateTimeField(verbose_name="وقت الدفع",
                                 auto_now_add=True)
-    # user = models.ForeignKey(User, verbose_name='مسئول الشيفت', on_delete=models.SET_NULL, null=True)
+    
+    # user = models.ForeignKey(Person, verbose_name='مسئول الشيفت', on_delete=models.SET_NULL, null=True)
     
     class Meta:
         verbose_name = "Cost"

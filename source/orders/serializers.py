@@ -4,27 +4,33 @@ from .models import Order, OrderItem
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    # menu_item = serializers.StringRelatedField()
-    
-    
+    """
+    For CRUD
+    """
 
     class Meta:
         model = OrderItem
         fields = '__all__'
-        # exclude = ('order',)
 
 
-    def create(self, validated_data):
+
+class OrderItemsSerializer(serializers.ModelSerializer):
+    """
+    For Order Serializer
+    """
     
-        total_price = validated_data['menu_item'].price * validated_data['quantity']
-        OrderItem.objects.create(total_price=total_price, **validated_data)
-        return super().create(validated_data)
+    menu_item = serializers.StringRelatedField()
+
+    class Meta:
+        model = OrderItem
+        exclude = ('order',)
 
     
 
 class OrderSerializer(serializers.ModelSerializer):
-    order_items = OrderItemSerializer(many=True, read_only=True)
+    order_items = OrderItemsSerializer(many=True, read_only=True)
 
+    shift = serializers.StringRelatedField()
     class Meta:
         model = Order
         fields = '__all__'

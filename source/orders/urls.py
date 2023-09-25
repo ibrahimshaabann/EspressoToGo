@@ -6,7 +6,7 @@ router = routers.DefaultRouter()
 
 router.register(r'^all', views.OrderViewSet, basename='orders')
 
-router.register(r'^orderItems', views.OrderItemsViewSet, basename='order-items')
+router.register(r'^order-items', views.OrderItemsViewSet, basename='order-items')
 
 
 urlpatterns = [

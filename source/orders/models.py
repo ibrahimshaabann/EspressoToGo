@@ -1,11 +1,9 @@
-from collections.abc import Iterable
-from django.db import models
+from django.db import models, transaction
 
 from shifts.models import Shift
 
 from products.models import Menu
 
-from django.contrib.postgres.fields import ArrayField
 
 class Order(models.Model):
 
@@ -40,13 +38,7 @@ class Order(models.Model):
     
 
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
-    
-    # def update_total_price(self):
-    #     total_price = 0.0
-    #     for item in self.order_items.all(): 
-    #         total_price += float(item.item_price) * int(item.quantity)
 
-    #     return total_price
 
 
     class Meta:
@@ -56,7 +48,7 @@ class Order(models.Model):
         ordering = ['-id']
 
     def __str__(self) -> str:
-        return f"{self.id} {self.shift} {self.order_status}"
+        return f"Order: {self.id}.\t Status: {self.order_status}"
     
     # customer = models.ForeignKey()
 
@@ -70,18 +62,7 @@ class OrderItem(models.Model):
     
     item_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
     
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
-    
-    # def save(self, *args, **kwargs):
-    #     self.item_price = self.menu_item.price
-    #     self.total_price = self.item_price * self.quantity
-        
-    #     self.order.total_price = self.order.update_total_price()
-
-    #     super(OrderItem, self).save(*args, **kwargs)
-    #     self.order.save()
-
-
+    total_price_of_order_items = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True) 
 
 
     class Meta:
@@ -89,3 +70,7 @@ class OrderItem(models.Model):
         verbose_name = "Order Item"
         verbose_name_plural = "Order Items"
         ordering = ['-id']
+
+
+    def __str__(self):
+        return f"{self.menu_item.name}: {self.quantity}"

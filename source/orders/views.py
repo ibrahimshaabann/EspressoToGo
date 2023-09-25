@@ -6,6 +6,7 @@ from .serializers import OrderSerializer, OrderItemSerializer
 
 class OrderViewSet(viewsets.ModelViewSet):
     """
+    CRUD for Orders
     """
     queryset = Order.objects.all().prefetch_related('order_items')
     serializer_class = OrderSerializer
@@ -16,6 +17,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 class OrderItemsViewSet(viewsets.ModelViewSet):
     """
+    CRUD for Order Items
     """
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer

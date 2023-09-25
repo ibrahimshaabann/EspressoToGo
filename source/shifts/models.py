@@ -20,8 +20,8 @@ class Shift(models.Model):
         verbose_name_plural = 'shifts'
         ordering = ['-id']
 
-    # def __str__(self) :
-        # return f"Emoloyee: {self.responsible_employee.full_name}"
+    def __str__(self) :
+        return f"Responsible Emoloyee: {self.responsible_employee.full_name}"
 
     
 
