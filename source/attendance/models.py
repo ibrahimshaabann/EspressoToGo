@@ -14,4 +14,4 @@ class Attendance(models.Model):
         db_table = "الحضور والانصراف"
 
     def __str__(self):
-        return self.pk
+        return f"{self.employee_attended.full_name}"
