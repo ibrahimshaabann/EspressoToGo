@@ -20,8 +20,10 @@ class Shift(models.Model):
         verbose_name_plural = 'shifts'
         ordering = ['-id']
 
-    def __str__(self) :
-        return f"Emoloyee: {self.responsible_employee.full_name}"
+    # def __str__(self) :
+        # return f"Emoloyee: {self.responsible_employee.full_name}"
+
+    
 
 
 class ShiftReport(models.Model):
@@ -55,9 +57,11 @@ class ShiftReport(models.Model):
     
     class Meta:
         db_table = 'shifts_reports'
-        verbose_name = 'Shift Reprt'
-        verbose_name_plural = 'shifts_reports'
+        verbose_name = 'Shift Report'
+        verbose_name_plural = 'Shifts Reports'
         ordering = ['-id']
 
     def __str__(self) -> str:
         return f"related shift: {self.related_shift.responsible_employee.full_name}"
+    
+    
