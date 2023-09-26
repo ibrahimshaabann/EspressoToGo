@@ -43,7 +43,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
         db_index=True, null=True, blank=False
     )
 
-    email = models.EmailField(unique=True, db_index=True, null=True, blank=True,)
+    email = models.EmailField(unique=True, db_index=True, null=True, blank=False,)
 
     phone_number = models.CharField(
         max_length=20, blank=False, 
