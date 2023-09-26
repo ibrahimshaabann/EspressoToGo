@@ -1,12 +1,26 @@
 from django.db import models
 from .validators import validate_price
+    
+
+class Category(models.Model):
+    name = models.CharField(null=False, 
+                            blank=False,
+                            max_length=90,
+                            verbose_name="category name")
+    
+
+    class Meta:
+        db_table = "categories"
+        verbose_name = "Catrgory"
+        verbose_name_plural = "categories"
+        ordering = ['name']
+
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+    
+   
 class Menu(models.Model):
-
-    class Categories(models.TextChoices):
-    #     # PIZZA = 'pizza', 'Pizza'
-        FOOD = 'food', 'Food'
-        DRINKS = 'Drinks', 'drinks'
-
 
     name = models.CharField(max_length=70,
                             null=False,
@@ -22,12 +36,13 @@ class Menu(models.Model):
                                     null=False,
                                     blank=False,
                                     verbose_name="is_available")
-    category = models.TextField(choices=Categories.choices,
-                                default=Categories.DRINKS,
-                                null=False,
-                                blank=False,
-                                verbose_name="category")
     
+    category = models.ForeignKey(Category,
+                                 null=True,
+                                 blank=True,
+                                 on_delete=models.SET_NULL,
+                                 verbose_name="category"   
+                                )
 
     class Meta:
         db_table = "menu_items"
@@ -35,9 +50,6 @@ class Menu(models.Model):
         verbose_name_plural = "menu items"
         ordering = ['-id'] # descending order
 
-
-    # def __str__(self) :
-        # return f"id: {self.id} Name:{self.name}"
 
     def __str__(self):
         return self.name
