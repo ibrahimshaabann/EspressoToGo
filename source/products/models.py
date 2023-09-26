@@ -5,14 +5,12 @@ from .validators import validate_price
 class Category(models.Model):
     name = models.CharField(null=False, 
                             blank=False,
-                            max_length=90,
+                            max_length=95,
                             verbose_name="category name")
     
 
     class Meta:
-        db_table = "categories"
         verbose_name = "Catrgory"
-        verbose_name_plural = "categories"
         ordering = ['name']
 
 
@@ -47,7 +45,7 @@ class Menu(models.Model):
     class Meta:
         db_table = "menu_items"
         verbose_name = "Menu"
-        verbose_name_plural = "menu items"
+        verbose_name_plural = "menu_items"
         ordering = ['-id'] # descending order
 
 
