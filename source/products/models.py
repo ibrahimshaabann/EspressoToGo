@@ -30,7 +30,7 @@ class Menu(models.Model):
     
 
     class Meta:
-        db_table = "menu items"
+        db_table = "menu_items"
         verbose_name = "Menu"
         verbose_name_plural = "menu items"
         ordering = ['-id'] # descending order

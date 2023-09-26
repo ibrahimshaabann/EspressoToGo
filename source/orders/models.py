@@ -4,6 +4,8 @@ from shifts.models import Shift
 
 from products.models import Menu
 
+from customers.models import Customer
+
 
 class Order(models.Model):
 
@@ -47,10 +49,12 @@ class Order(models.Model):
         verbose_name_plural = "orders"
         ordering = ['-id']
 
+        # unique_together = ('', '')
+
     def __str__(self) -> str:
         return f"Order: {self.id}.\t Status: {self.order_status}"
     
-    # customer = models.ForeignKey()
+    # customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
 
 
 class OrderItem(models.Model):

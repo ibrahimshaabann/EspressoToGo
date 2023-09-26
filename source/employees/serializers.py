@@ -10,13 +10,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     This serializer class is used when admins try to EXECUTE 'CRUD' Operations on Employees.
     
     The Employee model Itself does not have full_name, username, email, phone_number, gender, and birth_date fields
-    Instead it inherits them from the Person model and those fields are not required when creating an instance of the employee.
-    
-    #######################
-    
-    Required fields:
-    
-    "role", "employee", "password", "salary" 
+    Instead it inherits them from the Person model.
     
     """
 
