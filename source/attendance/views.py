@@ -9,7 +9,7 @@ from .permissions import IsEmployee
 from employees.permissions import IsAdmin
 
 class AttendanceViewSet(ModelViewSet):
-
+    
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
     filter_backends = [SearchFilter,AttendanceOutTimeFilterBackend]

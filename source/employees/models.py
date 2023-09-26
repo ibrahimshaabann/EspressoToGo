@@ -44,5 +44,5 @@ class Employee(EmployeeBridge):
         verbose_name = "Employee"
         verbose_name_plural = "Employees"
     
-    def __str__(self):
-        return self.full_name
+    # def __str__(self):
+    #     return self.full_name

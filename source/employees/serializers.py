@@ -31,3 +31,10 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         exclude = ("is_superuser", "is_staff", "groups", "user_permissions",)
+
+
+
+class EmployeeSerializerOnAttendance(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = ("full_name",)
