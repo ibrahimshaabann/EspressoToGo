@@ -3,9 +3,10 @@ from .validators import validate_price
 class Menu(models.Model):
 
     class Categories(models.TextChoices):
-        PIZZA = 'pizza', 'Pizza'
+    #     # PIZZA = 'pizza', 'Pizza'
         FOOD = 'food', 'Food'
         DRINKS = 'Drinks', 'drinks'
+
 
     name = models.CharField(max_length=70,
                             null=False,
@@ -29,11 +30,14 @@ class Menu(models.Model):
     
 
     class Meta:
-        db_table = "menu items"
+        db_table = "menu_items"
         verbose_name = "Menu"
         verbose_name_plural = "menu items"
         ordering = ['-id'] # descending order
 
 
-    def __str__(self) :
-        return f"id: {self.id} Name:{self.name}"
+    # def __str__(self) :
+        # return f"id: {self.id} Name:{self.name}"
+
+    def __str__(self):
+        return self.name

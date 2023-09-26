@@ -35,5 +35,3 @@ class Admin(AdminBridge):
         verbose_name = "Admin"
         verbose_name_plural = "Admins"
     
-    def __str__(self):
-        return self.full_name

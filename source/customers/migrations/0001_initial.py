@@ -3,7 +3,6 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import employees.validators
 
 
 class Migration(migrations.Migration):
@@ -16,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='EmployeeBridge',
+            name='CustomerBridge',
             fields=[
             ],
             options={
@@ -27,16 +26,15 @@ class Migration(migrations.Migration):
             bases=('users.person',),
         ),
         migrations.CreateModel(
-            name='Employee',
+            name='Customer',
             fields=[
                 ('person_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-                ('salary', models.DecimalField(decimal_places=2, max_digits=10, validators=[employees.validators.valid_salary])),
             ],
             options={
-                'verbose_name': 'Employee',
-                'verbose_name_plural': 'Employees',
-                'db_table': 'employees',
+                'verbose_name': 'Customer',
+                'verbose_name_plural': 'Customers',
+                'db_table': 'customers',
             },
-            bases=('employees.employeebridge',),
+            bases=('customers.customerbridge',),
         ),
     ]

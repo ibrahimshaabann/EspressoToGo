@@ -9,7 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 class MenuViewSet(ModelViewSet):
-    queryset = Menu.objects.all()
+    queryset = Menu.objects.all().distinct('name').order_by('name')
     serializer_class = MenuSerializer
     # authentication_classes = None
     # permission_classes = None

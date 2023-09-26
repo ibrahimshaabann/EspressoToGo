@@ -5,11 +5,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .filters import CostFilter
 from .models import Cost
 from .serializers import CostSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
-    # authentication_classes = None
+    authentication_classes = [JWTAuthentication,]
     # permission_classes = None
     filterset_class = CostFilter
     filter_backends = [SearchFilter, DjangoFilterBackend]
