@@ -10,7 +10,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
-    authentication_classes = [JWTAuthentication,]
+    # authentication_classes = [JWTAuthentication,]
     # permission_classes = None
     filterset_class = CostFilter
     filter_backends = [SearchFilter, DjangoFilterBackend]
