@@ -44,16 +44,16 @@ INSTALLED_APPS = [
 
 
 REST_FRAMEWORK = {
-    # "DEFAULT_AUTHENTICATION_CLASSES": [
-    #     "rest_framework_simplejwt.authentication.JWTAuthentication",
-    # ],
-    # "DEFAULT_PERMISSION_CLASSES": [
-    #     'rest_framework.permissions.AllowAny',
-    #     "rest_framework.permissions.IsAuthenticated",
-    # ],
-    # "DEFAULT_RENDERER_CLASSES": [
-        # "rest_framework.renderers.JSONRenderer",
-    # ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        'rest_framework.permissions.AllowAny',
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+    ],
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.JSONParser",
         "rest_framework.parsers.FormParser",
@@ -64,7 +64,7 @@ REST_FRAMEWORK = {
         'django.contrib.auth.backends.ModelBackend',
     ],
     
-    # "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
@@ -116,9 +116,9 @@ SIMPLE_JWT = {
 
 AUTH_USER_MODEL = "users.Person"
 
-# AUTHENTICATION_BACKENDS = [
-#     'users.authentication.CustomUserAuthenticationBackend',
-# ]
+AUTHENTICATION_BACKENDS = [
+    'users.authentication.CustomUserAuthenticationBackend',
+]
 
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
@@ -200,6 +200,10 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_ORIGINS = [
+    "http://localhost:8082",
+]
 
 # CORS_ALLOWED_ORIGINS = [
 #     'https://cafe-management-system-api-production.up.railway.app',
