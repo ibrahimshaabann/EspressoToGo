@@ -156,6 +156,7 @@ WSGI_APPLICATION = 'EspressoToGo.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
+        "DATABASE_URL": str(os.environ.get("DATABASE_URL")),
         "NAME": str(os.environ.get("DATABASE_NAME")),
         "USER": str(os.environ.get("DATABASE_USER")),
         "PASSWORD": str(os.environ.get("DATABASE_PASSWORD")),
@@ -205,9 +206,11 @@ CORS_ALLOW_ORIGINS = [
     "http://localhost:8083",
 ]
 
-# CORS_ALLOWED_ORIGINS = [
-#     'https://cafe-management-system-api-production.up.railway.app',
-# ]
+CORS_ALLOWED_ORIGINS = [
+    'https://espressotogo-production.up.railway.app',
+]
+
+
 
 CORS_ALLOW_METHODS = [
     'DELETE',
