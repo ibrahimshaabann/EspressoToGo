@@ -7,6 +7,8 @@ from .filters import AttendanceOutTimeFilterBackend
 from rest_framework.permissions import AllowAny
 from .permissions import IsEmployee
 from employees.permissions import IsAdmin
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 class AttendanceViewSet(ModelViewSet):
     
@@ -14,10 +16,8 @@ class AttendanceViewSet(ModelViewSet):
     serializer_class = AttendanceSerializer
     filter_backends = [SearchFilter,AttendanceOutTimeFilterBackend]
     search_fields = ["employee_attended"]
-    permission_classes = [AllowAny]
-
-    # permission_classes = [IsEmployee]
-    # authentication_classes = []
+    permission_classes = [IsEmployee]
+    authentication_classes = [JWTAuthentication]
 
 class AllAttendanceViewSet(ModelViewSet):
 
@@ -25,7 +25,5 @@ class AllAttendanceViewSet(ModelViewSet):
     serializer_class = AttendanceSerializer
     filter_backends = [SearchFilter]
     search_fields = ["employee_attended"]
-    permission_classes = [AllowAny]
-
-    # permission_classes = [IsAdmin]
-    # authentication_classes = []
+    permission_classes = [IsAdmin]
+    authentication_classes = [JWTAuthentication]
