@@ -25,10 +25,7 @@ urlpatterns = [
     path('products/',include('products.urls')),
     path('financials/',include('financials.urls')),
     path('employees/', include('employees.urls')),
-<<<<<<< HEAD
-=======
     path('attendance/', include('attendance.urls')),
->>>>>>> origin/attendance_app
     path('admins/', include('admins.urls')),
     path('shifts/', include('shifts.urls')),
     path('orders/', include('orders.urls')),

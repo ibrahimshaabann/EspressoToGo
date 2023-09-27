@@ -34,14 +34,12 @@ class EmployeeSerializerOnShifts(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-<<<<<<< HEAD
         exclude = (
             "id", "username", "email",
             "is_superuser", "is_staff", "groups", 
             "user_permissions", 'last_login', 
             'birth_date', 'salary', 'password', 'gender', 'role'
         )
-=======
         exclude = ("is_superuser", "is_staff", "groups", "user_permissions",)
 
 
@@ -50,4 +48,3 @@ class EmployeeSerializerOnAttendance(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = ("full_name",)
->>>>>>> origin/attendance_app
