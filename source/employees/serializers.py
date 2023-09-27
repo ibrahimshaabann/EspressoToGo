@@ -40,7 +40,7 @@ class EmployeeSerializerOnShifts(serializers.ModelSerializer):
             "user_permissions", 'last_login', 
             'birth_date', 'salary', 'password', 'gender', 'role'
         )
-        exclude = ("is_superuser", "is_staff", "groups", "user_permissions",)
+        # exclude = ("is_superuser", "is_staff", "groups", "user_permissions",)
 
 
 
