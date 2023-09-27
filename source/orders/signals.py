@@ -11,6 +11,7 @@ def set_item_price_of_order_item(sender, instance, **kwargs):
     instance.item_price = instance.menu_item.price
 
 
+
 # @receiver(post_save, sender=Order)
 # def update_total_price_of_order(sender, instance, **kwargs):
 #     order_items = OrderItem.objects.filter(order=instance)
