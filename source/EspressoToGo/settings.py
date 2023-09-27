@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "orders", #
     "shifts", #
     "financials", #
+    "attendance", #
     
 ]
 
