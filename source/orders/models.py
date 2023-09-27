@@ -52,7 +52,7 @@ class Order(models.Model):
         # unique_together = ('', '')
 
     def __str__(self) -> str:
-        return f"Order: {self.id}.\t Status: {self.order_status}"
+        return f"Order: {self.id} - Status: {self.order_status}"
     
     # customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
 
