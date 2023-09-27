@@ -8,8 +8,8 @@ class Shift(models.Model):
                                       auto_now_add=True)
     end_time = models.DateTimeField(null=True,
                                     blank=True,
-                                    verbose_name='وقت النهايه',
-                                    auto_now=True) ########################3
+                                    verbose_name='وقت النهاية',
+                                    auto_now=True) ########################
     responsible_employee = models.ForeignKey(Employee, 
                                              null=True,
                                              on_delete=models.SET_NULL,)

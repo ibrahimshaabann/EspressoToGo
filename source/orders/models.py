@@ -41,7 +41,7 @@ class Order(models.Model):
 
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
 
-
+    name = models.CharField(max_length=150, null=True, blank=True)
 
     class Meta:
         db_table = 'orders'

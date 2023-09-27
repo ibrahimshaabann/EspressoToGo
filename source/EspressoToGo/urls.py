@@ -11,4 +11,6 @@ urlpatterns = [
     path('shifts/', include('shifts.urls')),
     path('orders/', include('orders.urls')),
 
+    path('deliveries/', include('deliveries.urls')),
+
 ]
