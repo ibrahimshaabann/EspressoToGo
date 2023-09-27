@@ -66,8 +66,8 @@ class EmployeeLoginView(views.APIView):
     Employees get thier access and refresh tokens at this endpoint.
     """
 
-    permission_classes = [AllowAny]
-    # throttle_classes = [UserRateThrottle, AnonRateThrottle]
+    permission_classes = [AllowAny,]
+    throttle_classes = [UserRateThrottle, AnonRateThrottle]
 
 
     def post(self, request):
@@ -83,13 +83,13 @@ class EmployeeLoginView(views.APIView):
         email_or_phone_or_username = request.data.get("email_or_phone_or_username")
         password = request.data.get("password")
 
-        admin = CustomUserAuthenticationBackend().authenticate(
+        employee = CustomUserAuthenticationBackend().authenticate(
             request=request, username=email_or_phone_or_username, password=password
         )
 
-        if admin:
-                access_token = AccessToken.for_user(admin)
-                refresh_token = RefreshToken.for_user(admin)
+        if employee:
+                access_token = AccessToken.for_user(employee)
+                refresh_token = RefreshToken.for_user(employee)
                 return Response(
                     {
                         "access": str(access_token),

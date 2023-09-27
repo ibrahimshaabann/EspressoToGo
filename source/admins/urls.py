@@ -3,11 +3,11 @@ from rest_framework import routers
 
 from . import views
 
-router = routers.DefaultRouter()
+# router = routers.DefaultRouter()
 
 
 urlpatterns = [
-    path('', include(router.urls), name='admins'),
+    # path('', include(router.urls), name='admins'),
     path('sign-up/', views.AdminSignUpView.as_view(), name='admin-sign-up'),
     path('login/', views.AdminLoginView.as_view(), name='admin-login'),
 

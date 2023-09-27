@@ -31,7 +31,7 @@ class AdminLoginView(views.APIView):
     Admins get thier access and refresh tokens at this endpoint.
     """
 
-    # permission_classes = [AllowAny]
+    permission_classes = [AllowAny]
     # throttle_classes = [UserRateThrottle, AnonRateThrottle]
 
 
