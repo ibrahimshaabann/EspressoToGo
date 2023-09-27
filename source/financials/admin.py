@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Cost
 
-# Register your models here.
+@admin.register(Cost)
+class CostAdmin(admin.ModelAdmin):
+    list_display = ['description', 'price', 'date' , 'type']

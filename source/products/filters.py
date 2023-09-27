@@ -4,7 +4,7 @@ from .models import Menu
 class MenuFilter(django_filters.FilterSet):
     # Here we filter menu items according to their category name
     category = django_filters.CharFilter(field_name="category__name",
-                                         lookup_expr="exact")
+                                         lookup_expr="iexact")
     
     # description = django_filters.CharFilter(field_name='description', lookup_expr='contains')
     available = django_filters.BooleanFilter(field_name='available')

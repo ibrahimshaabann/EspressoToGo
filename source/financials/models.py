@@ -1,4 +1,5 @@
 from django.db import models
+from employees.models import Employee
 from products.validators import validate_price
 
 class Cost(models.Model):
@@ -19,8 +20,14 @@ class Cost(models.Model):
     date = models.DateTimeField(verbose_name="وقت الدفع",
                                 auto_now_add=True)
     
-    type = models.TextField(choices=Types.choices, default=Types.NORMAL_COST,  blank=False)
-    # user = models.ForeignKey(User, verbose_name='مسئول الشيفت', on_delete=models.SET_NULL, null=True)
+    type = models.TextField(choices=Types.choices,
+                            default=Types.NORMAL_COST,
+                            blank=False)
+
+    user = models.ForeignKey(Employee,
+                             verbose_name='مسئول الشيفت',
+                             on_delete=models.SET_NULL,
+                             null=True)
     
     class Meta:
         verbose_name = "Cost"

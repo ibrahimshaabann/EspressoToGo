@@ -9,14 +9,14 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('shifts', '0001_initial'),
+        ('financials', '0001_initial'),
         ('employees', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='shift',
-            name='responsible_employee',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='employees.employee'),
+            model_name='cost',
+            name='user',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='employees.employee', verbose_name='مسئول الشيفت'),
         ),
     ]
