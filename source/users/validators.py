@@ -7,9 +7,12 @@ def valid_phone_number(value):
     This validator checks if the phone number contains only digits.
     """
 
-    phone_number_pattern = r'^/d{11}$'
+    phone_number_pattern = r'^\d{11,12}$'
+
     if not re.match(phone_number_pattern, value):
         raise ValidationError(
             _("(Phone number must contain only digits and length of 11 digits."),
             code='invalid'
         )
+
+    

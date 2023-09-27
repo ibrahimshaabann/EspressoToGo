@@ -21,17 +21,18 @@ ALLOWED_HOSTS = list(str(os.environ.get("ALLOWED_HOSTS")).split(", "))
 
 INSTALLED_APPS = [
     'corsheaders',
+    'rest_framework_swagger',  
+    'drf_yasg',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     "rest_framework", #
     'rest_framework_simplejwt', #
+    'django_extensions',
     'django_filters',
-
     "users", #
     "employees", #
     "customers", #
@@ -53,9 +54,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
         "rest_framework.permissions.IsAuthenticated",
     ],
-    # "DEFAULT_RENDERER_CLASSES": [
-        # "rest_framework.renderers.JSONRenderer",
-    # ],
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+    ],
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.JSONParser",
         "rest_framework.parsers.FormParser",
@@ -66,7 +67,7 @@ REST_FRAMEWORK = {
         'django.contrib.auth.backends.ModelBackend',
     ],
     
-    # "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
@@ -158,6 +159,7 @@ WSGI_APPLICATION = 'EspressoToGo.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
+        "DATABASE_URL": str(os.environ.get("DATABASE_URL")),
         "NAME": str(os.environ.get("DATABASE_NAME")),
         "USER": str(os.environ.get("DATABASE_USER")),
         "PASSWORD": str(os.environ.get("DATABASE_PASSWORD")),
@@ -203,9 +205,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-# CORS_ALLOWED_ORIGINS = [
-#     'https://cafe-management-system-api-production.up.railway.app',
-# ]
+CORS_ALLOW_ORIGINS = [
+    "http://localhost:8083",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'https://espressotogo-production.up.railway.app',
+]
+
+
 
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -231,3 +239,21 @@ CORS_ALLOW_HEADERS = [
     'dnt',
     'origin',
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'JWT': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'scheme': 'https', 
+        },
+    },
+    'USE_SESSION_AUTH': False,
+    'JSON_EDITOR': True,
+    'api_version': '1.0',
+    'api_path': 'https://espressotogo-production.up.railway.app/swagger/',  
+}

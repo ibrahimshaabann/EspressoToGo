@@ -7,7 +7,21 @@ from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
 from users.authentication import CustomUserAuthenticationBackend
 
+from .serializers import AdminSerializer
+from .models import Admin
 
+
+class AdminSignUpView(views.APIView):
+    permission_classes = (AllowAny,)
+    throttle_classes = [UserRateThrottle, AnonRateThrottle]
+
+
+    def post(self, request):
+        serializer = AdminSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AdminLoginView(views.APIView):
     
@@ -17,8 +31,8 @@ class AdminLoginView(views.APIView):
     Admins get thier access and refresh tokens at this endpoint.
     """
 
-    permission_classes = [AllowAny]
-    throttle_classes = [UserRateThrottle, AnonRateThrottle]
+    # permission_classes = [AllowAny]
+    # throttle_classes = [UserRateThrottle, AnonRateThrottle]
 
 
     def post(self, request):

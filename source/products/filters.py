@@ -2,9 +2,12 @@ import django_filters
 from .models import Menu
 
 class MenuFilter(django_filters.FilterSet):
-    category = django_filters.ChoiceFilter(choices=Menu.Categories.choices)
+    # Here we filter menu items according to their category name
+    category = django_filters.CharFilter(field_name="category__name",
+                                         lookup_expr="iexact")
+    
     # description = django_filters.CharFilter(field_name='description', lookup_expr='contains')
-    available =django_filters.BooleanFilter(field_name='available')
+    available = django_filters.BooleanFilter(field_name='available')
    
     class Meta:
         model = Menu
@@ -12,6 +15,8 @@ class MenuFilter(django_filters.FilterSet):
             'name' : ['icontains','exact'],
             'price' : ['gte', 'lte'],
             }
+        
+    
         
 
  
