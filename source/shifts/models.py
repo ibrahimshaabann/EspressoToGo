@@ -9,7 +9,9 @@ class Shift(models.Model):
     end_time = models.DateTimeField(null=True,
                                     blank=True,
                                     verbose_name='وقت النهاية',
-                                    auto_now=True) ########################
+                                    # auto_now=True,
+                                    default=None,
+                                    ) ########################
     responsible_employee = models.ForeignKey(Employee, 
                                              null=True,
                                              on_delete=models.SET_NULL,)
@@ -39,7 +41,7 @@ class ShiftReport(models.Model):
                                       blank=False,
                                       decimal_places=2,
                                       max_digits=9,
-                                      verbose_name='')
+                                      verbose_name='اجمالي التكلفة')
 
     # net_profit = total_profit - total_costs
     net_profit = models.DecimalField(null=False,
@@ -55,6 +57,10 @@ class ShiftReport(models.Model):
                                         on_delete=models.PROTECT,
                                         verbose_name='الشيفت')
     
+
+
+    time_duration = models.DurationField(null=True, blank=True, verbose_name='مدة الشيفت')
+
     class Meta:
         db_table = 'shifts_reports'
         verbose_name = 'Shift Report'

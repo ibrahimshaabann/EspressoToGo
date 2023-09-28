@@ -20,26 +20,24 @@ ALLOWED_HOSTS = list(str(os.environ.get("ALLOWED_HOSTS")).split(", "))
 
 
 INSTALLED_APPS = [
-    'corsheaders',
-    'rest_framework_swagger',  
-    'drf_yasg',
+    'corsheaders',  #
+    'rest_framework_swagger', #
+    'drf_yasg', #
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     "rest_framework", #
     'rest_framework_simplejwt', #
-<<<<<<< HEAD:source/EspressoToGo/settings.py
     'django_extensions',
-    'django_filters',
-=======
     'django_filters', #
 
     "models_extensions", #
 
->>>>>>> deliveries:source/EspressoToGo/settings/baseSettings.py
     "users", #
     "employees", #
     "customers", #
@@ -48,12 +46,8 @@ INSTALLED_APPS = [
     "orders", #
     "shifts", #
     "financials", #
-<<<<<<< HEAD:source/EspressoToGo/settings.py
     "attendance", #
-    
-=======
     "deliveries", #
->>>>>>> deliveries:source/EspressoToGo/settings/baseSettings.py
 ]
 
 
@@ -65,9 +59,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
         "rest_framework.permissions.IsAuthenticated",
     ],
-    "DEFAULT_RENDERER_CLASSES": [
-        "rest_framework.renderers.JSONRenderer",
-    ],
+    # "DEFAULT_RENDERER_CLASSES": [
+        # "rest_framework.renderers.JSONRenderer",
+    # ],
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.JSONParser",
         "rest_framework.parsers.FormParser",

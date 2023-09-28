@@ -10,8 +10,8 @@ class Attendance(models.Model):
     user_created_the_attendance =  models.ForeignKey(Person,related_name="user_created", on_delete=models.SET_NULL,null=True,verbose_name= "المسئول")
     
     class Meta:
-        verbose_name_plural = "الحضور والانصراف"
-        db_table = "الحضور والانصراف"
+        verbose_name_plural = "attendances"
+        db_table = "Attendance"
 
     def __str__(self):
         return f"{self.employee_attended.full_name}"

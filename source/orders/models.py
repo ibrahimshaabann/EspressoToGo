@@ -39,7 +39,7 @@ class Order(models.Model):
                             blank=True)
     
 
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
 
     name = models.CharField(max_length=150, null=True, blank=True)
 
@@ -69,7 +69,8 @@ class OrderItem(models.Model):
     
     item_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
     
-
+    total_price_of_order_items = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    
     class Meta:
         db_table = 'order_items'
         verbose_name = "Order Item"
