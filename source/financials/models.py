@@ -34,3 +34,5 @@ class Cost(models.Model):
         verbose_name_plural = "Costs"
         db_table = "costs" 
         ordering = ['-id']
+
+

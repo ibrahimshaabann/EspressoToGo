@@ -25,6 +25,20 @@ class ShiftReportSerizlier(serializers.ModelSerializer):
         read_only=True
     )
 
+    
+    total_profit = serializers.DecimalField(
+        decimal_places=2,
+        max_digits=10,
+        read_only=True
+    ) 
+    total_costs = serializers.DecimalField(
+        decimal_places=2,
+        max_digits=10,
+        read_only=True
+    )
+
     class Meta:
         model = ShiftReport
         fields = '__all__'
+
+    

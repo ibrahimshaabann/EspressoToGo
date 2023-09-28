@@ -14,6 +14,7 @@ from django.shortcuts import get_object_or_404
 from employees.models import Employee
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
 
 
 class ShfitViewSet(ModelViewSet):
@@ -40,6 +41,36 @@ class ShfitViewSet(ModelViewSet):
         shift = Shift.objects.create(responsible_employee=responsible_employee,)
         shift.save()
         return Response(ShiftSerizlier(shift).data, status=status.HTTP_201_CREATED)
+    
+    
+    def benefits(self, request, pk=None):
+        shift = self.get_object()
+        benefits = shift.calculate_benefits()
+        return Response({'benefits': benefits}, status=status.HTTP_200_OK)
+
+    # Override the list method to include benefits
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        data = serializer.data
+
+        # Calculate benefits for each Shift and include it in the response
+        for shift_data in data:
+            shift = Shift.objects.get(id=shift_data['id'])
+            shift_data['benefits'] = shift.calculate_benefits()
+
+        return Response(data)
+
+    # Override the retrieve method to include benefits
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        data = serializer.data
+
+        # Calculate benefits for the retrieved Shift and include it in the response
+        data['benefits'] = instance.calculate_benefits()
+
+        return Response(data)
         
 
 
@@ -63,3 +94,4 @@ class ShfitReportViewSet(ModelViewSet):
     ]
     filterset_class = ShiftReportFilter
     
+
