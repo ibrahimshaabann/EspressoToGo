@@ -26,12 +26,11 @@ class AttendanceViewSet(ModelViewSet):
     permission_classes = [IsEmployee]
 
     def create(self, request, *args, **kwargs):
-        instance = self.get_object()        
         employee_id = request.data['employee_attended']
         employee = get_object_or_404(Employee, pk=employee_id)
         attendance = Attendance.objects.create(employee_attended = employee, user_created_the_attendance=request.user,)
         attendance.save()
-        serializer = AttendanceSerializer(instance)
+        serializer = AttendanceSerializer(attendance)
         return Response({
             "status": "Created",
             "data": serializer.data
