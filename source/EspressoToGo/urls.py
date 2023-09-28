@@ -30,6 +30,9 @@ urlpatterns = [
     path('shifts/', include('shifts.urls')),
     path('orders/', include('orders.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
+
+    path('deliveries/', include('deliveries.urls')),
+
 ]
 
 

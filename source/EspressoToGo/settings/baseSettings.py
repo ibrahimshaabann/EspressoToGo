@@ -31,8 +31,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "rest_framework", #
     'rest_framework_simplejwt', #
+<<<<<<< HEAD:source/EspressoToGo/settings.py
     'django_extensions',
     'django_filters',
+=======
+    'django_filters', #
+
+    "models_extensions", #
+
+>>>>>>> deliveries:source/EspressoToGo/settings/baseSettings.py
     "users", #
     "employees", #
     "customers", #
@@ -41,8 +48,12 @@ INSTALLED_APPS = [
     "orders", #
     "shifts", #
     "financials", #
+<<<<<<< HEAD:source/EspressoToGo/settings.py
     "attendance", #
     
+=======
+    "deliveries", #
+>>>>>>> deliveries:source/EspressoToGo/settings/baseSettings.py
 ]
 
 
