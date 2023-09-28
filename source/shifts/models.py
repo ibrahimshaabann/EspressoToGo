@@ -24,8 +24,6 @@ class Shift(models.Model):
         return f"Responsible Emoloyee: {self.responsible_employee.full_name}"
 
     
-
-
 class ShiftReport(models.Model):
     # sum total of orders in the shift object related to the shift report
     total_profit = models.DecimalField(null=False,
@@ -39,7 +37,7 @@ class ShiftReport(models.Model):
                                       blank=False,
                                       decimal_places=2,
                                       max_digits=9,
-                                      verbose_name='')
+                                      verbose_name='total costs')
 
     # net_profit = total_profit - total_costs
     net_profit = models.DecimalField(null=False,
