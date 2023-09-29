@@ -4,7 +4,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .permissions import IsAdmin, IsEmployee
 
-from .serializers import ShiftSerizlier, ShiftReportSerizlier, ShiftBenefitsSerizlier
+from .serializers import ShiftEmployeeSerizlier,ShiftAdminSerizlier, ShiftReportSerizlier, ShiftBenefitsSerizlier
 from .models import Shift, ShiftReport
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -22,7 +22,7 @@ from rest_framework.decorators import action
 class ShiftEmployeeViewSet(ModelViewSet):
     http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post', 'put']
     queryset = Shift.objects.all()
-    serializer_class = ShiftSerizlier
+    serializer_class = ShiftEmployeeSerizlier
     authentication_classes = [JWTAuthentication,]
     permission_classes = [IsEmployee,]
 
@@ -31,13 +31,13 @@ class ShiftEmployeeViewSet(ModelViewSet):
         responsible_employee = get_object_or_404(Employee, id=responsible_employee_id)        
         shift = Shift.objects.create(responsible_employee=responsible_employee,)
         shift.save()
-        return Response(ShiftSerizlier(shift).data, status=status.HTTP_201_CREATED)
+        return Response(ShiftEmployeeSerizlier(shift).data, status=status.HTTP_201_CREATED)
     
 
 class ShfitAdminViewSet(ModelViewSet):
     http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post', 'put']
     queryset = Shift.objects.all()
-    serializer_class = ShiftSerizlier
+    serializer_class = ShiftAdminSerizlier
     authentication_classes = [JWTAuthentication,]
     permission_classes = [IsAdmin,]
     filterset_class = ShiftFilter
