@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from .permissions import IsAdmin, IsEmployee
 
 from .serializers import ShiftSerizlier, ShiftReportSerizlier, ShiftBenefitsSerizlier
 from .models import Shift, ShiftReport
