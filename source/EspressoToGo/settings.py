@@ -20,19 +20,24 @@ ALLOWED_HOSTS = list(str(os.environ.get("ALLOWED_HOSTS")).split(", "))
 
 
 INSTALLED_APPS = [
-    'corsheaders',
-    'rest_framework_swagger',  
-    'drf_yasg',
+    'corsheaders',  #
+    'rest_framework_swagger', #
+    'drf_yasg', #
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     "rest_framework", #
     'rest_framework_simplejwt', #
     'django_extensions',
-    'django_filters',
+    'django_filters', #
+
+    "models_extensions", #
+
     "users", #
     "employees", #
     "customers", #
@@ -42,7 +47,7 @@ INSTALLED_APPS = [
     "shifts", #
     "financials", #
     "attendance", #
-    
+    "deliveries", #
 ]
 
 
@@ -54,9 +59,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
         "rest_framework.permissions.IsAuthenticated",
     ],
-    "DEFAULT_RENDERER_CLASSES": [
-        "rest_framework.renderers.JSONRenderer",
-    ],
+    # "DEFAULT_RENDERER_CLASSES": [
+        # "rest_framework.renderers.JSONRenderer",
+    # ],
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.JSONParser",
         "rest_framework.parsers.FormParser",
@@ -158,6 +163,7 @@ WSGI_APPLICATION = 'EspressoToGo.wsgi.application'
 
 DATABASES = {
     "default": {
+        "DATABASE_URL": os.environ.get("DATABASE_URL"),
         "ENGINE": "django.db.backends.postgresql",
         "DATABASE_URL": str(os.environ.get("DATABASE_URL")),
         "NAME": str(os.environ.get("DATABASE_NAME")),
@@ -190,7 +196,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Cairo'
 
 USE_I18N = True
 
@@ -223,6 +229,7 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
 
 
 CORS_ALLOW_HEADERS = [

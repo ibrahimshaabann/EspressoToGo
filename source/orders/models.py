@@ -11,7 +11,7 @@ class Order(models.Model):
 
     ORDER_STATUS_CHOICES = [
         ("PENDING", "Pending"),
-        ("CANCELED", "Canceled"),
+        ("CANCELED", "Canceled"), ## what happens if the order got cancelled as benefits ? 
         ("DONE", "Done")
     ]
 
@@ -39,9 +39,9 @@ class Order(models.Model):
                             blank=True)
     
 
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
 
-
+    
 
     class Meta:
         db_table = 'orders'
@@ -51,7 +51,7 @@ class Order(models.Model):
 
 
     def __str__(self) -> str:
-        return f"Order: {self.id}.\t Status: {self.order_status}"
+        return f"Order: {self.id} - Status: {self.order_status}"
     
     customer = models.ForeignKey(Customer,
                                  on_delete=models.CASCADE,
@@ -69,7 +69,8 @@ class OrderItem(models.Model):
     
     item_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
     
-
+    total_price_of_order_items = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    
     class Meta:
         db_table = 'order_items'
         verbose_name = "Order Item"

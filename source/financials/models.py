@@ -28,9 +28,18 @@ class Cost(models.Model):
                              verbose_name='مسئول الشيفت',
                              on_delete=models.SET_NULL,
                              null=True)
+    related_shift = models.ForeignKey(
+        "shifts.Shift",
+        verbose_name='الشيفت المرتبط',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
     
     class Meta:
         verbose_name = "Cost"
         verbose_name_plural = "Costs"
         db_table = "costs" 
         ordering = ['-id']
+
+

@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 import re
 
+
 def valid_phone_number(value):
     """
     This validator checks if the phone number contains only digits.
