@@ -9,7 +9,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .filters import ShiftFilter, ShiftReportFilter
-
+from orders.models import Order
+from financials.models import Cost
 from django.shortcuts import get_object_or_404
 from employees.models import Employee
 from rest_framework.response import Response
@@ -94,4 +95,7 @@ class ShfitReportViewSet(ModelViewSet):
     ]
     filterset_class = ShiftReportFilter
     
+
+
+
 

@@ -2,7 +2,6 @@ from decimal import Decimal
 from django.db import models
 from employees.models import Employee
 from financials.models import Cost
-
 class Shift(models.Model):
     start_time = models.DateTimeField(null=False, #only null not blank 
                                       blank=True,
