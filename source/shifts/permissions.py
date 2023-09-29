@@ -1,14 +1,15 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
-class IsAdmin(BasePermission):
+class IsAdmin(BasePermission):        
     def has_permission(self, request, view):
         """
         Note that delete method is not allowed even for admin
         """
+        
         if request.method == 'DELETE':
             return False 
-        
+
         else: # any other methods except delete are allowed for admin
             return request.user.role == "ADMIN" 
     
@@ -45,7 +46,7 @@ class IsEmployee(BasePermission):
 
         print(request.method)
         # Check if the request is attempting to update the 'end_time' field 
-        if request.method == 'PUT' and 'end_time' in request.data or view.action=="retrieve":
+        if request.method == 'PUT' or view.action=="retrieve":
             return request.user.role == "EMPLOYEE" and shift_user_username == request_username       
         else:
             # Deny the update for other fields or if the user is not an employee

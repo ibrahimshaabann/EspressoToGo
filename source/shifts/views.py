@@ -35,7 +35,7 @@ class ShiftEmployeeViewSet(ModelViewSet):
     
 
 class ShfitAdminViewSet(ModelViewSet):
-    http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post', 'put']
+    http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post', 'put','head']
     queryset = Shift.objects.all()
     serializer_class = ShiftAdminSerizlier
     authentication_classes = [JWTAuthentication,]
