@@ -3,6 +3,7 @@ from .views import ShfitReportViewSet, ShfitAdminViewSet, ShiftEmployeeViewSet, 
 from django.urls import path, include
 
 router = DefaultRouter()
+router.register(r'^employee/shift', ShiftEmployeeViewSet, basename='employee_shift')
 router.register(r'^all_shifts', ShfitAdminViewSet, basename='all_shifts')
 router.register(r'^shift_reports', ShfitBenefitsViewSet, basename='shift_reports')
 urlpatterns = [
