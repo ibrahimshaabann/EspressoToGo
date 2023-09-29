@@ -43,7 +43,12 @@ class Shift(models.Model):
 
         # Calculate benefits
         benefits = total_order_price - total_costs
-        return f"Total Benefits: {total_order_price} // Total Costs: {total_costs} // Net Profits: {benefits}"
+        return {
+            "total benefits": total_order_price,
+            "total costs": total_costs,
+            "net profit": benefits
+        }
+        # return f"Total Benefits: {total_order_price} // Total Costs: {total_costs} // Net Profits: {benefits}"
     
 
     class Meta:
@@ -85,11 +90,15 @@ class ShiftReport(models.Model):
                                         null=False,
                                         blank=False,
                                         on_delete=models.PROTECT,
-                                        verbose_name='الشيفت')
+                                        verbose_name='الشيفت',
+                                        related_name="shifts")
     
 
 
-    time_duration = models.DurationField(null=True, blank=True, verbose_name='مدة الشيفت')
+    # time_duration = models.DurationField(null=True, blank=True, verbose_name='مدة الشيفت')
+
+    
+
 
     class Meta:
         db_table = 'shifts_reports'

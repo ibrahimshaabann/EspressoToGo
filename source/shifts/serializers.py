@@ -9,7 +9,16 @@ class ShiftSerizlier(serializers.ModelSerializer):
     class Meta:
         model = Shift
         fields = '__all__'
+        
+    # def to_representation(self, instance):
+        # representation = super().to_representation(instance)
 
+
+
+class ShiftBenefitsSerizlier(serializers.ModelSerializer):
+    class Meta:
+        model = Shift
+        exclude = ('responsible_employee', )
 
 
 class ShiftReportSerizlier(serializers.ModelSerializer):
@@ -19,23 +28,7 @@ class ShiftReportSerizlier(serializers.ModelSerializer):
 
     related_shift = ShiftSerizlier()
 
-    net_profit = serializers.DecimalField(
-        decimal_places=2,
-        max_digits=10,
-        read_only=True
-    )
-
     
-    total_profit = serializers.DecimalField(
-        decimal_places=2,
-        max_digits=10,
-        read_only=True
-    ) 
-    total_costs = serializers.DecimalField(
-        decimal_places=2,
-        max_digits=10,
-        read_only=True
-    )
 
     class Meta:
         model = ShiftReport
