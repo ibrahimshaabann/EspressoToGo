@@ -1,7 +1,10 @@
 from rest_framework import viewsets
 from rest_framework import permissions
+
+from .permissions import IsAdmin
 from .models import Order, OrderItem
-from .serializers import OrderSerializer, OrderItemSerializer
+from .serializers import OrderSerializer, OrderItemSerializer, OrderSerializerAdmin
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from django.shortcuts import get_object_or_404
 
@@ -66,3 +69,12 @@ class OrderItemsViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
     permission_classes = [permissions.AllowAny]
+
+
+
+class OrderViewSetAdmin(viewsets.ModelViewSet):
+    http_method_names = []
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializerAdmin
+    permission_classes = [IsAdmin,]
+    authentication_classes = (JWTAuthentication,)

@@ -16,27 +16,20 @@ class Shift(models.Model):
     responsible_employee = models.ForeignKey(Employee, 
                                              null=True,
                                              on_delete=models.SET_NULL,)
+    
     def calculate_benefits(self):
         from orders.models import Order
         total_order_price = Decimal(0)
         total_costs = Decimal(0)
 
-        # Calculate total order price for orders within the shift's time frame
-        orders_in_shift = Order.objects.filter(
-            shift=self,
-            created_at__gte=self.start_time,
-            created_at__lte=self.end_time
-        )
+        # Calculate total order price for orders within the shift
+        orders_in_shift = Order.objects.filter(shift_id=self.id)
 
         for order in orders_in_shift:
             total_order_price += order.total_price_of_order
 
-        # Calculate total costs for costs within the shift's time frame
-        costs_in_shift = Cost.objects.filter(
-            user=self.responsible_employee,
-            date__gte=self.start_time,
-            date__lte=self.end_time
-        )
+        # Calculate total costs for costs within the shift
+        costs_in_shift = Cost.objects.filter(related_shift_id=self.id)
 
         for cost in costs_in_shift:
             total_costs += cost.price
@@ -44,9 +37,9 @@ class Shift(models.Model):
         # Calculate benefits
         benefits = total_order_price - total_costs
         return {
-            "total benefits": total_order_price,
-            "total costs": total_costs,
-            "net profit": benefits
+            "total_benefits": total_order_price,
+            "total_costs": total_costs,
+            "net_profit": benefits
         }
         # return f"Total Benefits: {total_order_price} // Total Costs: {total_costs} // Net Profits: {benefits}"
     

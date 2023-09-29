@@ -11,7 +11,7 @@ class Order(models.Model):
 
     ORDER_STATUS_CHOICES = [
         ("PENDING", "Pending"),
-        ("CANCELED", "Canceled"),
+        ("CANCELED", "Canceled"), ## what happens if the order got cancelled as benefits ? 
         ("DONE", "Done")
     ]
 
@@ -41,7 +41,7 @@ class Order(models.Model):
 
     total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
 
-    name = models.CharField(max_length=150, null=True, blank=True)
+    
 
     class Meta:
         db_table = 'orders'
