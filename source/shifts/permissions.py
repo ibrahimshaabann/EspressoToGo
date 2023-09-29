@@ -10,7 +10,6 @@ class IsAdmin(BasePermission):
             return False 
         
         else: # any other methods except delete are allowed for admin
-            print(request.user.role)
             return request.user.role == "ADMIN" 
     
 
@@ -18,21 +17,12 @@ class IsAdmin(BasePermission):
         return request.user.role == "ADMIN"
     
 
-
 class IsEmployee(BasePermission):
     def has_permission(self, request, view):
 
         # The employee is allowed to retrieve his shift only, GET IN GENERAL is not allowed
-        if request.method in('POST', 'PUT') or view.action == "retrieve":
+        if request.method in('POST','PUT','GET') or view.action == "retrieve":
             return request.user.role == "EMPLOYEE"
-        
-        
-        # elif request.method == 'PUT' and 'end_time' in request.data:
-        #     """
-        #     In our login, The employee has the permission to change the out_time for his shift only
-
-        #     """
-        #     return request.user.role == "EMPLOYEE"
         
         else:
             return False
@@ -46,10 +36,17 @@ class IsEmployee(BasePermission):
         by getting the shift id, and check if the user id related to the shift recieved in json
         is same as user id in the request
         """
-        # Check if the request is attempting to update the 'end_time' field
-        if request.method == 'PUT' and 'end_time' in request.data:
-            return request.user.role == "EMPLOYEE"
-        
+
+        # This means username of the the employee  making request
+        request_username = request.user.username 
+
+        # This is the username of the employee responsible for the shift
+        shift_user_username =  obj.responsible_employee.username
+
+        print(request.method)
+        # Check if the request is attempting to update the 'end_time' field 
+        if request.method == 'PUT' and 'end_time' in request.data or view.action=="retrieve":
+            return request.user.role == "EMPLOYEE" and shift_user_username == request_username       
         else:
             # Deny the update for other fields or if the user is not an employee
             return False

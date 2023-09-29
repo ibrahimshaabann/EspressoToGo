@@ -3,8 +3,6 @@ from .models import Shift, ShiftReport
 from employees.serializers import EmployeeSerializer, EmployeeSerializerOnShifts
 
 
-
-
 class ShiftSerizlier(serializers.ModelSerializer):
     responsible_employee = EmployeeSerializerOnShifts()
     class Meta:

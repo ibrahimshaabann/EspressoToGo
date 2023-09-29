@@ -20,7 +20,7 @@ from rest_framework.decorators import action
 
 
 class ShiftEmployeeViewSet(ModelViewSet):
-    http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post']
+    http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post', 'put']
     queryset = Shift.objects.all()
     serializer_class = ShiftSerizlier
     authentication_classes = [JWTAuthentication,]
