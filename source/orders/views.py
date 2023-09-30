@@ -3,7 +3,7 @@ from rest_framework import permissions
 
 from .permissions import IsAdmin
 from .models import Order, OrderItem
-from .serializers import OrderSerializer, OrderItemSerializer, OrderSerializerAdmin
+from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from django.shortcuts import get_object_or_404
@@ -17,14 +17,43 @@ class OrderViewSet(viewsets.ModelViewSet):
     CRUD for Orders
     """
     queryset = Order.objects.all().prefetch_related('order_items')
-    serializer_class = OrderSerializer
     permission_classes = [permissions.AllowAny]
 
 
-    def create(self, request, *args, **kwargs):
-        # Getting the current shift to assign it to the order object as its related shift
-        request.data['shift'] = Shift.objects.first().id
 
+    def get_serializer_class(self):
+
+        if self.request.method in ["POST", "PUT", "PATCH"]:
+            print("@"*20)
+            return OrderCreationSerializer
+
+        else:
+            return OrderGetSerializer
+
+    # def get_serializer(self, *args, **kwargs):
+        
+    #     print("*"*10)
+    #     """
+    #     overridong the get_serializer method 
+    #         - If the request is post, put, patch
+    #             -> execute NewOrderSerializer
+    #         - if method is get or retrieve
+
+    #     """
+        
+    #     if self.request.method in ["POST", "PUT", "PATCH"]:
+    #         print("@"*20)
+    #         return OrderCreationSerializer
+
+    #     else:
+    #         return OrderGetSerializer
+
+
+    def create(self, request, *args, **kwargs):
+        print("#"*20)
+        # Getting the current shift to assign it to the order object as its related shift
+        request.data["shift"] = Shift.objects.first().id
+        print(request.data)
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
