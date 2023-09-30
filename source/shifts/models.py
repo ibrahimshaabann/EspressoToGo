@@ -2,6 +2,8 @@ from decimal import Decimal
 from django.db import models
 from employees.models import Employee
 from financials.models import Cost
+from django.db.models import Sum
+
 class Shift(models.Model):
     start_time = models.DateTimeField(null=False, #only null not blank 
                                       blank=True,
@@ -41,8 +43,31 @@ class Shift(models.Model):
             "total_costs": total_costs,
             "net_profit": benefits
         }
-        # return f"Total Benefits: {total_order_price} // Total Costs: {total_costs} // Net Profits: {benefits}"
     
+
+    """
+    you can use the next query to provide staes fot the admin dashboard:
+        - Most menu items sales
+        - least menu items sales
+        - total customers
+    """
+    
+    def calc_menu_items_sales(self):
+        from orders .models import OrderItem
+        search_shift = self
+
+        menu_sales_in_shift = list(  # here we cast the queryset to list
+            OrderItem.objects.filter( 
+                order__shift = search_shift #getting all order items related to the search shift
+            ).values(
+                'menu_item__name' 
+            ).annotate(
+                Sum('quantity') 
+            )
+        )
+
+        return  menu_sales_in_shift
+
 
     class Meta:
         db_table = 'shifts'
@@ -88,7 +113,6 @@ class ShiftReport(models.Model):
 
     # time_duration = models.DurationField(null=True, blank=True, verbose_name='مدة الشيفت')
 
-    
 
 
     class Meta:

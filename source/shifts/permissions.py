@@ -44,9 +44,8 @@ class IsEmployee(BasePermission):
         # This is the username of the employee responsible for the shift
         shift_user_username =  obj.responsible_employee.username
 
-        print(request.method)
         # Check if the request is attempting to update the 'end_time' field 
-        if request.method == 'PUT' or view.action=="retrieve":
+        if request.method == 'PUT' or view.action == "retrieve":
             return request.user.role == "EMPLOYEE" and shift_user_username == request_username       
         else:
             # Deny the update for other fields or if the user is not an employee

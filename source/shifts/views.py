@@ -4,7 +4,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .permissions import IsAdmin, IsEmployee
 
-from .serializers import ShiftEmployeeSerizlier,ShiftAdminSerizlier, ShiftReportSerizlier, ShiftBenefitsSerizlier
+from .serializers import ShiftEmployeeSerizlier,ShiftAdminSerizlier
 from .models import Shift, ShiftReport
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -49,102 +49,12 @@ class ShfitAdminViewSet(ModelViewSet):
     
     ordering_fields = ['start_time',]
 
-
-    
-    # def benefits(self, request, pk=None):
-    #     shift = self.get_object()
-    #     benefits = shift.calculate_benefits()
-    #     return Response({'benefits': benefits}, status=status.HTTP_200_OK)
-
-    # Override the list method to include benefits
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     data = serializer.data
-
-    #     # Calculate benefits for each Shift and include it in the response
-    #     for shift_data in data:
-    #         shift = Shift.objects.get(id=shift_data['id'])
-    #         shift_data['benefits'] = shift.calculate_benefits()
-
-    #     return Response(data)
-
-    # # Override the retrieve method to include benefits
-    # def retrieve(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-    #     serializer = self.get_serializer(instance)
-    #     data = serializer.data
-
-    #     # Calculate benefits for the retrieved Shift and include it in the response
-    #     data['benefits'] = instance.calculate_benefits()
-
-
-    #     return Response(data)
-        
-
-
-class ShfitReportViewSet(ModelViewSet):
-    http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post']
-    queryset = ShiftReport.objects.all()
-    serializer_class = ShiftReportSerizlier
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (AllowAny,)    ###
-    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
-    search_fields = [
-        'id',
-        'responsible_employee__full_name',
-        'responsible_employee__username',
-        'responsible_employee__phone_number'
-    ]
-    ordering_fields = [
-        'total_profit',
-        'net_profit',
-        'total_costs',
-    ]
-    filterset_class = ShiftReportFilter
-    
-    def list(self, request, *args, **kwargs):
-        shift_reports = self.queryset
-        shifts = Shift.objects.all()
-        for shift_report in shift_reports:
-            
-            shift_report = ShiftReport.objects.filter(related_shift=Shift.objects.filter(id=shift_report.id))
-
-            shift_report.total_costs
-            shift_report.total_profit
-            shift_report.net_profit 
-        
-
-
-
-
-
-class ShfitBenefitsViewSet(ModelViewSet):
-    http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post']
-    queryset = Shift.objects.all()
-    serializer_class = ShiftBenefitsSerizlier
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (AllowAny,)    ###
-    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
-    search_fields = [
-        'id',
-        'responsible_employee__full_name',
-        'responsible_employee__username',
-        'responsible_employee__phone_number'
-    ]
-    ordering_fields = [
-        'total_profit',
-        'net_profit',
-        'total_costs',
-    ]
-    filterset_class = ShiftFilter
-    
     def benefits(self, request, pk=None):
         shift = self.get_object()
         benefits = shift.calculate_benefits()
         return Response({'benefits': benefits}, status=status.HTTP_200_OK)
 
-    # Override the list method to include benefits
+     # Override the list method to include benefits
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
@@ -168,3 +78,96 @@ class ShfitBenefitsViewSet(ModelViewSet):
 
 
         return Response(data)
+
+
+class ShfitBenefitsViewSet(ModelViewSet):
+    http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post']
+    queryset = Shift.objects.all()
+    serializer_class = ShiftAdminSerizlier
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAdmin,)    ###
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    search_fields = [
+        'id',
+        'responsible_employee__full_name',
+        'responsible_employee__username',
+        'responsible_employee__phone_number'
+    ]
+    ordering_fields = [
+        'total_profit',
+        'net_profit',
+        'total_costs',
+    ]
+    filterset_class = ShiftFilter
+    
+    def benefits(self, request, pk=None):
+        print("benefits")
+        shift = self.get_object()
+        benefits = shift.calculate_benefits()
+        shift.calc_menu_items_sales()
+        return Response({'benefits': benefits}, status=status.HTTP_200_OK)
+
+        
+
+    # Override the list method to include benefits
+    def list(self, request, *args, **kwargs):
+        print("list")
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        data = serializer.data
+
+        # Calculate benefits for each Shift and include it in the response
+        for shift_data in data:
+            shift = Shift.objects.get(id=shift_data['id'])
+            shift_data['benefits'] = shift.calculate_benefits()
+
+        return Response(data)
+
+    # Override the retrieve method to include benefits
+    def retrieve(self, request, *args, **kwargs):
+        print("retrieve")
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        data = serializer.data
+
+        # Calculate benefits for the retrieved Shift and include it in the response
+        data['benefits'] = instance.calculate_benefits()
+        
+        data['shift_menu_sales'] = instance.calc_menu_items_sales()
+
+        return Response(data) 
+    
+
+
+    # class ShfitReportViewSet(ModelViewSet):
+
+
+
+#     http_method_names = ['get', 'retrieve', 'patch', 'options', 'trace','post']
+#     queryset = ShiftReport.objects.all()
+#     serializer_class = ShiftReportSerizlier
+#     authentication_classes = (JWTAuthentication,)
+#     permission_classes = [IsAdmin,]   ###
+#     filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+#     search_fields = [
+#         'id',
+#         'responsible_employee__full_name',
+#         'responsible_employee__username',
+#         'responsible_employee__phone_number'
+#     ]
+#     ordering_fields = [
+#         'total_profit',
+#         'net_profit',
+#         'total_costs',
+#     ]
+#     filterset_class = ShiftReportFilter
+    
+#     def list(self, request, *args, **kwargs):
+#         shift_reports = self.queryset
+#         shifts = Shift.objects.all()
+#         for shift_report in shift_reports:            
+#             shift_report = ShiftReport.objects.filter(related_shift=Shift.objects.filter(id=shift_report.id))
+#             shift_report.total_costs
+#             shift_report.total_profit
+#             shift_report.net_profit # What the fuckin' is this?
+        

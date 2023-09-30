@@ -24,12 +24,6 @@ class ShiftEmployeeSerizlier(serializers.ModelSerializer):
         # representation = super().to_representation(instance)
 
 
-class ShiftBenefitsSerizlier(serializers.ModelSerializer):
-    class Meta:
-        model = Shift
-        exclude = ('responsible_employee', )
-
-
 class ShiftAdminSerizlier(serializers.ModelSerializer):
     """
     Note that we want to show 
@@ -40,17 +34,15 @@ class ShiftAdminSerizlier(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ShiftReportSerizlier(serializers.ModelSerializer):
-    """
-    Don't forget to include another serializer
-    """
+# class ShiftReportSerizlier(serializers.ModelSerializer):
+#     """
+#     Don't forget to include another serializer
+#     """
 
-    related_shift = ShiftEmployeeSerizlier()
+#     related_shift = ShiftEmployeeSerizlier()
 
-    
-
-    class Meta:
-        model = ShiftReport
-        fields = '__all__'
+#     class Meta:
+#         model = ShiftReport
+#         fields = '__all__'
 
     
