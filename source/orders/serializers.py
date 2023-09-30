@@ -1,7 +1,5 @@
 from rest_framework import serializers
-
 from .models import Order, OrderItem
-
 
 class OrderItemSerializer(serializers.ModelSerializer):
     """
@@ -11,7 +9,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = '__all__'
-
 
 
 class OrderItemsSerializer(serializers.ModelSerializer):
@@ -24,7 +21,6 @@ class OrderItemsSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         exclude = ('order',)
-
     
 
 class OrderGetSerializer(serializers.ModelSerializer):
@@ -53,9 +49,7 @@ class OrderCreationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
-
-    
-
+ 
 
 class OrderSerializerForDisplayingDeliveryData(serializers.ModelSerializer):    
 
@@ -69,8 +63,6 @@ class OrderSerializerForDisplayingDeliveryData(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
         
-
-
 
 class OrderSerializerAdmin(serializers.ModelSerializer):
     class Meta:
