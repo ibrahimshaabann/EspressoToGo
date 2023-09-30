@@ -50,6 +50,10 @@ class Shift(models.Model):
         - Most menu items sales
         - least menu items sales
         - total customers
+        - Top categories
+        - Down categories
+        - Top menu item sales
+        - Down menu item sales
     """
     
     def calc_menu_items_sales(self):
@@ -60,9 +64,11 @@ class Shift(models.Model):
             OrderItem.objects.filter( 
                 order__shift = search_shift #getting all order items related to the search shift
             ).values(
-                'menu_item__name' 
+               'menu_item__name' 
             ).annotate(
-                Sum('quantity') 
+                quantity = Sum('quantity') 
+            ).order_by(
+                '-quantity'
             )
         )
 

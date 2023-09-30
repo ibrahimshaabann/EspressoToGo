@@ -76,7 +76,11 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
 
     def __str__(self):
-        return self.email
+        if self.full_name :
+            return self.full_name
+        
+        else: 
+            return self.username
 
     class Meta:
         db_table = "users"

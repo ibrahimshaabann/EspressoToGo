@@ -3,4 +3,4 @@ from .models import Cost
 
 @admin.register(Cost)
 class CostAdmin(admin.ModelAdmin):
-    list_display = ['description', 'price', 'date' , 'type']
+    list_display = ['description', 'price', 'date' , 'type','user']

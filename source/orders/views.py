@@ -21,6 +21,12 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
 
+    def create(self, request, *args, **kwargs):
+        # Getting the current shift to assign it to the order object as its related shift
+        request.data['shift'] = Shift.objects.first().id
+
+        return super().create(request, *args, **kwargs)
+
     def update(self, request, *args, **kwargs):
         # Retrieve the Order object
         order = self.get_object()
@@ -60,6 +66,7 @@ class OrderViewSet(viewsets.ModelViewSet):
             
         # Continue with the update
         return super().update(request, *args, **kwargs)
+    
 
 
 class OrderItemsViewSet(viewsets.ModelViewSet):
