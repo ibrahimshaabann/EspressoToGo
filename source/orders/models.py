@@ -38,6 +38,7 @@ class Order(models.Model):
                             null=True,
                             blank=True)
     
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL,null=True,blank=True)
 
     total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
 

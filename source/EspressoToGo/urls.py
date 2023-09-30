@@ -26,7 +26,7 @@ urlpatterns = [
     path('financials/',include('financials.urls')),
     path('employees/', include('employees.urls')),
     path('attendance/', include('attendance.urls')),
-    path('admins/', include('admins.urls')),
+    # path('admins/', include('admins.urls')),
     path('shifts/', include('shifts.urls')),
     path('orders/', include('orders.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),

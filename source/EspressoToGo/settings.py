@@ -7,11 +7,13 @@ import os
 
 from datetime import timedelta
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv,  find_dotenv
+
 
 load_dotenv(".env")
 
-SECRET_KEY = os.environ.get("SECRET_KEY", None)
+
+SECRET_KEY='14e762e64813950acdc4e2c865945a93b880ee447c82e535'
 
 DEBUG = os.environ.get("DEBUG", False)
 
@@ -34,14 +36,14 @@ INSTALLED_APPS = [
     "rest_framework", #
     'rest_framework_simplejwt', #
     'django_extensions',
-    'django_filters', #
+    'django_filters', 
 
     "models_extensions", #
 
     "users", #
     "employees", #
     "customers", #
-    "admins", #
+    # "admins", #
     "products", #
     "orders", #
     "shifts", #
@@ -170,7 +172,7 @@ DATABASES = {
         "USER": str(os.environ.get("DATABASE_USER")),
         "PASSWORD": str(os.environ.get("DATABASE_PASSWORD")),
         "HOST": str(os.environ.get("DATABASE_HOST")),
-        "PORT": int(os.environ.get("DATABASE_PORT")),
+        "PORT": os.environ.get("DATABASE_PORT"),
         # 'TEST': {
         #     'NAME': '',
         # },

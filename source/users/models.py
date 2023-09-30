@@ -21,7 +21,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
     
     class Role(models.TextChoices):
         ADMIN = "ADMIN", "Admin"
-        CUSTOMER = "CUSTOMER", "Customer"
+        # CUSTOMER = "CUSTOMER", "Customer"
         EMPLOYEE = "EMPLOYEE", "Employee"
         # MANAGER = "MANAGER", "Manager"
         # ___ = "", ""
@@ -76,7 +76,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
 
     def __str__(self):
-        return self.email
+        return self.full_name
 
     class Meta:
         db_table = "users"

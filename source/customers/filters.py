@@ -9,7 +9,7 @@ class CustomerFilter(django_filters.FilterSet):
     class Meta:
         model = Customer
         fields = {
-            "email": ["exact", 'icontains'],
-            "phone_number": ["exact", 'icontains'],
+            # "email": ["exact", 'icontains'],
+            # "phone_number": ["exact", 'icontains'],
             "username": ["exact", 'icontains'],
         }
