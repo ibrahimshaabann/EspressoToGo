@@ -32,9 +32,16 @@ class Customer(CustomerBridge):
 
     # address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
 
+    
+    def __str__(self):
+        return self.username
+
+
     class Meta:
         db_table = "customers"
         verbose_name = "Customer"
         verbose_name_plural = "Customers"
     
+
+
     
