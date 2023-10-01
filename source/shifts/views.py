@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+
+from admins.models import Admin
 from .permissions import IsAdmin, IsEmployee
 
 from .serializers import ShiftEmployeeSerizlier,ShiftAdminSerizlier
@@ -27,8 +29,8 @@ class ShiftEmployeeViewSet(ModelViewSet):
     permission_classes = [IsEmployee,]
 
     def create(self, request, *args, **kwargs):
-        responsible_employee_id = request.data.get('responsible_employee')
-        responsible_employee = get_object_or_404(Employee, id=responsible_employee_id)        
+        responsible_employee_username = request.user.username
+        responsible_employee = get_object_or_404(Employee, username=responsible_employee_username)        
         shift = Shift.objects.create(responsible_employee=responsible_employee,)
         shift.save()
         return Response(ShiftEmployeeSerizlier(shift).data, status=status.HTTP_201_CREATED)
@@ -53,6 +55,8 @@ class ShfitAdminViewSet(ModelViewSet):
         'total_costs',
     ]
     filterset_class = ShiftFilter
+
+
     
     def benefits(self, request, pk=None):
         print("benefits")
