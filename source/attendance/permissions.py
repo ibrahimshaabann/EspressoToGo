@@ -10,12 +10,13 @@ class IsEmployee(BasePermission):
     def has_permission(self, request, view):
         if request.method == 'DELETE':
             return request.user.role == "ADMIN"
-        return True
+        return request.user.role == "ADMIN" or request.user.role == "Employee"
 
 
     def has_object_permission(self, request, view, obj):
                 
         if request.method == 'DELETE':
             return request.user.role == "ADMIN"
-        return True
+        return request.user.role == "ADMIN" or request.user.role == "Employee"
+
  
