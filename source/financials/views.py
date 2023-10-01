@@ -12,25 +12,44 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
+from employees.permissions import IsAdmin
+from employees.models import Employee
+from django.shortcuts import get_object_or_404
+from shifts.models import Shift
 
 
 
 class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
-    # authentication_classes = [JWTAuthentication,]
-    # permission_classes = None
+    authentication_classes = [JWTAuthentication,]
+    permission_classes = [AllowAny, ]
     filterset_class = CostFilter
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = ['date', 'description','date', ]
+
+
+    def create(self, request, *args, **kwargs):
+        user_id = request.user.id
+        request.data["user"] = get_object_or_404(Employee, pk=user_id)
+        # related_shift = Shift.objects.first().id
+        request.data["related_shift"] =  Shift.objects.first().id
+        return super().create(request, *args, **kwargs)
+    
+
+# description                    
+# price                  
+# date     
+# type =              
+# user    
+# related_shift 
 
 
 
 
 class BenefitsViewSet(APIView):
 
-    
-    permission_classes = [AllowAny,]
+    permission_classes = [IsAdmin,]
     def post(self,request):
         start_time = request.data.get('start_time')
         end_time = request.data.get('end_time')

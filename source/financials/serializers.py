@@ -8,4 +8,6 @@ class CostSerializer(ModelSerializer):
     class Meta:
         model = Cost
         fields = '__all__'
+
+    
     

@@ -43,3 +43,11 @@ class Employee(EmployeeBridge):
         db_table = "employees"
         verbose_name = "Employee"
         verbose_name_plural = "Employees"
+
+
+    def __str__(self):
+        if self.full_name :
+            return self.full_name
+        
+        else: 
+            return self.username

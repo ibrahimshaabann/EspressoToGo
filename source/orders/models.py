@@ -36,7 +36,8 @@ class Order(models.Model):
     shift = models.ForeignKey(Shift,
                             on_delete=models.SET_NULL,
                             null=True,
-                            blank=True)
+                            blank=True,
+                            related_name='orders')
     
 
     total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
@@ -63,7 +64,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
 
-    menu_item = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    menu_item = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name='menu_item')
 
     quantity = models.PositiveIntegerField(default=1)
     
