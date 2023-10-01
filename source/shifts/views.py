@@ -29,9 +29,12 @@ class ShiftEmployeeViewSet(ModelViewSet):
     permission_classes = [IsEmployee,]
 
     def create(self, request, *args, **kwargs):
-        responsible_employee_username = request.user.username
-        responsible_employee = get_object_or_404(Employee, username=responsible_employee_username)        
-        shift = Shift.objects.create(responsible_employee=responsible_employee,)
+         
+         # Here we get the responsible employee object by the request user name and 
+         # create a shift object with the esponsible employee object
+        shift = Shift.objects.create(
+            responsible_employee = get_object_or_404(Employee, username=request.user.username)
+            )
         shift.save()
         return Response(ShiftEmployeeSerizlier(shift).data, status=status.HTTP_201_CREATED)
     
