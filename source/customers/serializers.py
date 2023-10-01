@@ -16,13 +16,26 @@ class CustomerSerializer(serializers.ModelSerializer):
     
     """
     def create(self, validated_data):
-        validated_data["password"] = make_password(validated_data["password"] )
+
+        """
+        Considering the fact that the Admin model inherits from the Person model,
+        All person fields are allow null values. even the password.
+        But here we can get all fields that are required for creating admins.
+        """
+        
+        validated_data["password"] = make_password(validated_data["password"])
+
+        validated_data["full_name"] = validated_data["full_name"]
+        validated_data["phone_number"] = validated_data["phone_number"]
+
         return super().create(validated_data)
     
     class Meta:
         model = Customer
         exclude = ("is_superuser", "is_staff", "groups", "user_permissions",)
         
+
+
 
 
 class CustomerSerializerForDisplayingCustomerData(serializers.ModelSerializer):

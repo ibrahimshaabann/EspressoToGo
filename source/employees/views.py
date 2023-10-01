@@ -43,6 +43,9 @@ class EmployeeSignUpView(views.APIView):
 
 
     def post(self, request):
+        request.data["role"] = "EMPLOYEE"   # This is to set the role to CUSTOMER when signing up.
+        request.data["employee_role"] = "WAITER"
+        
         serializer = EmployeeSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -79,7 +82,8 @@ class EmployeeLoginView(views.APIView):
             request=request, username=email_or_phone_or_username, password=password
         )
 
-        if employee:
+
+        if employee and employee.role == "EMPLOYEE":
                 access_token = AccessToken.for_user(employee)
                 refresh_token = RefreshToken.for_user(employee)
                 return Response(

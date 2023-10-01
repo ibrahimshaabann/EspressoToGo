@@ -4,7 +4,13 @@ from .models import Employee
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    # password = serializers.CharField(write_only=True)
+
+    """
+    If we need to create a cashier without a passowrd we can use this serializer. with commented password field.
+    And we can Extended our serializer to have a password field.
+    and create employees with passwords. and all other person fields
+    """
     
     """
     This serializer class is used when admins try to EXECUTE 'CRUD' Operations on Employees.
@@ -15,7 +21,8 @@ class EmployeeSerializer(serializers.ModelSerializer):
     """
 
     def create(self, validated_data):
-        validated_data["password"] = make_password(validated_data["password"] )
+        # validated_data['username'] = validated_data['username'].lower()
+        # validated_data["password"] = make_password(validated_data["password"])
         return super().create(validated_data)
     
     class Meta:

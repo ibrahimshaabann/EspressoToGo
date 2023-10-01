@@ -2,7 +2,7 @@ from django.db import models
 
 from users.models import Person
 
-# from .managers import CustomerManager
+from .managers import CustomerManager
 
 import uuid
 
@@ -18,7 +18,7 @@ class CustomerBridge(Person):
     class Meta:
         proxy = True
 
-    # objects = CustomerManager()    # Custom Manager for the Customer model used only to filter the admins.
+    objects = CustomerManager()    # Custom Manager for the Customer model used only to filter the admins.
 
 
 
@@ -30,11 +30,7 @@ class Customer(CustomerBridge):
     """
     # Customer_id = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
-    # address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
-
-    
-    def __str__(self):
-        return self.username
+    address = models.TextField(blank=True, null=True)
 
 
     class Meta:

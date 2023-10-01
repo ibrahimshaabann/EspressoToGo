@@ -10,5 +10,6 @@ urlpatterns = [
     # path('', include(router.urls), name='admins'),
     path('sign-up/', views.AdminSignUpView.as_view(), name='admin-sign-up'),
     path('login/', views.AdminLoginView.as_view(), name='admin-login'),
+    path('all-admins/', views.AllAdminsViewSet.as_view(), name='all-admins'),
 
 ]
