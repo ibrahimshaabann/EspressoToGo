@@ -16,34 +16,24 @@ from employees.permissions import IsAdmin
 from employees.models import Employee
 from django.shortcuts import get_object_or_404
 from shifts.models import Shift
-
+from .permissions import IsAdminOrEmployee
 
 
 class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
     authentication_classes = [JWTAuthentication,]
-    permission_classes = [AllowAny, ]
+    permission_classes = [IsAdminOrEmployee, ]
     filterset_class = CostFilter
     filter_backends = [SearchFilter, DjangoFilterBackend]
-    search_fields = ['date', 'description','date', ]
+    search_fields = ['date', 'description','date', 'user__username' ]
 
 
     def create(self, request, *args, **kwargs):
         user_id = request.user.id
         request.data["user"] = get_object_or_404(Employee, pk=user_id)
-        # related_shift = Shift.objects.first().id
         request.data["related_shift"] =  Shift.objects.first().id
         return super().create(request, *args, **kwargs)
-    
-
-# description                    
-# price                  
-# date     
-# type =              
-# user    
-# related_shift 
-
 
 
 
