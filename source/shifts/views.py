@@ -5,7 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from admins.models import Admin
 from .permissions import IsAdmin, IsEmployee
-
+from django.core.exceptions import ValidationError
 from .serializers import ShiftEmployeeSerizlier,ShiftAdminSerizlier
 from .models import Shift, ShiftReport
 from rest_framework.permissions import AllowAny
@@ -29,18 +29,18 @@ class ShiftEmployeeViewSet(ModelViewSet):
     permission_classes = [IsEmployee,]
 
     def create(self, request, *args, **kwargs):
-        last_shift = Shift.objects.first()
+        try:
+            last_shift = Shift.objects.first()
 
-         # Here we get the responsible employee object by the request user name and 
-         # create a shift object with the esponsible employee object
-        new_shift = Shift.objects.create(
-            responsible_employee = get_object_or_404(Employee, username=request.user.username)
-            )
+            # Here we get the responsible employee object by the request user name and create a shift object with the esponsible employee object
+            new_shift = Shift.objects.create(responsible_employee = get_object_or_404(Employee, username=request.user.username))
 
-        # if the last created shift has no end_time, set its end_time to  the new shift start_time 
-        if last_shift and not last_shift.end_time:
-            last_shift.end_time = new_shift.start_time
+            # if the last created shift has no end_time, set its end_time to  the new shift start_time 
+            last_shift.end_time = new_shift.start_time if last_shift and not last_shift.end_time else None
             last_shift.save()
+
+        except Exception as e:
+            return Response({'error': str(e)}, status = status.HTTP_400_BAD_REQUEST)
 
         return Response(ShiftEmployeeSerizlier(new_shift).data, status=status.HTTP_201_CREATED)
     
