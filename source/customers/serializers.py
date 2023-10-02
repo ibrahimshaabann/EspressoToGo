@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 
 
 class CustomerSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True)
+    
     """
     This serializer class is used when admins try to EXECUTE 'CRUD' Operations on Customers.
     
@@ -15,6 +15,10 @@ class CustomerSerializer(serializers.ModelSerializer):
     Instead it inherits them from the Person model.
     
     """
+    
+    # Allow null values for password field.
+    
+    
     def create(self, validated_data):
 
         """
