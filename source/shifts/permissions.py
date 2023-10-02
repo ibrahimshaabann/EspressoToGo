@@ -1,6 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-
 class IsAdmin(BasePermission):        
     def has_permission(self, request, view):
         """
@@ -19,6 +18,7 @@ class IsAdmin(BasePermission):
     
 
 class IsEmployee(BasePermission):
+    message = "You don't have permission: The requested shift object doesn't relate to the employee"
     def has_permission(self, request, view):
 
         # The employee is allowed to retrieve his shift only, GET IN GENERAL is not allowed
@@ -41,8 +41,11 @@ class IsEmployee(BasePermission):
         # This means username of the the employee  making request
         request_username = request.user.username 
 
-        # This is the username of the employee responsible for the shift
-        shift_user_username =  obj.responsible_employee.username
+        if obj.responsible_employee:
+            # This is the username of the employee responsible for the shift
+            shift_user_username =  obj.responsible_employee.username
+        else:
+            raise PermissionError("This requested shift has no assigned responsible employee")
 
         # Check if the request is attempting to update the 'end_time' field 
         if request.method == 'PUT' or view.action == "retrieve":

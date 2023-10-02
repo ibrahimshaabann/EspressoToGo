@@ -8,9 +8,15 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
-class MenuSerializer(serializers.ModelSerializer):
+class MenuCreationSerializer(serializers.ModelSerializer):
     # this category attribute shows the name of the category object related to the menu item 
     # using serializers.StringRelatedField()
+    class Meta:
+        model = Menu
+        fields = '__all__'
+
+class MenuRetrievingSerializer(serializers.ModelSerializer):
+    
     category = serializers.StringRelatedField()
     class Meta:
         model = Menu
