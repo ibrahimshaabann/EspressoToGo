@@ -1,56 +1,31 @@
 from rest_framework import viewsets
 from rest_framework import permissions
-
-from .permissions import IsAdmin
 from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
 from django.shortcuts import get_object_or_404
-
 from products.models import Menu
 from shifts.models import Shift
-
+from attendance.permissions import IsEmployee
+from employees.permissions import IsAdmin
 
 class OrderViewSet(viewsets.ModelViewSet):
     """
     CRUD for Orders
     """
     queryset = Order.objects.all().prefetch_related('order_items')
-    permission_classes = [permissions.AllowAny]
-
+    permission_classes = [IsEmployee]
 
 
     def get_serializer_class(self):
 
         if self.request.method in ["POST", "PUT", "PATCH"]:
-            print("@"*20)
             return OrderCreationSerializer
 
         else:
             return OrderGetSerializer
 
-    # def get_serializer(self, *args, **kwargs):
-        
-    #     print("*"*10)
-    #     """
-    #     overridong the get_serializer method 
-    #         - If the request is post, put, patch
-    #             -> execute NewOrderSerializer
-    #         - if method is get or retrieve
-
-    #     """
-        
-    #     if self.request.method in ["POST", "PUT", "PATCH"]:
-    #         print("@"*20)
-    #         return OrderCreationSerializer
-
-    #     else:
-    #         return OrderGetSerializer
-
-
     def create(self, request, *args, **kwargs):
-        print("#"*20)
         # Getting the current shift to assign it to the order object as its related shift
         request.data["shift"] = Shift.objects.first().id
         print(request.data)
@@ -75,24 +50,6 @@ class OrderViewSet(viewsets.ModelViewSet):
             order.save()
         
 
-        if order_items_data:
-            # Loop through the order items data
-            for item_data in order_items_data:
-                # Retrieve the Menu instance with the given menu_item ID
-                menu_item_id = item_data.get('menu_item', None)
-                menu_item = get_object_or_404(Menu, pk=menu_item_id)
-
-                # Check if an order item with the same menu item and order already exists
-                existing_order_item = OrderItem.objects.filter(order=order, menu_item=menu_item).first()
-
-                if existing_order_item:
-                    # If it exists, update the quantity
-                    existing_order_item.quantity += item_data['quantity']
-                    existing_order_item.save()
-                else:
-                    # If it doesn't exist, create a new OrderItem
-                    OrderItem.objects.create(order=order, menu_item=menu_item, quantity=item_data['quantity'])
-            
         # Continue with the update
         return super().update(request, *args, **kwargs)
     
@@ -105,7 +62,7 @@ class OrderItemsViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
     permission_classes = [permissions.AllowAny]
-
+    # permission_classes = []
 
 
 class OrderViewSetAdmin(viewsets.ModelViewSet):

@@ -17,8 +17,6 @@ from employees.models import Employee
 from django.shortcuts import get_object_or_404
 from shifts.models import Shift
 
-
-
 class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
@@ -35,16 +33,6 @@ class CostViewSet(ModelViewSet):
         # related_shift = Shift.objects.first().id
         request.data["related_shift"] =  Shift.objects.first().id
         return super().create(request, *args, **kwargs)
-    
-
-# description                    
-# price                  
-# date     
-# type =              
-# user    
-# related_shift 
-
-
 
 
 class BenefitsViewSet(APIView):
@@ -66,6 +54,7 @@ class BenefitsViewSet(APIView):
             related_shift__start_time__gte=start_time,
             related_shift__end_time__lte=end_time
         )
+
         for cost in costs_in_duration:
             total_costs += cost.price
         net_profit = total_orders_prices - total_costs
@@ -77,5 +66,4 @@ class BenefitsViewSet(APIView):
 
         },
         status=status.HTTP_200_OK
-        
         )
