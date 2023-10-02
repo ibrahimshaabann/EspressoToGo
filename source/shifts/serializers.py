@@ -4,6 +4,8 @@ from employees.serializers import EmployeeSerializer, EmployeeSerializerOnShifts
 
 
 class ShiftEmployeeSerizlier(serializers.ModelSerializer):
+    start_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M')
+    end_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M')
     responsible_employee = serializers.StringRelatedField()
     class Meta:
         model = Shift
@@ -19,6 +21,18 @@ class ShiftEmployeeSerizlier(serializers.ModelSerializer):
         instance.save()
         return instance
     
+
+    def create(self, validated_data):
+        print("*"*20)
+        shift = Shift.objects.first()
+        print(shift.id)
+        if shift and not shift.end_time:
+            shift.end_time = validated_data['start_time']
+            shift.save()
+
+        return super().create(validated_data)
+        
+    
     
     # def to_representation(self, instance):
         # representation = super().to_representation(instance)
@@ -28,11 +42,14 @@ class ShiftAdminSerizlier(serializers.ModelSerializer):
     """
     Note that we want to show 
     """
+    start_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M')
+    end_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M')
     responsible_employee = serializers.StringRelatedField()
     class Meta:
         model = Shift
         fields = '__all__'
 
+    
 
 # class ShiftReportSerizlier(serializers.ModelSerializer):
 #     """

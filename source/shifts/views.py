@@ -29,14 +29,20 @@ class ShiftEmployeeViewSet(ModelViewSet):
     permission_classes = [IsEmployee,]
 
     def create(self, request, *args, **kwargs):
-         
+        last_shift = Shift.objects.first()
+
          # Here we get the responsible employee object by the request user name and 
          # create a shift object with the esponsible employee object
-        shift = Shift.objects.create(
+        new_shift = Shift.objects.create(
             responsible_employee = get_object_or_404(Employee, username=request.user.username)
             )
-        shift.save()
-        return Response(ShiftEmployeeSerizlier(shift).data, status=status.HTTP_201_CREATED)
+
+        # if the last created shift has no end_time, set its end_time to  the new shift start_time 
+        if last_shift and not last_shift.end_time:
+            last_shift.end_time = new_shift.start_time
+            last_shift.save()
+
+        return Response(ShiftEmployeeSerizlier(new_shift).data, status=status.HTTP_201_CREATED)
     
 
 class ShfitAdminViewSet(ModelViewSet):
