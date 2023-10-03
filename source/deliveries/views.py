@@ -21,12 +21,17 @@ class DeliveryViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     throttle_classes = (UserRateThrottle, AnonRateThrottle,)
     filterset_class = DeliveryFilter  
-    filter_backends = [
-        DjangoFilterBackend,
-        filters.SearchFilter, 
-        filters.OrderingFilter,
-    ]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,]
     search_fields = ['description', 'customer__full_name', 'customer__phone_number']
+    
+    # def create(self, request, *args, **kwargs):
+    #     return super().create(request, *args, **kwargs)
+    
+    # def update(self, request, *args, **kwargs):
+    #     return super().update(request, *args, **kwargs)
+    
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
     
     def get_serializer_class(self):
         if self.request.method in ['POST', 'GET', 'PATCH']:
