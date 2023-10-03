@@ -27,9 +27,44 @@ class DeliveryViewSet(viewsets.ModelViewSet):
     
     # def update(self, request, *args, **kwargs):
     #     return super().update(request, *args, **kwargs)
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'GET', 'PATCH']:
+            return DeliveryCreationSerializer
+        else: 
+            return DeliveryForDisplayingSerializer
+
+    
+    def update(self, request, *args, **kwargs):
+        try:
+            # Getting the parameter <pk> sent in the url
+            deliver_obj = Delivery.objects.get(id = kwargs['pk'])
+        except Delivery.DoesNotExist:
+            return Response(
+                {"detail": "Delivery object not found"},
+                status = status.HTTP_404_NOT_FOUND
+            )
+        retrieved_address = request.data.get('address', None)
+        retrieved_description = request.data.get('description', None)
+        retieved_customer = request.data.get('customer', None)
+
+        if retrieved_address:
+            deliver_obj.address = retrieved_address
+        if retrieved_description:
+            deliver_obj.description = retrieved_description
+        if retieved_customer:
+            deliver_obj.customer = retieved_customer
+
+        deliver_obj.save()
+
+        return Response(
+            DeliveryForDisplayingSerializer(deliver_obj).data,
+            status = status.HTTP_200_OK
+        ) 
     
     def partial_update(self, request, *args, **kwargs):
         try:
+            # Getting the parameter <pk> sent in the url
             deliver_obj = Delivery.objects.get(id = kwargs['pk'])
         except Delivery.DoesNotExist:
             return Response(
