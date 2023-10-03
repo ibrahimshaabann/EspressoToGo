@@ -30,6 +30,7 @@ class ShiftEmployeeViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         try:
+            # Getting the last shift object to check ites end time
             last_shift = Shift.objects.first()
 
             # Here we get the responsible employee object by the request user name and create a shift object with the esponsible employee object

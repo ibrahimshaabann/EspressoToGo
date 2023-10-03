@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.permissions import AllowAny
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
-from rest_framework import views, status
+from rest_framework import views, status, generics
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
@@ -11,17 +11,23 @@ from .serializers import AdminSerializer
 from .models import Admin
 
 
+from .permissions import IsAdmin
+
 class AdminSignUpView(views.APIView):
     permission_classes = (AllowAny,)
     throttle_classes = [UserRateThrottle, AnonRateThrottle]
-
+    # permission_classes = (IsAdmin,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
+        request.data["role"] = "ADMIN"
         serializer = AdminSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
 
 class AdminLoginView(views.APIView):
     
@@ -31,7 +37,7 @@ class AdminLoginView(views.APIView):
     Admins get thier access and refresh tokens at this endpoint.
     """
 
-    permission_classes = [AllowAny]
+    permission_classes = (AllowAny,)
     # throttle_classes = [UserRateThrottle, AnonRateThrottle]
 
 
@@ -55,7 +61,7 @@ class AdminLoginView(views.APIView):
             request=request, username=email_or_phone_or_username, password=password
         )
 
-        if admin:
+        if admin and admin.role == "ADMIN":
                 access_token = AccessToken.for_user(admin)
                 refresh_token = RefreshToken.for_user(admin)
                 return Response(
@@ -73,3 +79,13 @@ class AdminLoginView(views.APIView):
             )
         
 
+
+
+class AllAdminsViewSet(generics.ListAPIView):
+    """
+    This view is used to get all admins.
+    """
+    # permission_classes = (IsAdmin,)
+    queryset = Admin.objects.all()
+    serializer_class = AdminSerializer
+    permission_classes = (AllowAny,)

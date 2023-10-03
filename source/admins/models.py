@@ -30,6 +30,13 @@ class Admin(AdminBridge):
     """
     # admin_id = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
+
+    def save(self, force_update=True, commit=True, *args, **kwargs):
+        if not self.role:
+            self.role = self.base_role
+        return super().save(force_update, commit, *args, **kwargs)
+
+
     class Meta:
         db_table = "admins"
         verbose_name = "Admin"

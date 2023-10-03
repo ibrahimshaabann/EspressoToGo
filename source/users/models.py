@@ -40,10 +40,16 @@ class Person(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         validators = [UnicodeUsernameValidator()],
         max_length=50, unique=True, 
-        db_index=True, null=True, blank=False
+        db_index=True, null=True, blank=True
     )
 
-    email = models.EmailField(unique=True, db_index=True, null=True, blank=False,)
+    email = models.EmailField(unique=True, db_index=True, null=True, blank=True,)
+
+    password = models.CharField(max_length=128, verbose_name="password", null=True, blank=True)
+
+    is_superuser = models.BooleanField(default=False, blank=True, null=True)
+
+    is_staff = models.BooleanField(default=False, blank=True, null=True)
 
     phone_number = models.CharField(
         max_length=20, blank=False, 
@@ -51,7 +57,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
         validators=[valid_phone_number]
     )
     
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
     
     birth_date = models.DateField(null=True, blank=True)
 
@@ -63,7 +69,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
     
     EMAIL_FIELD = 'username'
 
-    REQUIRED_FIELDS = ["username"]
+    REQUIRED_FIELDS = ["full_name", "phone_number"]
 
     def save(self, force_update=True, commit=True, *args, **kwargs):
         """
@@ -76,14 +82,10 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
 
     def __str__(self):
-        if self.full_name :
-            return self.full_name
-        
-        else: 
-            return self.username
+        return self.full_name
 
     class Meta:
-        db_table = "users"
+        db_table = "us  ers"
 
 
         

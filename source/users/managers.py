@@ -12,17 +12,21 @@ class PersonManager(BaseUserManager):
         """
         Creates and saves a User with the given username, and password.
         """
-        if not username:
-            raise ValueError("Users must have a username")
+        if email:
+            email = self.normalize_email(email)
 
         user = self.model(
             username=username,
             **extra_fields
         )
 
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
+        if not password:
+            user.set_unusable_password()  # Set the password as unusable
+        else:
+            user.set_password(password)
+            user.save(using=self._db)
+            return user
+        
 
     def create_superuser(self, username, password=None, **extra_fields):
         
