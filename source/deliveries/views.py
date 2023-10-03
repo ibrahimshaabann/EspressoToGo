@@ -1,6 +1,4 @@
-import json
 from django.shortcuts import render
-
 from orders.models import Order
 from .serializers import DeliveryForDisplayingSerializer, DeliveryCreationSerializer
 from .models import Delivery
@@ -31,7 +29,30 @@ class DeliveryViewSet(viewsets.ModelViewSet):
     #     return super().update(request, *args, **kwargs)
     
     def partial_update(self, request, *args, **kwargs):
-        return super().partial_update(request, *args, **kwargs)
+        try:
+            deliver_obj = Delivery.objects.get(id = kwargs['pk'])
+        except Delivery.DoesNotExist:
+            return Response(
+                {"detail": "Delivery object not found"},
+                status = status.HTTP_404_NOT_FOUND
+            )
+        retrieved_address = request.data.get('address', None)
+        retrieved_description = request.data.get('description', None)
+        retieved_customer = request.data.get('customer', None)
+
+        if retrieved_address:
+            deliver_obj.address = retrieved_address
+        elif retrieved_description:
+            deliver_obj.description = retrieved_description
+        elif retieved_customer:
+            deliver_obj.customer = retieved_customer
+
+        deliver_obj.save()
+
+        return Response(
+            DeliveryForDisplayingSerializer(deliver_obj).data,
+            status = status.HTTP_200_OK
+        ) 
     
     def get_serializer_class(self):
         if self.request.method in ['POST', 'GET', 'PATCH']:
