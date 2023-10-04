@@ -8,7 +8,7 @@ class IsAdminOrEmployee(BasePermission):
         # else:
         #      return request.user.role == "ADMIN"
 
-        if request.method == 'DELETE':
+        if request.method in ['DELETE', 'PUT']:
             return request.user.role == "ADMIN"
         
         else:
