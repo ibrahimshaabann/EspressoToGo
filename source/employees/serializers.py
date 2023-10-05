@@ -72,6 +72,9 @@ class EmployeeSerializerOnShifts(serializers.ModelSerializer):
 
 
 class EmployeeSerializerOnAttendance(serializers.ModelSerializer):
+    """
+    this serializer class is used in attendance to filter who's not attended
+    """
     class Meta:
         model = Employee
-        fields = ("full_name",)
+        fields = ("id","full_name")

@@ -36,7 +36,6 @@ class CostViewSet(ModelViewSet):
         return super().create(request, *args, **kwargs)
 
 
-
 class BenefitsViewSet(APIView):
 
     permission_classes = [IsAdmin,]
@@ -56,6 +55,7 @@ class BenefitsViewSet(APIView):
             related_shift__start_time__gte=start_time,
             related_shift__end_time__lte=end_time
         )
+
         for cost in costs_in_duration:
             total_costs += cost.price
         net_profit = total_orders_prices - total_costs
@@ -67,5 +67,4 @@ class BenefitsViewSet(APIView):
 
         },
         status=status.HTTP_200_OK
-        
         )

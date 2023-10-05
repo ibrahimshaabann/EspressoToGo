@@ -1,9 +1,10 @@
 import json
 from django.shortcuts import render
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet,ViewSet
 from rest_framework.filters import SearchFilter
 
 from employees.models import Employee
+from employees.serializers import EmployeeSerializerOnAttendance
 from .models import Attendance
 from .serializers import AttendanceSerializer
 from .filters import AttendanceOutTimeFilterBackend
@@ -64,3 +65,16 @@ class AllAttendanceViewSet(ModelViewSet):
     search_fields = ["employee_attended"]
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdmin]
+
+
+    
+
+
+class EmployeeAttendanceViewSet(ViewSet):
+    authentication_classes = [JWTAuthentication]
+    def list(self, request):
+        employees = Employee.objects.filter(
+            employee_attendance__out_time__isnull=False
+        ).distinct()
+        serializer = EmployeeSerializerOnAttendance(employees, many=True)
+        return Response(serializer.data)
