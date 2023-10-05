@@ -27,7 +27,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         But here we can get all fields that are required for creating admins.
         """
         
-        validated_data["password"] = make_password(validated_data["password"])
+        # validated_data["password"] = make_password(validated_data["password"])
 
         validated_data["full_name"] = validated_data["full_name"]
         validated_data["phone_number"] = validated_data["phone_number"]

@@ -103,6 +103,8 @@ class EmployeeLoginView(views.APIView):
         email_or_phone_or_username = request.data.get("email_or_phone_or_username")
         password = request.data.get("password")
 
+        print(email_or_phone_or_username, password)
+
         employee = CustomUserAuthenticationBackend().authenticate(
             request=request, username=email_or_phone_or_username, password=password
         )

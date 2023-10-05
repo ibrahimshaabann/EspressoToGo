@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "financials", #
     "attendance", #
     "deliveries", #
+
+    'django_seed', #
 ]
 
 

@@ -65,8 +65,6 @@ class ShfitAdminViewSet(ModelViewSet):
         'total_costs',
     ]
     filterset_class = ShiftFilter
-
-
     
     def benefits(self, request, pk=None):
         print("benefits")
@@ -79,15 +77,14 @@ class ShfitAdminViewSet(ModelViewSet):
 
     # Override the list method to include benefits
     def list(self, request, *args, **kwargs):
-        print("list")
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
         data = serializer.data
 
-        # Calculate benefits for each Shift and include it in the response
-        for shift_data in data:
-            shift = Shift.objects.get(id=shift_data['id'])
-            shift_data['benefits'] = shift.calculate_benefits()
+        # Calculate benefits for each Shift  and include it in the response
+        # for shift_data in data:
+        #     shift = Shift.objects.get(id=shift_data['id'])
+        #     shift_data['benefits'] = shift.calculate_benefits()
 
         return Response(data)
 

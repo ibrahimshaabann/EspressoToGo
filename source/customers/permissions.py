@@ -8,16 +8,14 @@ class IsAdmin(BasePermission):
     """
 
     def has_permission(self, request, view):
-        if request in SAFE_METHODS or request.user.role == "ADMIN":
-            return True
-        else:
-            return False
-
+        if not request.method == "DELETE":
+            return request.user.role in ["ADMIN", "EMPLOYEE"]
+        
     """
     Object-level permission to only allow only admins to edit.
     """
 
     def has_object_permission(self, request, view, obj):
-
-        return request.user.role == "ADMIN"
+        if not request.method == "DELETE":
+            return request.user.role in ["EMPLOYEE", "ADMIN"]
     

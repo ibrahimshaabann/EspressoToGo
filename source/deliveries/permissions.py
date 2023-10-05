@@ -12,9 +12,8 @@ class IsAdminOrEmployee(BasePermission):
             return request.user.role == "ADMIN"
         
         else:
-            return request.user.role == "ADMIN" or request.user.role=="EMPLOYEE"
+            return request.user.role == "ADMIN" or request.user.role == "EMPLOYEE"
 
         
     def has_object_permission(self, request, view, obj):
-        # return request.user.role == "ADMIN"
         return request.user.role == "ADMIN" or request.user.role=="EMPLOYEE"

@@ -34,31 +34,27 @@ class Order(models.Model):
                                       auto_now_add=True)
     
     shift = models.ForeignKey(Shift,
-                            on_delete=models.SET_NULL,
-                            null=True,
-                            blank=True,
+                            on_delete=models.PROTECT,
+                            null=False,
+                            blank=False,
                             related_name='orders')
     
 
     total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
 
-    
-
+    customer = models.ForeignKey(Customer,
+                                 on_delete=models.SET_NULL,
+                                 related_name='orders',
+                                 null=True,
+                                 blank=True)
     class Meta:
         db_table = 'orders'
         verbose_name = "Order"
         verbose_name_plural = "orders"
         ordering = ['-id']
-
-
+    
     def __str__(self) -> str:
         return f"Order: {self.id} - Status: {self.order_status}"
-    
-    customer = models.ForeignKey(Customer,
-                                 on_delete=models.CASCADE,
-                                 related_name='orders',
-                                 null=True,
-                                 blank=True)
 
 
 class OrderItem(models.Model):
