@@ -106,3 +106,8 @@ class AllCustomersViewSet(viewsets.ModelViewSet):
     ]
     
     filterset_class = CustomerFilter
+
+
+    def create(self, request, *args, **kwargs):
+         request.data['role'] = "CUSTOMER"
+         return super().create(request, *args, **kwargs)

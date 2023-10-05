@@ -23,8 +23,8 @@ from datetime import datetime
 
 import time
 
-# 0.001372436999999893 Zeyad    0.024613380432128906
-# 0.001200585999999948 Ibrahim  0.02322077751159668
+# 0.001372436999999893s Zeyad   
+# 0.001200585999999948s Ibrahim 
 
 # return 0 if x == y else 1 if x > y else -1
 
