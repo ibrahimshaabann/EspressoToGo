@@ -85,7 +85,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
         return self.full_name
 
     class Meta:
-        db_table = "us  ers"
+        db_table = "users"
 
 
         
