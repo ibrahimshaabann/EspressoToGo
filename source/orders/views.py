@@ -9,6 +9,7 @@ from shifts.models import Shift
 from attendance.permissions import IsEmployee
 from employees.permissions import IsAdmin
 from .permissions import IsAdminOrEmployee
+from django.core.exceptions import ValidationError
 
 class OrderViewSet(viewsets.ModelViewSet):
     """
@@ -28,7 +29,10 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # Getting the current shift to assign it to the order object as its related shift
-        request.data["shift"] = Shift.objects.first().id
+        try:
+            request.data["shift"] = Shift.objects.first().id 
+        except Exception as e:
+            raise ValidationError(str(e))
 
         return super().create(request, *args, **kwargs)
 
