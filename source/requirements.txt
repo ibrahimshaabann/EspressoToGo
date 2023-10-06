@@ -33,3 +33,4 @@ uritemplate==4.1.1
 urllib3==2.0.5
 whitenoise==6.5.0
 django-extensions-models==1.0
+django-jazzmin==2.6.0

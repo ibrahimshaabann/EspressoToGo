@@ -19,6 +19,7 @@ ALLOWED_HOSTS = list(str(os.environ.get("ALLOWED_HOSTS")).split(", "))
 
 
 INSTALLED_APPS = [
+    'jazzmin', 
     'corsheaders',  #
     'rest_framework_swagger', #
     'drf_yasg', #
@@ -175,6 +176,29 @@ DATABASES = {
         # },
     }
 }
+JAZZMIN_SETTINGS = {
+"site_title": "Espresso to Go",
+"site_header": "Espresso to Go",
+"site_brand": "Espresso to Go",
+"site_logo": "logo-black.png",
+"site_logo_classes": "img-circle",
+"welcome_sign": "Welcome to Espresso to Go",
+"related_modal_active": False,
+"copyright": "Smart Solutions Ltd",
+"show_sidebar": True,
+"navigation_expanded": True,
+"show_ui_builder": True,
+"order_with_respect_to": ["auth", "books"],
+
+"topmenu_links": 
+[
+ {"name": "Espresso To Go"}
+],
+
+"usermenu_links": [
+     {'name':"Support", "url":"https://www.facebook.com/"},
+    ],
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -206,6 +230,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
