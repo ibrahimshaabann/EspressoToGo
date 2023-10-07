@@ -22,6 +22,7 @@ if DEBUG:
 
 
 INSTALLED_APPS = [
+
     'corsheaders',  #
     'rest_framework_swagger', #
     'drf_yasg', #
@@ -207,8 +208,20 @@ USE_L10N = True
 
 USE_TZ = True
 
+CSRF_TRUSTED_ORIGINS = ["https://*.up.railway.app"]
 
-STATIC_URL = '/static/'
+# local
+# STATIC_URL = '/static/'
+
+# production
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+# Media Files (uploaded from users)
+MEDIA_URL = "media/"
+MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
