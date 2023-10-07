@@ -17,6 +17,9 @@ DEBUG = os.environ.get("DEBUG", False)
 
 ALLOWED_HOSTS = list(str(os.environ.get("ALLOWED_HOSTS")).split(", "))
 
+if DEBUG:
+    DEBUG = False
+
 
 INSTALLED_APPS = [
     'corsheaders',  #

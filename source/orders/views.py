@@ -84,7 +84,9 @@ class OrderItemsViewSet(viewsets.ModelViewSet):
     """
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
-    permission_classes = [JWTAuthentication, ]
+    authentication_classes = (JWTAuthentication,)
+    # permission_classes = [, ]
+    permission_classes = [permissions.AllowAny, ]
 
 
     def update(self, request, *args, **kwargs):
