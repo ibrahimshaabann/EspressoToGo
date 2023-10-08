@@ -26,8 +26,8 @@ class CustomerSignUpView(views.APIView):
     permission_classes = (AllowAny,)
     throttle_classes = [UserRateThrottle, AnonRateThrottle]
     authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAdmin,)
-    # permission_classes = (AllowAny,)
+    # permission_classes = (IsAdmin,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         request.data["role"] = "CUSTOMER"   # This is to set the role to CUSTOMER when signing up.
