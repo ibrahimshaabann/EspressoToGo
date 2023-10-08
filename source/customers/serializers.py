@@ -6,7 +6,7 @@ from django.contrib.auth.hashers import make_password
 
 class CustomerSerializer(serializers.ModelSerializer):
 
-    password = serializers.CharField(write_only=True, required=True)
+    # password = serializers.CharField(write_only=True, required=True)
     
     """
     This serializer class is used when admins try to EXECUTE 'CRUD' Operations on Customers.
@@ -29,7 +29,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         But here we can get all fields that are required for creating admins.
         """
         
-        validated_data["password"] = make_password(validated_data["password"])
+        # validated_data["password"] = make_password(validated_data["password"])
 
         validated_data["full_name"] = validated_data["full_name"]
         validated_data["phone_number"] = validated_data["phone_number"]
