@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, views, generics
 from rest_framework import permissions
 
 from .permissions import IsAdmin
@@ -123,3 +123,42 @@ class OrderViewSetAdmin(viewsets.ModelViewSet):
     serializer_class = OrderSerializerAdmin
     permission_classes = [IsAdmin,]
     authentication_classes = (JWTAuthentication,)
+
+
+
+class PendingOrderView(viewsets.ModelViewSet):
+    # http_method_names = ['get','patch','options','trace']
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializerAdmin
+    # permission_classes = [IsAdmin,]
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (JWTAuthentication,)
+
+    # def get_queryset(self):
+    #     queryset = self.queryset
+    #     queryset = queryset
+    #     return queryset
+
+    def list(self, request, *args, **kwargs):
+        print("list")
+        last_order = Order.objects.first()
+        print(last_order)
+        if last_order.order_status == "PENDING":
+            return Response({'last_order': OrderSerializerAdmin(last_order).data})
+        
+        else:
+            return Response({'last_order': None})
+    
+
+    def partial_update(self, request, *args, **kwargs):
+        last_order = self.get_object()
+        print(last_order)
+        order_status = request.data.get('order_status', None)
+        if order_status:
+            last_order.order_status = order_status
+            last_order.save()
+        return Response({
+            "message": "Order updated successfully",
+            "order": OrderSerializerAdmin(last_order).data
+        }, status=status.HTTP_200_OK)
+        
