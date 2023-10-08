@@ -81,11 +81,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     
 
     def partial_update(self, request, *args, **kwargs):
+        order = self.get_object()
         order_status = request.data.get('order_status', None)
         order_type = request.data.get('order_type', None)
-        order = self.get_object()
-        order.order_status = order_status
-        order.order_type = order_type
+        if order_status:
+            order.order_status = order_status
+        if order_type:
+            order.order_type = order_type
         order.save()
         return Response(
             {
