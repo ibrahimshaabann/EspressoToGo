@@ -10,14 +10,17 @@ from users.authentication import CustomUserAuthenticationBackend
 from .serializers import AdminSerializer
 from .models import Admin
 
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 from .permissions import IsAdmin
 
 class AdminSignUpView(views.APIView):
     permission_classes = (AllowAny,)
     throttle_classes = [UserRateThrottle, AnonRateThrottle]
-    # permission_classes = (IsAdmin,)
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAdmin,)
+    authentication_classes = (JWTAuthentication,)
+    # permission_classes = (AllowAny,)
 
     def post(self, request):
         request.data["role"] = "ADMIN"
@@ -85,7 +88,8 @@ class AllAdminsViewSet(generics.ListAPIView):
     """
     This view is used to get all admins.
     """
-    # permission_classes = (IsAdmin,)
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAdmin,)
     queryset = Admin.objects.all()
     serializer_class = AdminSerializer
-    permission_classes = (AllowAny,)
+    # permission_classes = (AllowAny,)

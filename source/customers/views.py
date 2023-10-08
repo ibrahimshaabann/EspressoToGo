@@ -18,13 +18,16 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import filters
 
-# from .permissions import IsAdmin
+from .permissions import IsAdmin
+
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class CustomerSignUpView(views.APIView):
     permission_classes = (AllowAny,)
     throttle_classes = [UserRateThrottle, AnonRateThrottle]
-    # permission_classes = (IsAdmin,)
-    permission_classes = (AllowAny,)
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAdmin,)
+    # permission_classes = (AllowAny,)
 
     def post(self, request):
         request.data["role"] = "CUSTOMER"   # This is to set the role to CUSTOMER when signing up.
@@ -92,10 +95,10 @@ class AllCustomersViewSet(viewsets.ModelViewSet):
     """
     This view is used to get all admins.
     """
-    # permission_classes = (IsAdmin,)
+    permission_classes = (IsAdmin,)
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-    permission_classes = (AllowAny,)    
+    # permission_classes = (AllowAny,)    
 
     filter_backends = [
         DjangoFilterBackend,
