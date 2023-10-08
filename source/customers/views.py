@@ -23,9 +23,8 @@ from .permissions import IsAdmin
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class CustomerSignUpView(views.APIView):
-    permission_classes = (AllowAny,)
     throttle_classes = [UserRateThrottle, AnonRateThrottle]
-    authentication_classes = (JWTAuthentication,)
+    # authentication_classes = (JWTAuthentication,)
     # permission_classes = (IsAdmin,)
     permission_classes = (AllowAny,)
 
