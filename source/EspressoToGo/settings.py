@@ -23,6 +23,8 @@ if DEBUG:
 
 INSTALLED_APPS = [
 
+    'jazzmin', # 
+
     'corsheaders',  #
     'rest_framework_swagger', #
     'drf_yasg', #
@@ -211,7 +213,10 @@ USE_TZ = True
 CSRF_TRUSTED_ORIGINS = ["https://*.up.railway.app"]
 
 # local
-# STATIC_URL = '/static/'
+# STATIC_URL = 'static/'
+
+
+
 
 # production
 STATIC_URL = 'static/'

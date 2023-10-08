@@ -40,5 +40,5 @@ class Admin(AdminBridge):
     class Meta:
         db_table = "admins"
         verbose_name = "Admin"
-        verbose_name_plural = "Admins"
+        verbose_name_plural = "الادمنز"
     

@@ -79,7 +79,7 @@ class Shift(models.Model):
     class Meta:
         db_table = 'shifts'
         verbose_name = 'Shift'
-        verbose_name_plural = 'shifts'
+        verbose_name_plural = 'الشيفتات'
         ordering = ['-id']
 
     def __str__(self) :
@@ -125,7 +125,7 @@ class ShiftReport(models.Model):
     class Meta:
         db_table = 'shifts_reports'
         verbose_name = 'Shift Report'
-        verbose_name_plural = 'Shifts Reports'
+        verbose_name_plural = 'تقارير الشيفتات'
         ordering = ['-id']
 
     def __str__(self) -> str:
