@@ -6,6 +6,9 @@ from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from rest_framework.response import Response
+from rest_framework import status
+
 from django.shortcuts import get_object_or_404
 
 from products.models import Menu
@@ -76,6 +79,21 @@ class OrderViewSet(viewsets.ModelViewSet):
         # Continue with the update
         return super().update(request, *args, **kwargs)
     
+
+    def partial_update(self, request, *args, **kwargs):
+        order_status = request.data.get('order_status', None)
+        order_type = request.data.get('order_type', None)
+        order = self.get_object()
+        order.order_status = order_status
+        order.order_type = order_type
+        order.save()
+        return Response(
+            {
+                "message": "Order updated successfully",
+                "order": OrderGetSerializer(order).data
+            }, 
+            status=status.HTTP_200_OK
+        )
 
 
 class OrderItemsViewSet(viewsets.ModelViewSet):
