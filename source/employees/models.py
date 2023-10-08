@@ -47,7 +47,7 @@ class Employee(EmployeeBridge):
         max_digits=10, decimal_places=2, 
         null=False, blank=False, 
         validators=[valid_salary]
-        )
+    )
 
 
     class Meta:
