@@ -230,6 +230,29 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 
+JAZZMIN_SETTINGS = {
+"site_title": "Espresso to Go",
+"site_header": "Espresso to Go",
+"site_brand": "Espresso to Go",
+"site_logo": "espresso.ico",
+"site_logo_classes": "img-circle",
+"welcome_sign": "Welcome to Espresso to Go",
+"related_modal_active": False,
+"copyright": "Smart Solutions Ltd",
+"show_sidebar": True,
+"navigation_expanded": True,
+"show_ui_builder": True,
+"order_with_respect_to": ["auth", "books"],
+
+"topmenu_links": 
+[
+ {"name": "Espresso To Go"}
+],
+
+"usermenu_links": [
+     {'name':"Support", "url":"https://www.facebook.com/"},
+    ],
+}
 
 
 CORS_ALLOW_HEADERS = [
