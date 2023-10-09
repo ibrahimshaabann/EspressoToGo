@@ -1,15 +1,42 @@
 from django.contrib import admin
-from .models import Shift, ShiftReport
+from django.utils.html import format_html
+from .models import Shift
+from .views import ShfitAdminViewSet
 
-
-@admin.register(Shift)
 class ShiftAdmin(admin.ModelAdmin):
-    list_display = ('id', 'start_time', 'end_time', 'responsible_employee')
+    list_display = ('id', 'responsible_employee', 'start_time', 'end_time', 'display_total_benefits', 'display_total_costs', 'display_net_profit','shift_menu_sales')
 
+    def display_total_benefits(self, obj):
+        benefits = obj.calculate_benefits()
+        return benefits['total_benefits']
 
-@admin.register(ShiftReport)
-class ShiftReportAdmin(admin.ModelAdmin):
-    list_display = ('id', 'total_profit', 'total_costs', 'net_profit', 'related_shift')
+    display_total_benefits.short_description = 'اجمالي الشيفت'
 
+    def display_total_costs(self, obj):
+        benefits = obj.calculate_benefits()
+        return benefits['total_costs']
 
+    display_total_costs.short_description = 'المصاريف'
 
+    def display_net_profit(self, obj):
+        benefits = obj.calculate_benefits()
+        return benefits['net_profit']
+
+    display_net_profit.short_description = 'صافي الربح'
+    
+    def shift_menu_sales(self, obj):
+        sales = obj.calc_menu_items_sales()
+        return format_html('<br>'.join([f'{item["menu_item__name"]}: {item["quantity"]}' for item in sales]))
+    
+    shift_menu_sales.short_description = 'Shift Menu Sales'    
+        
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        shift = Shift.objects.get(pk=object_id)
+        benefits = shift.calculate_benefits()
+        extra_context = extra_context or {}
+        extra_context['benefits'] = benefits
+        return super().change_view(request, object_id, form_url, extra_context=extra_context)
+
+    change_view.short_description = "View Shift Benefits"
+
+admin.site.register(Shift, ShiftAdmin)

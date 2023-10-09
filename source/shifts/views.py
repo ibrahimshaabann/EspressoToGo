@@ -7,11 +7,11 @@ from admins.models import Admin
 from .permissions import IsAdmin, IsEmployee
 from django.core.exceptions import ValidationError
 from .serializers import ShiftEmployeeSerizlier,ShiftAdminSerizlier
-from .models import Shift, ShiftReport
+from .models import Shift
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .filters import ShiftFilter, ShiftReportFilter
+from .filters import ShiftFilter
 from orders.models import Order
 from financials.models import Cost
 from django.shortcuts import get_object_or_404

@@ -3,13 +3,10 @@ from rest_framework import permissions
 from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
-<<<<<<< HEAD
-=======
 
 from rest_framework.response import Response
 from rest_framework import status
 
->>>>>>> f7215295e1727762a1d33999583635936d4dfb5a
 from django.shortcuts import get_object_or_404
 from products.models import Menu
 from shifts.models import Shift
@@ -90,14 +87,10 @@ class OrderItemsViewSet(viewsets.ModelViewSet):
     """
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
-<<<<<<< HEAD
-    authentication_classes = [JWTAuthentication, ]
-=======
     authentication_classes = (JWTAuthentication,)
     # permission_classes = [, ]
     permission_classes = [permissions.AllowAny, ]
 
->>>>>>> f7215295e1727762a1d33999583635936d4dfb5a
 
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
@@ -112,9 +105,6 @@ class OrderViewSetAdmin(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializerAdmin
     permission_classes = [IsAdmin,]
-<<<<<<< HEAD
-    authentication_classes = (JWTAuthentication,)
-=======
     authentication_classes = (JWTAuthentication,)
 
 
@@ -155,4 +145,3 @@ class PendingOrderView(viewsets.ModelViewSet):
             "order": OrderSerializerAdmin(last_order).data
         }, status=status.HTTP_200_OK)
         
->>>>>>> f7215295e1727762a1d33999583635936d4dfb5a

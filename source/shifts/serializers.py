@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Shift, ShiftReport
+from .models import Shift
 from employees.serializers import EmployeeSerializer, EmployeeSerializerOnShifts
 
 

@@ -225,7 +225,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Media Files (uploaded from users)
 MEDIA_URL = "media/"
-MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
+# MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -264,17 +264,15 @@ JAZZMIN_SETTINGS = {
 "navigation_expanded": True,
 "show_ui_builder": True,
 "order_with_respect_to": ["auth", "books"],
-
 "topmenu_links": 
 [
- {"name": "Espresso To Go"}
+  {'name': 'Espresso to Go | I Will Love You Forever', 'url': '/', 'permissions': []},
 ],
 
 "usermenu_links": [
      {'name':"Support", "url":"https://www.facebook.com/"},
     ],
 }
-
 
 CORS_ALLOW_HEADERS = [
     "accept",

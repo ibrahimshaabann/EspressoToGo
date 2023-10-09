@@ -86,49 +86,49 @@ class Shift(models.Model):
         return f"Responsible Emoloyee: {self.responsible_employee.full_name}"
 
     
-class ShiftReport(models.Model):
-    # sum total of orders in the shift object related to the shift report
-    total_profit = models.DecimalField(null=True,
-                                       blank=True,
-                                       decimal_places=2,
-                                       max_digits=9,
-                                       verbose_name='اجمالي الربح')
+# class ShiftReport(models.Model):
+#     # sum total of orders in the shift object related to the shift report
+#     total_profit = models.DecimalField(null=True,
+#                                        blank=True,
+#                                        decimal_places=2,
+#                                        max_digits=9,
+#                                        verbose_name='اجمالي الربح')
     
-    # sum of cost in shift object of shift report
-    total_costs = models.DecimalField(null=True,
-                                      blank=True,
-                                      decimal_places=2,
-                                      max_digits=9,
-                                      verbose_name='اجمالي التكلفة')
+#     # sum of cost in shift object of shift report
+#     total_costs = models.DecimalField(null=True,
+#                                       blank=True,
+#                                       decimal_places=2,
+#                                       max_digits=9,
+#                                       verbose_name='اجمالي التكلفة')
 
-    # net_profit = total_profit - total_costs
-    net_profit = models.DecimalField(null=True,
-                                    blank=True,
-                                    decimal_places=2,
-                                    max_digits=9,
-                                    verbose_name='صافي الربح')
+#     # net_profit = total_profit - total_costs
+#     net_profit = models.DecimalField(null=True,
+#                                     blank=True,
+#                                     decimal_places=2,
+#                                     max_digits=9,
+#                                     verbose_name='صافي الربح')
     
-    # Each shift report has one shift nad shift has one shift report
-    related_shift = models.OneToOneField(Shift,
-                                        null=False,
-                                        blank=False,
-                                        on_delete=models.PROTECT,
-                                        verbose_name='الشيفت',
-                                        related_name="shifts")
+#     # Each shift report has one shift nad shift has one shift report
+#     related_shift = models.OneToOneField(Shift,
+#                                         null=False,
+#                                         blank=False,
+#                                         on_delete=models.PROTECT,
+#                                         verbose_name='الشيفت',
+#                                         related_name="shifts")
     
 
 
-    # time_duration = models.DurationField(null=True, blank=True, verbose_name='مدة الشيفت')
+#     # time_duration = models.DurationField(null=True, blank=True, verbose_name='مدة الشيفت')
 
 
 
-    class Meta:
-        db_table = 'shifts_reports'
-        verbose_name = 'Shift Report'
-        verbose_name_plural = 'تقارير الشيفتات'
-        ordering = ['-id']
+#     class Meta:
+#         db_table = 'shifts_reports'
+#         verbose_name = 'Shift Report'
+#         verbose_name_plural = 'تقارير الشيفتات'
+#         ordering = ['-id']
 
-    def __str__(self) -> str:
-        return f"related shift: {self.related_shift.responsible_employee.full_name}"
+#     def __str__(self) -> str:
+#         return f"related shift: {self.related_shift.responsible_employee.full_name}"
     
     
