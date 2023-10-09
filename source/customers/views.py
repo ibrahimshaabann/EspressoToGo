@@ -20,11 +20,19 @@ from rest_framework import filters
 
 from .permissions import IsAdmin
 
+<<<<<<< HEAD
 from rest_framework_simplejwt.authentication import JWTAuthentication 
+=======
+from rest_framework_simplejwt.authentication import JWTAuthentication
+>>>>>>> f7215295e1727762a1d33999583635936d4dfb5a
 
 class CustomerSignUpView(views.APIView):
-    permission_classes = (AllowAny,)
     throttle_classes = [UserRateThrottle, AnonRateThrottle]
+<<<<<<< HEAD
+=======
+    # authentication_classes = (JWTAuthentication,)
+    # permission_classes = (IsAdmin,)
+>>>>>>> f7215295e1727762a1d33999583635936d4dfb5a
     permission_classes = (AllowAny,)
 
     def post(self, request):
@@ -93,11 +101,15 @@ class AllCustomersViewSet(viewsets.ModelViewSet):
     """
     This view is used to get all admins.
     """
-    # permission_classes = (IsAdmin,)
+    permission_classes = (IsAdmin,)
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+<<<<<<< HEAD
     authentication_classes = [JWTAuthentication,]
     permission_classes = (IsAdmin,)    
+=======
+    # permission_classes = (AllowAny,)    
+>>>>>>> f7215295e1727762a1d33999583635936d4dfb5a
 
     filter_backends = [
         DjangoFilterBackend,

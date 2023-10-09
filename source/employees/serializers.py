@@ -5,7 +5,7 @@ from .models import Employee
 
 
 class CashierSignUpSerializer(serializers.ModelSerializer):
-    # password = serializers.CharField(required=False, allow_null=True, write_only=True)
+    password = serializers.CharField(required=False, allow_null=True, write_only=True)
 
     """
     This serializer class is used when to create Cashiers' Account using only thire full_name.
@@ -13,7 +13,7 @@ class CashierSignUpSerializer(serializers.ModelSerializer):
     
 
     def create(self, validated_data):
-        # validated_data['password'] = make_password(validated_data['password'])
+        validated_data['password'] = make_password(validated_data['password'])
         validated_data['full_name'] = validated_data['full_name'].lower()
         return super().create(validated_data)
     
@@ -24,7 +24,7 @@ class CashierSignUpSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    # password = serializers.CharField(write_only=True)
 
     """
     If we need to create a cashier without a passowrd we can use this serializer. with commented password field.
@@ -41,8 +41,8 @@ class EmployeeSerializer(serializers.ModelSerializer):
     """
 
     def create(self, validated_data):
-        validated_data['username'] = validated_data['username'].lower()
-        validated_data["password"] = make_password(validated_data["password"])
+        # validated_data['username'] = validated_data['username'].lower()
+        # validated_data["password"] = make_password(validated_data["password"])
         return super().create(validated_data)
     
     class Meta:

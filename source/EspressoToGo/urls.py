@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from rest_framework_swagger.views import get_swagger_view
 from drf_yasg.views import get_schema_view
@@ -21,7 +21,12 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
+
+    # For Production
+    path('0mysecureadminpanelurl1/', admin.site.urls),
+
+
     path('products/',include('products.urls')),
     path('financials/',include('financials.urls')),
     path('employees/', include('employees.urls')),
@@ -38,5 +43,8 @@ urlpatterns = [
 ]
 
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+from django.views.static import serve
+urlpatterns += [ re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})]

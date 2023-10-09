@@ -50,7 +50,7 @@ class Order(models.Model):
     class Meta:
         db_table = 'orders'
         verbose_name = "Order"
-        verbose_name_plural = "orders"
+        verbose_name_plural = "الاوردرات"
         ordering = ['-id']
     
     def __str__(self) -> str:
@@ -71,7 +71,7 @@ class OrderItem(models.Model):
     class Meta:
         db_table = 'order_items'
         verbose_name = "Order Item"
-        verbose_name_plural = "Order Items"
+        verbose_name_plural = "عناصر الاوردر"
         ordering = ['-id']
 
 

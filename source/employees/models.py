@@ -47,13 +47,13 @@ class Employee(EmployeeBridge):
         max_digits=10, decimal_places=2, 
         null=False, blank=False, 
         validators=[valid_salary]
-        )
+    )
 
 
     class Meta:
         db_table = "employees"
         verbose_name = "Employee"
-        verbose_name_plural = "Employees"
+        verbose_name_plural = "الموظفين"
 
 
     def __str__(self):

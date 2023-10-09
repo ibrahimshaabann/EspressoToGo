@@ -17,7 +17,7 @@ class Delivery(TimeStampedModel):
     class Meta:
         db_table = 'deliveries'
         verbose_name = 'Delivery'
-        verbose_name_plural = 'Deliveries'
+        verbose_name_plural = 'الدليفري'
         ordering = ['-id']
 
     def str(self) -> str:

@@ -1,8 +1,15 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, views, generics
 from rest_framework import permissions
 from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
+<<<<<<< HEAD
+=======
+
+from rest_framework.response import Response
+from rest_framework import status
+
+>>>>>>> f7215295e1727762a1d33999583635936d4dfb5a
 from django.shortcuts import get_object_or_404
 from products.models import Menu
 from shifts.models import Shift
@@ -59,6 +66,23 @@ class OrderViewSet(viewsets.ModelViewSet):
         return super().update(request, *args, **kwargs)
     
 
+    def partial_update(self, request, *args, **kwargs):
+        order = self.get_object()
+        order_status = request.data.get('order_status', None)
+        order_type = request.data.get('order_type', None)
+        if order_status:
+            order.order_status = order_status
+        if order_type:
+            order.order_type = order_type
+        order.save()
+        return Response(
+            {
+                "message": "Order updated successfully",
+                "order": OrderGetSerializer(order).data
+            }, 
+            status=status.HTTP_200_OK
+        )
+
 
 class OrderItemsViewSet(viewsets.ModelViewSet):
     """
@@ -66,7 +90,14 @@ class OrderItemsViewSet(viewsets.ModelViewSet):
     """
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
+<<<<<<< HEAD
     authentication_classes = [JWTAuthentication, ]
+=======
+    authentication_classes = (JWTAuthentication,)
+    # permission_classes = [, ]
+    permission_classes = [permissions.AllowAny, ]
+
+>>>>>>> f7215295e1727762a1d33999583635936d4dfb5a
 
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
@@ -81,4 +112,47 @@ class OrderViewSetAdmin(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializerAdmin
     permission_classes = [IsAdmin,]
+<<<<<<< HEAD
     authentication_classes = (JWTAuthentication,)
+=======
+    authentication_classes = (JWTAuthentication,)
+
+
+
+class PendingOrderView(viewsets.ModelViewSet):
+    # http_method_names = ['get','patch','options','trace']
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializerAdmin
+    # permission_classes = [IsAdmin,]
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (JWTAuthentication,)
+
+    # def get_queryset(self):
+    #     queryset = self.queryset
+    #     queryset = queryset
+    #     return queryset
+
+    def list(self, request, *args, **kwargs):
+        print("list")
+        last_order = Order.objects.first()
+        print(last_order)
+        if last_order.order_status == "PENDING":
+            return Response({'last_order': OrderSerializerAdmin(last_order).data})
+        
+        else:
+            return Response({'last_order': None})
+    
+
+    def partial_update(self, request, *args, **kwargs):
+        last_order = self.get_object()
+        print(last_order)
+        order_status = request.data.get('order_status', None)
+        if order_status:
+            last_order.order_status = order_status
+            last_order.save()
+        return Response({
+            "message": "Order updated successfully",
+            "order": OrderSerializerAdmin(last_order).data
+        }, status=status.HTTP_200_OK)
+        
+>>>>>>> f7215295e1727762a1d33999583635936d4dfb5a
