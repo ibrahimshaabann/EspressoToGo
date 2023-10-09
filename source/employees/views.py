@@ -21,9 +21,9 @@ from .serializers import EmployeeSerializer, CashierSignUpSerializer
 class EmployeeViewSetForAdmins(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    # authentication_classes = (JWTAuthentication,)
-    # permission_classes = (IsAdmin, IsAuthenticated,)
-    permission_classes = (AllowAny,)
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAdmin,)
+    # permission_classes = (AllowAny,)
     
     
     filter_backends = [
@@ -62,7 +62,9 @@ class CashierSignUpView(views.APIView):
     And to be assigned to a cashier role.
     """
 
-    permission_classes = (AllowAny,)
+    authentication_classes = (JWTAuthentication,)
+    # permission_classes = (AllowAny,)
+    permission_classes = (IsAdmin,)
     throttle_classes = [UserRateThrottle, AnonRateThrottle]
 
 

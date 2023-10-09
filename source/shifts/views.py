@@ -42,7 +42,7 @@ class ShiftEmployeeViewSet(ModelViewSet):
             last_shift = Shift.objects.first()
 
             # Here we get the responsible employee object by the request user name and create a shift object with the esponsible employee object
-            new_shift = Shift.objects.create(responsible_employee = get_object_or_404(Employee, username=request.user.username))
+            new_shift = Shift.objects.create(responsible_employee = get_object_or_404(Employee, pk=request.user.id))
 
             start_time = time.time()
             if last_shift:
