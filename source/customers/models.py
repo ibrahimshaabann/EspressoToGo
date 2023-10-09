@@ -36,7 +36,7 @@ class Customer(CustomerBridge):
     class Meta:
         db_table = "customers"
         verbose_name = "Customer"
-        verbose_name_plural = "Customers"
+        verbose_name_plural = "الزباين"
     
 
 

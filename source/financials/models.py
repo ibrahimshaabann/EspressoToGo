@@ -38,7 +38,7 @@ class Cost(models.Model):
     
     class Meta:
         verbose_name = "Cost"
-        verbose_name_plural = "Costs"
+        verbose_name_plural = "المالية"
         db_table = "costs" 
         ordering = ['-id']
 
