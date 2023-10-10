@@ -22,7 +22,7 @@ class IsEmployee(BasePermission):
     def has_permission(self, request, view):
 
         # The employee is allowed to retrieve his shift only, GET IN GENERAL is not allowed
-        if request.method in('POST', 'PATCH') or view.action == "retrieve":
+        if request.method in ('POST', 'PATCH') or view.action == "retrieve":
             return request.user.role == "EMPLOYEE"
         
         else:
