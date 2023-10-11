@@ -16,13 +16,13 @@ class Cost(models.Model):
                                 decimal_places=2,
                                 null=False,
                                 blank=False,
-                                validators=[validate_price])
+                                validators=[validate_price],verbose_name="السعر")
     date = models.DateTimeField(verbose_name="وقت الدفع",
-                                auto_now_add=True)
+                                auto_now_add=True,null=True,blank=True)
     
     type = models.TextField(choices=Types.choices,
                             default=Types.NORMAL_COST,
-                            blank=False)
+                            blank=False,verbose_name="النوع")
 
     user = models.ForeignKey(Employee,
                              verbose_name='مسئول الشيفت',

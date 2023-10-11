@@ -23,30 +23,30 @@ class Order(models.Model):
 
     order_status = models.CharField(max_length=12,
                                     choices=ORDER_STATUS_CHOICES,
-                                    default="PENDING")
+                                    default="PENDING",verbose_name="حالة الاوردر")
     
     order_type = models.CharField(max_length=12,
                                 choices=ORDER_TYPE_CHOICES,
-                                default="HALL")
+                                default="HALL",verbose_name="نوع الاوردر")
     
     created_at = models.DateTimeField(null=False,
                                       blank=False,
-                                      auto_now_add=True)
+                                      auto_now_add=True,verbose_name="وقت الاودر")
     
     shift = models.ForeignKey(Shift,
                             on_delete=models.PROTECT,
                             null=False,
                             blank=False,
-                            related_name='orders')
+                            related_name='orders',verbose_name="الشيفت")
     
 
-    total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True,verbose_name="اجمالي السعر")
 
     customer = models.ForeignKey(Customer,
                                  on_delete=models.SET_NULL,
                                  related_name='orders',
                                  null=True,
-                                 blank=True)
+                                 blank=True,verbose_name="العميل")
     class Meta:
         db_table = 'orders'
         verbose_name = "Order"
@@ -58,15 +58,15 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items',verbose_name="الاوردر")
 
-    menu_item = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name='menu_item')
+    menu_item = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name='menu_item',verbose_name="الاسم")
 
-    quantity = models.PositiveIntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=1,verbose_name="الكمية")
     
-    item_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    item_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True,verbose_name="سعر العنصر")
     
-    total_price_of_order_items = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    total_price_of_order_items = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True,verbose_name="اجمالي العناصر")
     
     class Meta:
         db_table = 'order_items'

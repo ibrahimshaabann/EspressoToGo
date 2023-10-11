@@ -23,7 +23,9 @@ class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
     authentication_classes = [JWTAuthentication,]
-    permission_classes = [IsAdminOrEmployee, ]
+    permission_classes = [AllowAny, ]
+    # permission_classes = [IsAdminOrEmployee, ]
+
     filterset_class = CostFilter
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = ['date', 'description','date', 'user__username' ]

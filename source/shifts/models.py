@@ -18,7 +18,7 @@ class Shift(models.Model):
                                     )
     responsible_employee = models.ForeignKey(Employee, 
                                              null=True,
-                                             on_delete=models.SET_NULL,)
+                                             on_delete=models.SET_NULL,verbose_name="مسئول الشيفت")
     
     def calculate_benefits(self):
         from orders.models import Order

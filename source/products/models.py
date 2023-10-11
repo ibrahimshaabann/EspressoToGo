@@ -6,12 +6,12 @@ class Category(models.Model):
     name = models.CharField(null=False, 
                             blank=False,
                             max_length=95,
-                            verbose_name="category name")
+                            verbose_name="الفئة")
     
 
     class Meta:
-        verbose_name = "Catrgory"
-        verbose_name_plural = "Categories"
+        verbose_name = "الفئة"
+        verbose_name_plural = "الفئات"
         db_table = "categories"
         ordering = ['name']
 
@@ -25,23 +25,23 @@ class Menu(models.Model):
     name = models.CharField(max_length=70,
                             null=False,
                             blank=False,
-                            verbose_name="name")
+                            verbose_name="الاسم")
     price = models.DecimalField(decimal_places=2,
                                 max_digits=6,
                                 null=False,
                                 blank=False,
-                                verbose_name="price",
+                                verbose_name="السعر",
                                 validators=[validate_price])
     available = models.BooleanField(default=True,
                                     null=False,
                                     blank=False,
-                                    verbose_name="is_available")
+                                    verbose_name="متاح")
     
     category = models.ForeignKey(Category,
                                  null=True,
                                  blank=True,
                                  on_delete=models.SET_NULL,
-                                 verbose_name="category"   
+                                 verbose_name="الفئة"   
                                 )
 
     class Meta:

@@ -33,6 +33,8 @@ class OrderGetSerializer(serializers.ModelSerializer):
     shift = serializers.StringRelatedField()
     total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
 
+    created_at = serializers.DateTimeField(format='%d/%m/%Y %H:%M', required=False)
+
     class Meta:
         model = Order
         fields = '__all__'
@@ -45,6 +47,8 @@ class OrderCreationSerializer(serializers.ModelSerializer):
         we don't need to customize anything
     """
     total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
+
+    created_at = serializers.DateTimeField(format='%d/%m/%Y %H:%M', required=False)
 
     class Meta:
         model = Order
@@ -59,12 +63,18 @@ class OrderSerializerForDisplayingDeliveryData(serializers.ModelSerializer):
 
     total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
 
+    created_at = serializers.DateTimeField(format='%d/%m/%Y %H:%M', required=False)
+
+
     class Meta:
         model = Order
         fields = '__all__'
         
 
 class OrderSerializerAdmin(serializers.ModelSerializer):
+
+    created_at = serializers.DateTimeField(format='%d/%m/%Y %H:%M', required=False)
+
     class Meta:
         model = Order
         fields = '__all__'

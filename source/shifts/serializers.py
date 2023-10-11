@@ -4,8 +4,8 @@ from employees.serializers import EmployeeSerializer, EmployeeSerializerOnShifts
 
 
 class ShiftEmployeeSerizlier(serializers.ModelSerializer):
-    start_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M')
-    end_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M')
+    start_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M', required=False)
+    end_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M', required=False)
     responsible_employee = serializers.StringRelatedField()
     class Meta:
         model = Shift
@@ -42,8 +42,8 @@ class ShiftAdminSerizlier(serializers.ModelSerializer):
     """
     Note that we want to show 
     """
-    start_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M')
-    end_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M')
+    start_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M', required=False)
+    end_time = serializers.DateTimeField(format='%d/%m/%Y %H:%M', required=False)
     responsible_employee = serializers.StringRelatedField()
     class Meta:
         model = Shift

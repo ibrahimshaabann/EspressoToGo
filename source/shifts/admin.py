@@ -2,10 +2,22 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import Shift
 from .views import ShfitAdminViewSet
+from orders.models import Order
+
+class ShiftInline(admin.StackedInline):  #or admin.TabularInline
+    model = Order
+    extra = 0 
 
 class ShiftAdmin(admin.ModelAdmin):
-    list_display = ('id', 'responsible_employee', 'start_time', 'end_time', 'display_total_benefits', 'display_total_costs', 'display_net_profit','shift_menu_sales')
+    list_display = ('id', 'responsible_employee', 'start_time', 'end_time', 'display_total_benefits', 'display_total_costs', 'display_net_profit')
+    inlines = [ShiftInline]  # Add this line to display related OrderItem objects inline
 
+    def has_change_permission(self, request, obj=None):
+        return False  # Disables editing of the table
+
+    def has_delete_permission(self, request, obj=None):
+        return False  # Disables the Delete of the records
+    
     def display_total_benefits(self, obj):
         benefits = obj.calculate_benefits()
         return benefits['total_benefits']
@@ -24,11 +36,13 @@ class ShiftAdmin(admin.ModelAdmin):
 
     display_net_profit.short_description = 'صافي الربح'
     
-    def shift_menu_sales(self, obj):
+    readonly_fields = ('start_time','display_shift_menu_sales','display_total_benefits','display_total_costs', 'display_net_profit')
+
+    def display_shift_menu_sales(self, obj):
         sales = obj.calc_menu_items_sales()
         return format_html('<br>'.join([f'{item["menu_item__name"]}: {item["quantity"]}' for item in sales]))
-    
-    shift_menu_sales.short_description = 'Shift Menu Sales'    
+
+    display_shift_menu_sales.short_description = 'الاكثر مبيعاً' 
         
     def change_view(self, request, object_id, form_url='', extra_context=None):
         shift = Shift.objects.get(pk=object_id)
