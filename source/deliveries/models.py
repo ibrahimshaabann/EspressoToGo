@@ -12,7 +12,7 @@ class Delivery(TimeStampedModel):
     for_order = models.ForeignKey(Order, on_delete=models.CASCADE, null=False, blank=False, related_name='order_deliveries')
     responsible_employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, blank=True, related_name='employee_deliveries')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False, blank=False, related_name='customer_delivery')
-    tax = models.PositiveIntegerField(null=True, blank=True, verbose_name="tax")
+    # tax = models.PositiveIntegerField(null=True, blank=True, verbose_name="tax")
     
     class Meta:
         db_table = 'deliveries'
