@@ -19,14 +19,6 @@ from employees.models import Employee
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-from datetime import datetime
-
-import time
-
-# 0.001372436999999893s Zeyad   
-# 0.001200585999999948s Ibrahim 
-
-# return 0 if x == y else 1 if x > y else -1
 
 
 class ShiftEmployeeViewSet(ModelViewSet):
@@ -44,12 +36,10 @@ class ShiftEmployeeViewSet(ModelViewSet):
             # Here we get the responsible employee object by the request user name and create a shift object with the esponsible employee object
             new_shift = Shift.objects.create(responsible_employee = get_object_or_404(Employee, pk=request.user.id))
 
-            start_time = time.time()
             if last_shift:
                 # if the last created shift has no end_time, set its end_time to  the new shift start_time 
                 last_shift.end_time = new_shift.start_time if last_shift and not last_shift.end_time else None
                 last_shift.save()
-            print(time.time() - start_time)
 
         except Exception as e:
             return Response({'error': str(e)}, status = status.HTTP_400_BAD_REQUEST)

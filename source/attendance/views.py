@@ -71,10 +71,15 @@ class AllAttendanceViewSet(ModelViewSet):
 
 
 class EmployeeAttendanceViewSet(ViewSet):
+
+    """
+    This view is used to get the employees those whom are not currently in the place   
+    """
+
     authentication_classes = [JWTAuthentication]
     def list(self, request):
-        employees = Employee.objects.filter(
-            employee_attendance__out_time__isnull=False
+        employees = Employee.objects.exclude(
+            employee_attendance__out_time__isnull=True
         ).distinct()
         serializer = EmployeeSerializerOnAttendance(employees, many=True)
         return Response(serializer.data)

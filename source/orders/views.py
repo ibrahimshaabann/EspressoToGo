@@ -22,7 +22,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     CRUD for Orders
     """
     queryset = Order.objects.all().prefetch_related('order_items')
-    permission_classes = [IsEmployee]
+    permission_classes = (IsEmployee,)
 
 
     def get_serializer_class(self):
