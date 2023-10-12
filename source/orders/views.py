@@ -21,6 +21,8 @@ class OrderViewSet(viewsets.ModelViewSet):
     """
     queryset = Order.objects.all().prefetch_related('order_items')
     permission_classes = [IsEmployee]
+    # permission_classes = [permissions.AllowAny]
+
 
 
     def get_serializer_class(self):

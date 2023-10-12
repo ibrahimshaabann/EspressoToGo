@@ -4,6 +4,8 @@ from .models import Admin
 
 
 class AdminModelAdmin(admin.ModelAdmin):
+    readonly_fields = ("password",)
+
 
     def has_delete_permission(self, request, obj=None):
         return False  # Disables the Delete of the records

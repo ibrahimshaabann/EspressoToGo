@@ -24,7 +24,7 @@ ALLOWED_HOSTS = list(str(os.environ.get("ALLOWED_HOSTS")).split(", "))
 INSTALLED_APPS = [
 
     'jazzmin', # 
-
+     "admincharts",
     'corsheaders',  #
     'rest_framework_swagger', #
     'drf_yasg', #
@@ -254,8 +254,8 @@ CORS_ALLOW_METHODS = [
 JAZZMIN_SETTINGS = {
 "site_title": "Espresso to Go",
 "site_header": "Espresso to Go",
-"site_brand": "Espresso to Go",
-"site_logo": "espresso.ico",
+"site_brand": "EspressotoGo",
+"site_logo": "espresso.png",
 "site_logo_classes": "img-circle",
 "welcome_sign": "Welcome to Espresso to Go",
 "related_modal_active": False,
@@ -270,7 +270,7 @@ JAZZMIN_SETTINGS = {
 ],
 
 "usermenu_links": [
-     {'name':"Support", "url":"https://www.facebook.com/"},
+     {'name':"Support", "url":"https://www.facebook.com/zeyadesperado"},
     ],
 }
 

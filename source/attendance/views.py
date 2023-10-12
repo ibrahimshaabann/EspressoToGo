@@ -73,8 +73,10 @@ class AllAttendanceViewSet(ModelViewSet):
 class EmployeeAttendanceViewSet(ViewSet):
     authentication_classes = [JWTAuthentication]
     def list(self, request):
+        print(employees)
         employees = Employee.objects.filter(
             employee_attendance__out_time__isnull=False
         ).distinct()
+        print(employees)
         serializer = EmployeeSerializerOnAttendance(employees, many=True)
         return Response(serializer.data)
