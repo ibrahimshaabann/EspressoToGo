@@ -23,7 +23,6 @@ class EmployeeViewSetForAdmins(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAdmin,)
-    # permission_classes = (AllowAny,)
     
     
     filter_backends = [
@@ -63,8 +62,7 @@ class CashierSignUpView(views.APIView):
     """
 
     authentication_classes = (JWTAuthentication,)
-    # permission_classes = (AllowAny,)
-    permission_classes = (IsAdmin,)
+    permission_classes = (AllowAny,)
     throttle_classes = [UserRateThrottle, AnonRateThrottle]
 
 

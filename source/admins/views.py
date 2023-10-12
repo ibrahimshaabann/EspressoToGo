@@ -16,11 +16,11 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .permissions import IsAdmin
 
 class AdminSignUpView(views.APIView):
-    permission_classes = (AllowAny,)
+    # permission_classes = (AllowAny,)
     throttle_classes = [UserRateThrottle, AnonRateThrottle]
     permission_classes = (IsAdmin,)
     authentication_classes = (JWTAuthentication,)
-    # permission_classes = (AllowAny,)
+    
 
     def post(self, request):
         request.data["role"] = "ADMIN"

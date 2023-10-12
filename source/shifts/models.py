@@ -83,8 +83,10 @@ class Shift(models.Model):
         ordering = ['-id']
 
     def __str__(self) :
-        return f"Responsible Emoloyee: {self.responsible_employee.full_name}"
-
+        if self.responsible_employee:
+            return f"{self.responsible_employee.full_name}"
+        else:
+            return f"{self.pk}"
     
 # class ShiftReport(models.Model):
 #     # sum total of orders in the shift object related to the shift report

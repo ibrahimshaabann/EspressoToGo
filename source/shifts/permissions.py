@@ -22,7 +22,7 @@ class IsEmployee(BasePermission):
     def has_permission(self, request, view):
 
         # The employee is allowed to retrieve his shift only, GET IN GENERAL is not allowed
-        if request.method in('POST','PUT') or view.action == "retrieve":
+        if request.method in ('POST', 'PATCH') or view.action == "retrieve":
             return request.user.role == "EMPLOYEE"
         
         else:
@@ -49,7 +49,7 @@ class IsEmployee(BasePermission):
             raise PermissionError("This requested shift has no assigned responsible employee")
 
         # Check if the request is attempting to update the 'end_time' field 
-        if request.method == 'PUT' or view.action == "retrieve":
+        if request.method in('POST', 'PATCH') or view.action == "retrieve":
             return request.user.role == "EMPLOYEE" and shift_user_username == request_username       
         else:
             # Deny the update for other fields or if the user is not an employee

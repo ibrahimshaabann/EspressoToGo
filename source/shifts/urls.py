@@ -7,4 +7,4 @@ router.register(r'^employee/shift', ShiftEmployeeViewSet, basename='employee_shi
 router.register(r'^all_shifts', ShfitAdminViewSet, basename='all_shifts')
 urlpatterns = [
     path('', include(router.urls))
-]
+]   

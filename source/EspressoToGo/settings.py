@@ -131,6 +131,7 @@ AUTH_USER_MODEL = "users.Person"
 
 AUTHENTICATION_BACKENDS = [
     'users.authentication.CustomUserAuthenticationBackend',
+
 ]
 
 MIDDLEWARE = [
@@ -210,12 +211,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-CSRF_TRUSTED_ORIGINS = ["https://*.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.up.railway.app",
+    "http://localhost:8000",
+]
 
 # local
 # STATIC_URL = 'static/'
-
-
 
 
 # production
@@ -225,7 +227,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Media Files (uploaded from users)
 MEDIA_URL = "media/"
-# MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
+MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -237,7 +239,7 @@ CORS_ALLOW_ORIGINS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'https://espressotogo-production.up.railway.app',
+    'https://*-production.up.railway.app',
 ]
 
 

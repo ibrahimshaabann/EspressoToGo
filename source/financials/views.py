@@ -18,6 +18,10 @@ from django.shortcuts import get_object_or_404
 from shifts.models import Shift
 from .permissions import IsAdminOrEmployee
 from users.models import Person
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c56c05834c8f6e59734a7cb7efa6495dd25579f
 
 class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
@@ -32,14 +36,19 @@ class CostViewSet(ModelViewSet):
 
 
     def create(self, request, *args, **kwargs):
-        user_id = request.user.id
-        print(user_id)
-        print(request.data)
-        print(Person.pk)
-        request.data["user"] = get_object_or_404(Person, pk=user_id)
+        user_created_the_cost = get_object_or_404(Person, pk=request.user.id)
+        
+        request.data["user"] = user_created_the_cost
+        
         request.data["related_shift"] =  Shift.objects.first().id
+        
         return super().create(request, *args, **kwargs)
 
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
+    # def destroy(self, request, *args, **kwargs):
+        # return super().destroy(request, *args, **kwargs)
 
 class BenefitsViewSet(APIView):
 

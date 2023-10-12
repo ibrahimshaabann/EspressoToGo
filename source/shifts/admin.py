@@ -12,11 +12,11 @@ class ShiftAdmin(admin.ModelAdmin):
     list_display = ('id', 'responsible_employee', 'start_time', 'end_time', 'display_total_benefits', 'display_total_costs', 'display_net_profit')
     inlines = [ShiftInline]  # Add this line to display related OrderItem objects inline
 
-    def has_change_permission(self, request, obj=None):
-        return False  # Disables editing of the table
+    # def has_change_permission(self, request, obj=None):
+    #     return False  # Disables editing of the table
 
-    def has_delete_permission(self, request, obj=None):
-        return False  # Disables the Delete of the records
+    # def has_delete_permission(self, request, obj=None):
+    #     return False  # Disables the Delete of the records
     
     def display_total_benefits(self, obj):
         benefits = obj.calculate_benefits()

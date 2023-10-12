@@ -39,7 +39,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(
         validators = [UnicodeUsernameValidator()],
-        max_length=50, unique=True, 
+        max_length=50, unique=True,
         db_index=True, null=True, blank=True
     )
 

@@ -7,6 +7,8 @@ from .models import Admin
 class AdminSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
     
+    username = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+
     """
     This serializer class is used when admins try to Sign-Up.
     'In our base User Class password is not required, but in the Admin model we serialize it as required'
