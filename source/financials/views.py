@@ -18,10 +18,6 @@ from django.shortcuts import get_object_or_404
 from shifts.models import Shift
 from .permissions import IsAdminOrEmployee
 from users.models import Person
-<<<<<<< HEAD
-=======
-
->>>>>>> 3c56c05834c8f6e59734a7cb7efa6495dd25579f
 
 class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
