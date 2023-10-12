@@ -17,8 +17,8 @@ DEBUG = os.environ.get("DEBUG", False)
 
 ALLOWED_HOSTS = list(str(os.environ.get("ALLOWED_HOSTS")).split(", "))
 
-if DEBUG:
-    DEBUG = False
+# if DEBUG:
+    # DEBUG = False
 
 
 INSTALLED_APPS = [
@@ -131,6 +131,7 @@ AUTH_USER_MODEL = "users.Person"
 
 AUTHENTICATION_BACKENDS = [
     'users.authentication.CustomUserAuthenticationBackend',
+
 ]
 
 MIDDLEWARE = [
@@ -210,12 +211,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-CSRF_TRUSTED_ORIGINS = ["https://*.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.up.railway.app",
+    "http://localhost:8000",
+]
 
 # local
 # STATIC_URL = 'static/'
-
-
 
 
 # production
@@ -237,7 +239,7 @@ CORS_ALLOW_ORIGINS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'https://espressotogo-production.up.railway.app',
+    'https://*-production.up.railway.app',
 ]
 
 
