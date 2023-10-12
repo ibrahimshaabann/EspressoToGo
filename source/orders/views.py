@@ -1,5 +1,6 @@
 from rest_framework import viewsets, views, generics
 from rest_framework import permissions
+from .filters import OrderFilter
 from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -12,13 +13,16 @@ from attendance.permissions import IsEmployee
 from employees.permissions import IsAdmin
 from .permissions import IsAdminOrEmployee
 from django.core.exceptions import ValidationError
+from django_filters.rest_framework import DjangoFilterBackend
 
 class OrderViewSet(viewsets.ModelViewSet):
     """
     CRUD for Orders
     """
-    queryset = Order.objects.all().prefetch_related('order_items')
+    queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
     permission_classes = [IsEmployee]
+    filterset_class = OrderFilter
+    filter_backends = [DjangoFilterBackend, ]
 
 
     def get_serializer_class(self):

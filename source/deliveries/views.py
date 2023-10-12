@@ -56,6 +56,7 @@ class DeliveryViewSet(viewsets.ModelViewSet):
         retrieved_address = request.data.get('address', None)
         retrieved_description = request.data.get('description', None)
         retieved_customer = request.data.get('customer', None)
+        retrieved_tax = request.data.get('tax', None)
 
         if retrieved_address:
             deliver_obj.address = retrieved_address
@@ -63,6 +64,8 @@ class DeliveryViewSet(viewsets.ModelViewSet):
             deliver_obj.description = retrieved_description
         if retieved_customer:
             deliver_obj.customer = retieved_customer
+        if retrieved_tax:
+            deliver_obj.tax = retrieved_tax
 
         deliver_obj.save()
 
