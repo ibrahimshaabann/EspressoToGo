@@ -225,7 +225,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Media Files (uploaded from users)
 MEDIA_URL = "media/"
-# MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
+MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
