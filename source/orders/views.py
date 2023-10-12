@@ -102,8 +102,6 @@ class OrderViewSetAdmin(viewsets.ModelViewSet):
     permission_classes = [IsAdmin,]
     authentication_classes = (JWTAuthentication,)
 
-
-
 class PendingOrderView(viewsets.ModelViewSet):
     # http_method_names = ['get','patch','options','trace']
     queryset = Order.objects.all()
@@ -111,11 +109,6 @@ class PendingOrderView(viewsets.ModelViewSet):
     # permission_classes = [IsAdmin,]
     permission_classes = (permissions.AllowAny,)
     authentication_classes = (JWTAuthentication,)
-
-    # def get_queryset(self):
-    #     queryset = self.queryset
-    #     queryset = queryset
-    #     return queryset
 
     def list(self, request, *args, **kwargs):
         print("list")

@@ -97,7 +97,6 @@ class AllCustomersViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAdmin,)
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-    permission_classes = (AllowAny,)    
 
     filter_backends = [
         DjangoFilterBackend,
