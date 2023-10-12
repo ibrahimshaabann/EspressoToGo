@@ -24,7 +24,6 @@ ALLOWED_HOSTS = list(str(os.environ.get("ALLOWED_HOSTS")).split(", "))
 INSTALLED_APPS = [
 
     'jazzmin', # 
-     "admincharts",
     'corsheaders',  #
     'rest_framework_swagger', #
     'drf_yasg', #
@@ -265,7 +264,6 @@ JAZZMIN_SETTINGS = {
 "show_sidebar": True,
 "navigation_expanded": True,
 "show_ui_builder": True,
-"order_with_respect_to": ["auth", "books"],
 "topmenu_links": 
 [
   {'name': 'Espresso to Go | I Will Love You Forever', 'url': '/', 'permissions': []},
