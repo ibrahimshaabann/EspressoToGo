@@ -6,8 +6,8 @@ class EmployeeModelAdmin(admin.ModelAdmin):
     # readonly_fields = ("password",)
     exclude = ["password",]
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return False  # Disables the Delete of the records
+    def has_delete_permission(self, request, obj=None):
+        return False  # Disables the Delete of the records
     
     def save_model(self, request, obj, form, change):
         # Hash the password before saving the object

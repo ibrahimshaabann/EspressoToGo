@@ -256,7 +256,7 @@ JAZZMIN_SETTINGS = {
 "site_title": "Espresso to Go",
 "site_header": "Espresso to Go",
 "site_brand": "EspressotoGo",
-"site_logo": "espresso.png",
+"site_logo": "espresso.ico",
 "site_logo_classes": "img-circle",
 "welcome_sign": "Welcome to Espresso to Go",
 "related_modal_active": False,
