@@ -94,7 +94,7 @@ class AllCustomersViewSet(viewsets.ModelViewSet):
     """
     This view is used to get all admins.
     """
-    permission_classes = (IsAdmin,)
+    # permission_classes = (IsAdmin,)
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
     # permission_classes = (AllowAny,)    

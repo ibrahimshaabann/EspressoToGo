@@ -83,6 +83,7 @@ class Shift(models.Model):
         ordering = ['-id']
 
     def __str__(self) :
+        print(self.responsible_employee)
         return f"Responsible Emoloyee: {self.responsible_employee.full_name}"
 
     

@@ -7,6 +7,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 
+from rest_framework.response import Response
+from rest_framework import status
 from django.shortcuts import get_object_or_404
 from products.models import Menu
 from shifts.models import Shift
@@ -89,8 +91,7 @@ class OrderItemsViewSet(viewsets.ModelViewSet):
     serializer_class = OrderItemSerializer
     authentication_classes = (JWTAuthentication,)
     # permission_classes = [, ]
-    permission_classes = [permissions.AllowAny, ]
-
+    permission_classes = (permissions.AllowAny,)
 
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
@@ -116,11 +117,6 @@ class PendingOrderView(viewsets.ModelViewSet):
     # permission_classes = [IsAdmin,]
     permission_classes = (permissions.AllowAny,)
     authentication_classes = (JWTAuthentication,)
-
-    # def get_queryset(self):
-    #     queryset = self.queryset
-    #     queryset = queryset
-    #     return queryset
 
     def list(self, request, *args, **kwargs):
         print("list")
