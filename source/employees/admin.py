@@ -3,13 +3,16 @@ from django.contrib import admin
 from .models import Employee
 
 class EmployeeModelAdmin(admin.ModelAdmin):
-    # readonly_fields = ("password",)
-    exclude = ["last_login","groups","user_permissions","role","is_superuser","is_staff",]
 
+    fields = ["full_name", "username", "email", "password", "phone_number", "gender", "birth_date"]
+    # this function to email field name to arabic 
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name == 'email':
+            kwargs['label'] = 'الايميل'
+        return super().formfield_for_dbfield(db_field, **kwargs)
+    
     list_display= ("id","full_name", 'phone_number')
     
-
-    # list_filter = ('full_name', 'phone_number',)  
 
     search_fields = ('full_name', 'phone_number')
 

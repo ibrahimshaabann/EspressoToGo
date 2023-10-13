@@ -5,10 +5,8 @@ from .models import Person
 
 
 class PersonModelAdmin(admin.ModelAdmin):
-    # list_editable = ["password",]
-    # readonly_fields = ["password",]
-    exclude = ["last_login","groups","user_permissions","role","is_superuser","is_staff",]
     list_display = ["full_name"]
+    
     def has_delete_permission(self, request, obj=None):
         return False  # Disables the Delete of the records
     
@@ -27,6 +25,12 @@ class PersonModelAdmin(admin.ModelAdmin):
 
         super().save_model(request, obj, form, change)
 
-
+    fields = ["full_name", "username", "email", "password", "phone_number", "gender", "birth_date"]
+    # this function to email field name to arabic 
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        if db_field.name == 'email':
+            kwargs['label'] = 'الايميل'
+        return super().formfield_for_dbfield(db_field, **kwargs)
+    
 admin.site.register(Person, PersonModelAdmin)
 admin.site.unregister(Group)
