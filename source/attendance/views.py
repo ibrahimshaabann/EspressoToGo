@@ -22,7 +22,7 @@ class AttendanceViewSet(ModelViewSet):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
     filter_backends = [SearchFilter,AttendanceOutTimeFilterBackend]
-    search_fields = ["employee_attended"]
+    search_fields = ["employee_attended__full_name"]
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsEmployee]
 

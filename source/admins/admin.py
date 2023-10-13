@@ -1,18 +1,30 @@
 from django.contrib import admin
-
 from .models import Admin
 
-
 class AdminModelAdmin(admin.ModelAdmin):
+    exclude = ["last_login","groups","user_permissions","role","is_superuser","is_staff",]
+    
+    list_display = ['id', 'full_name', 'phone_number', ]
+    # fields = ["full_name","username","email","password",]
+    # list_filter = ('full_name', 'phone_number',)  
 
-    exclude = ["password",]
+    search_fields = ('full_name', 'phone_number')
+    
     def has_delete_permission(self, request, obj=None):
         return False  # Disables the Delete of the records
-    
-    def save_model(self, request, obj, form, change):
-        # Hash the password before saving the object
-        obj.set_password(form.cleaned_data['password'])
-        super().save_model(request, obj, form, change)
 
+    def save_model(self, request, obj, form, change):
+        # Check if the password field has changed
+        if change:
+            original_obj = Admin.objects.get(pk=obj.pk)
+            
+            if original_obj.password != obj.password:
+                obj.set_password(obj.password)
+        else:
+            # Creating a new object
+            # Hash the password before saving the object
+            obj.set_password(form.cleaned_data['password'])
+
+        super().save_model(request, obj, form, change)
 
 admin.site.register(Admin, AdminModelAdmin)

@@ -11,6 +11,9 @@ class ShiftInline(admin.StackedInline):  #or admin.TabularInline
 class ShiftAdmin(admin.ModelAdmin):
     list_display = ('id', 'responsible_employee', 'start_time', 'end_time', 'display_total_benefits', 'display_total_costs', 'display_net_profit')
     inlines = [ShiftInline]  # Add this line to display related OrderItem objects inline
+      
+    list_filter = ['id', 'responsible_employee__full_name', 'responsible_employee__phone_number']
+    search_fields = ('responsible_employee__full_name', 'responsible_employee__phone_number')
 
     def has_change_permission(self, request, obj=None):
         return False  # Disables editing of the table

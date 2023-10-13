@@ -35,17 +35,17 @@ class Person(AbstractBaseUser, PermissionsMixin):
         ("F", "Female"),
     ]
     
-    full_name = models.CharField(max_length=50, blank=False, null=False)
+    full_name = models.CharField(max_length=50, blank=False, null=False,verbose_name="الاسم")
 
     username = models.CharField(
         validators = [UnicodeUsernameValidator()],
         max_length=50, unique=True,
-        db_index=True, null=True, blank=True
+        db_index=True, null=True, blank=True,verbose_name="اسم المستخدم"
     )
 
-    email = models.EmailField(unique=True, db_index=True, null=True, blank=True,)
+    email = models.EmailField(unique=True, db_index=True, null=True, blank=True)
 
-    password = models.CharField(max_length=128, verbose_name="password", null=True, blank=True)
+    password = models.CharField(max_length=128, verbose_name="كلمة السر", null=True, blank=True)
 
     is_superuser = models.BooleanField(default=False, blank=True, null=True)
 
@@ -55,11 +55,12 @@ class Person(AbstractBaseUser, PermissionsMixin):
         max_length=20, blank=False, 
         null=True, unique=True, db_index=True,
         validators=[valid_phone_number]
+        , verbose_name="رقم التليفون"
     )
     
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True,verbose_name="النوع")
     
-    birth_date = models.DateField(null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True,verbose_name="تاريخ الميلاد")
 
     objects = PersonManager()
 

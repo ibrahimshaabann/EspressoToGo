@@ -54,7 +54,7 @@ class Order(models.Model):
         ordering = ['-id']
     
     def __str__(self) -> str:
-        return f"Order: {self.id} - Status: {self.order_status}"
+        return f"{self.pk}"
 
 
 class OrderItem(models.Model):
