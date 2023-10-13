@@ -15,5 +15,4 @@ router.register(r'^orders-admin', views.OrderViewSetAdmin, basename='order-items
 
 urlpatterns = [
     path('', include(router.urls)),
-    # path('pending-order/', views.PendingOrderView.as_view(), name='pending-order'),
 ]

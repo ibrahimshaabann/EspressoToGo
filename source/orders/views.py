@@ -1,17 +1,14 @@
-from rest_framework import viewsets, views, generics
+from rest_framework import viewsets
 from rest_framework import permissions
 from .filters import OrderFilter
 from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
 from rest_framework.response import Response
 from rest_framework import status
-
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from products.models import Menu
 from shifts.models import Shift
 from attendance.permissions import IsEmployee
 from employees.permissions import IsAdmin
@@ -115,17 +112,13 @@ class OrderViewSetAdmin(viewsets.ModelViewSet):
 
 
 class PendingOrderView(viewsets.ModelViewSet):
-    # http_method_names = ['get','patch','options','trace']
     queryset = Order.objects.all()
     serializer_class = OrderSerializerAdmin
-    # permission_classes = [IsAdmin,]
     permission_classes = (permissions.AllowAny,)
     authentication_classes = (JWTAuthentication,)
 
     def list(self, request, *args, **kwargs):
-        print("list")
         last_order = Order.objects.first()
-        print(last_order)
         if last_order.order_status == "PENDING":
             return Response({'last_order': OrderSerializerAdmin(last_order).data})
         
