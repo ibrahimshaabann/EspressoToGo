@@ -1,7 +1,6 @@
-from django.db.models import Q
 from rest_framework import views, status
 from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
@@ -9,13 +8,10 @@ from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from users.authentication import CustomUserAuthenticationBackend
 
-
 from .permissions import IsAdmin
 from .filters import EmployeeFilter
 from .models import Employee
 from .serializers import EmployeeSerializer, CashierSignUpSerializer
-
-
 
 
 class EmployeeViewSetForAdmins(viewsets.ModelViewSet):
@@ -102,9 +98,6 @@ class EmployeeLoginView(views.APIView):
 
         email_or_phone_or_username = request.data.get("email_or_phone_or_username")
         password = request.data.get("password")
-
-        print(email_or_phone_or_username, password)
-
         employee = CustomUserAuthenticationBackend().authenticate(
             request=request, username=email_or_phone_or_username, password=password
         )

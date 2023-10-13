@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Shift
-from employees.serializers import EmployeeSerializer, EmployeeSerializerOnShifts
 
 
 class ShiftEmployeeSerizlier(serializers.ModelSerializer):
@@ -32,11 +31,6 @@ class ShiftEmployeeSerizlier(serializers.ModelSerializer):
 
         return super().create(validated_data)
         
-    
-    
-    # def to_representation(self, instance):
-        # representation = super().to_representation(instance)
-
 
 class ShiftAdminSerizlier(serializers.ModelSerializer):
     """
@@ -48,18 +42,5 @@ class ShiftAdminSerizlier(serializers.ModelSerializer):
     class Meta:
         model = Shift
         fields = '__all__'
-
-    
-
-# class ShiftReportSerizlier(serializers.ModelSerializer):
-#     """
-#     Don't forget to include another serializer
-#     """
-
-#     related_shift = ShiftEmployeeSerizlier()
-
-#     class Meta:
-#         model = ShiftReport
-#         fields = '__all__'
 
     

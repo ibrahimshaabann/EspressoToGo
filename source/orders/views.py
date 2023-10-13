@@ -4,6 +4,8 @@ from .filters import OrderFilter
 from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
+
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.response import Response
@@ -20,7 +22,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     """
     CRUD for Orders
     """
-    queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
+    queryset = Order.objects.all().prefetch_related('order_items')
     permission_classes = [IsEmployee]
     filterset_class = OrderFilter
     filter_backends = [DjangoFilterBackend, ]
@@ -112,7 +114,8 @@ class OrderViewSetAdmin(viewsets.ModelViewSet):
 
 
 class PendingOrderView(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
+    # http_method_names = ['get','patch','options','trace']
+    queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
     serializer_class = OrderSerializerAdmin
     permission_classes = (permissions.AllowAny,)
     authentication_classes = (JWTAuthentication,)

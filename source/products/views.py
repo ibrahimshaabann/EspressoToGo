@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from products.filters import MenuFilter
 from .models import Category, Menu

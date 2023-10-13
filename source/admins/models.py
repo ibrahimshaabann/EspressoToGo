@@ -2,6 +2,7 @@ from django.db import models
 
 from users.models import Person
 
+
 from .managers import AdminManager
 
 import uuid
@@ -30,8 +31,11 @@ class Admin(AdminBridge):
     """
     # admin_id = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
-
     def save(self, force_update=True, commit=True, *args, **kwargs):
+        
+        self.is_staff = True
+        self.is_superuser = True 
+        
         if not self.role:
             self.role = self.base_role
         return super().save(force_update, commit, *args, **kwargs)
@@ -42,3 +46,4 @@ class Admin(AdminBridge):
         verbose_name = "Admin"
         verbose_name_plural = "الادمنز"
     
+

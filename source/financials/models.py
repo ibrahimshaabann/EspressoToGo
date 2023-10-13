@@ -1,5 +1,4 @@
 from django.db import models
-from employees.models import Employee
 from products.validators import validate_price
 
 from users.models import Person

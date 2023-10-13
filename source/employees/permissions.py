@@ -1,7 +1,6 @@
 from rest_framework.permissions import BasePermission
 
 
-
 class IsAdmin(BasePermission):
     """
     Custom permission to allow only admin users to access. 
