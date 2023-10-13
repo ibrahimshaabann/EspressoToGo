@@ -1,24 +1,17 @@
-from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from admins.models import Admin
 from .permissions import IsAdmin, IsEmployee
-from django.core.exceptions import ValidationError
 from .serializers import ShiftEmployeeSerizlier,ShiftAdminSerizlier
 from .models import Shift
-from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .filters import ShiftFilter
-from orders.models import Order
-from financials.models import Cost
 from django.shortcuts import get_object_or_404
 from employees.models import Employee
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import action
 
 
 class ShiftEmployeeViewSet(ModelViewSet):

@@ -1,5 +1,4 @@
 from decimal import Decimal
-from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter
 from rest_framework.views import APIView
@@ -9,11 +8,9 @@ from .models import Cost
 from orders.models import Order
 from .serializers import CostSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from employees.permissions import IsAdmin
-from employees.models import Employee
 from django.shortcuts import get_object_or_404
 from shifts.models import Shift
 from .permissions import IsAdminOrEmployee
@@ -23,9 +20,7 @@ class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
     authentication_classes = [JWTAuthentication,]
-    # permission_classes = [AllowAny, ]
     permission_classes = [IsAdminOrEmployee, ]
-
     filterset_class = CostFilter
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = ['date', 'description','date', 'user__username' ]

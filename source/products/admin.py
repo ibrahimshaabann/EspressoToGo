@@ -5,7 +5,7 @@ from .filters import MenuFilter
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'category', 'available')
-    list_filter = ('name', 'category', 'available')  
+    list_filter = ( 'category', 'available')  
 
     search_fields = ('id','name', 'category__name')  
 

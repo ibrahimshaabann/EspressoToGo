@@ -1,5 +1,4 @@
 from django.db import models
-from employees.models import Employee
 from products.validators import validate_price
 
 from users.models import Person
@@ -40,7 +39,7 @@ class Cost(models.Model):
     
     class Meta:
         verbose_name = "Cost"
-        verbose_name_plural = "المالية"
+        verbose_name_plural = "المصاريف"
         db_table = "costs" 
         ordering = ['-id']
 

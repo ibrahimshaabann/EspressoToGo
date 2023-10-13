@@ -6,7 +6,7 @@ from .models import Person
 
 class PersonModelAdmin(admin.ModelAdmin):
     list_display = ["full_name"]
-    
+
     def has_delete_permission(self, request, obj=None):
         return False  # Disables the Delete of the records
     
@@ -32,5 +32,5 @@ class PersonModelAdmin(admin.ModelAdmin):
             kwargs['label'] = 'الايميل'
         return super().formfield_for_dbfield(db_field, **kwargs)
     
-admin.site.register(Person, PersonModelAdmin)
+# admin.site.register(Person, PersonModelAdmin)
 admin.site.unregister(Group)

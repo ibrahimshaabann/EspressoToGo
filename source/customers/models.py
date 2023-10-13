@@ -4,7 +4,6 @@ from users.models import Person
 
 from .managers import CustomerManager
 
-import uuid
 
 class CustomerBridge(Person):
     """
@@ -28,7 +27,6 @@ class Customer(CustomerBridge):
     This is the Customer model.
     It is used to create an Customer instance.
     """
-    # Customer_id = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
 
     address = models.TextField(blank=True, null=True)
 

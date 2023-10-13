@@ -8,3 +8,5 @@ from django.shortcuts import render
 @admin.register(Cost)
 class CostAdmin(admin.ModelAdmin):
     list_display = ['description', 'price', 'date' , 'type','user']
+    list_filter = ['date','user','type',]
+    search_fields = ['user__full_name','description',]

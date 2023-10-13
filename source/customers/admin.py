@@ -1,10 +1,9 @@
 from django.contrib import admin
 from .models import Customer
 
-# admin.site.register(Customer)
-# 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display= ("id","full_name", 'phone_number')
+    list_display= ("id","full_name", 'phone_number',)
+    fields = ["full_name","phone_number", "gender","address" ]
     
 
     # list_filter = ('full_name', 'phone_number',)  

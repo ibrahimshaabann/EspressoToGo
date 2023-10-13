@@ -8,8 +8,6 @@ from .validators import valid_phone_number
 
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
-# from django_extensions.db.models import TimeStampedModel
-
 
 class Person(AbstractBaseUser, PermissionsMixin):
     """

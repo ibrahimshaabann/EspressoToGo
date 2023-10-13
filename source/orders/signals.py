@@ -26,7 +26,6 @@ def update_total_price_of_order(sender, instance, **kwargs):
     """
     order = instance.order
     order_items = order.order_items.all()
-    print(order_items)
     total_price = sum(item.total_price_of_order_items for item in order_items)
     order.total_price_of_order = total_price
     order.save()

@@ -81,6 +81,5 @@ class EmployeeAttendanceViewSet(ViewSet):
         employees = Employee.objects.exclude(
             employee_attendance__out_time__isnull=True
         ).distinct()
-        print(employees)
         serializer = EmployeeSerializerOnAttendance(employees, many=True)
         return Response(serializer.data)
