@@ -38,8 +38,6 @@ class CostViewSet(ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
 
-    # def destroy(self, request, *args, **kwargs):
-        # return super().destroy(request, *args, **kwargs)
 
 class BenefitsViewSet(APIView):
 
