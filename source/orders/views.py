@@ -78,7 +78,10 @@ class OrderViewSet(viewsets.ModelViewSet):
         order_status = request.data.get('order_status', None)
         order_type = request.data.get('order_type', None)
         customer_id = request.data.get('customer', None)
-        customer = get_object_or_404(Customer,pk=customer_id)
+        try:
+            customer = Customer.objects.filter(id=customer_id)
+        except Exception as e:
+            raise ValidationError(str(e))
         
         if order_status:
             order.order_status = order_status
