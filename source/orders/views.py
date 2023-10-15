@@ -8,7 +8,6 @@ from customers.models import Customer
 
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from shifts.models import Shift
@@ -22,7 +21,8 @@ class OrderViewSet(viewsets.ModelViewSet):
     """
     CRUD for Orders
     """
-    queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
+
+    queryset = Order.objects.all().prefetch_related('order_items')
     permission_classes = [IsEmployee]
     filterset_class = OrderFilter
     filter_backends = [DjangoFilterBackend, ]
@@ -34,7 +34,15 @@ class OrderViewSet(viewsets.ModelViewSet):
 
         else:
             return OrderGetSerializer
-
+        
+    def list(self, request, *args, **kwargs):
+        """
+        Overriding list method to get s=the current shif tobjects only
+        """
+        current_shift_orders_queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
+        shift_orders_serializer = self.get_serializer(current_shift_orders_queryset, many=True)
+        return Response(shift_orders_serializer.data, status=status.HTTP_200_OK)
+   
     def create(self, request, *args, **kwargs):
         # Getting the current shift to assign it to the order object as its related shift
         try:
@@ -65,7 +73,6 @@ class OrderViewSet(viewsets.ModelViewSet):
         # Continue with the update
         return super().update(request, *args, **kwargs)
     
-
     def partial_update(self, request, *args, **kwargs):
         order = self.get_object()
         order_status = request.data.get('order_status', None)
@@ -115,9 +122,7 @@ class OrderViewSetAdmin(viewsets.ModelViewSet):
     authentication_classes = (JWTAuthentication,)
 
 
-
 class PendingOrderView(viewsets.ModelViewSet):
-    # http_method_names = ['get','patch','options','trace']
     queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
     serializer_class = OrderSerializerAdmin
     permission_classes = (permissions.AllowAny,)
@@ -127,11 +132,9 @@ class PendingOrderView(viewsets.ModelViewSet):
         last_order = Order.objects.first()
         if last_order.order_status == "PENDING":
             return Response({'last_order': OrderSerializerAdmin(last_order).data})
-        
         else:
             return Response({'last_order': None})
     
-
     def partial_update(self, request, *args, **kwargs):
         last_order = self.get_object()
         order_status = request.data.get('order_status', None)
