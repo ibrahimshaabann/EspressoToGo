@@ -131,7 +131,6 @@ class PendingOrderView(viewsets.ModelViewSet):
 
     def partial_update(self, request, *args, **kwargs):
         last_order = self.get_object()
-        print(last_order)
         order_status = request.data.get('order_status', None)
         if order_status:
             last_order.order_status = order_status
