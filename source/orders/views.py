@@ -4,7 +4,7 @@ from .filters import OrderFilter
 from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
+from customers.models import Customer
 
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,11 +22,10 @@ class OrderViewSet(viewsets.ModelViewSet):
     """
     CRUD for Orders
     """
-    queryset = Order.objects.all().prefetch_related('order_items')
+    queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
     permission_classes = [IsEmployee]
     filterset_class = OrderFilter
     filter_backends = [DjangoFilterBackend, ]
-
 
     def get_serializer_class(self):
 
@@ -55,7 +54,6 @@ class OrderViewSet(viewsets.ModelViewSet):
 
         # Retrieve the Shift instance with the given shift ID (1 in this case)
         shift_id = request.data.get('shift', None)
-        
         shift = get_object_or_404(Shift, pk=shift_id)
         
         if shift:
@@ -72,10 +70,15 @@ class OrderViewSet(viewsets.ModelViewSet):
         order = self.get_object()
         order_status = request.data.get('order_status', None)
         order_type = request.data.get('order_type', None)
+        customer_id = request.data.get('customer', None)
+        customer = get_object_or_404(Customer,pk=customer_id)
+        
         if order_status:
             order.order_status = order_status
         if order_type:
             order.order_type = order_type
+        if customer:
+            order.customer = customer
         order.save()
         return Response(
             {

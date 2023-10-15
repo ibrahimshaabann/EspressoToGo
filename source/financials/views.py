@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404
 from shifts.models import Shift
 from .permissions import IsAdminOrEmployee
 from users.models import Person
-
+from employees.models import Employee
 class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
@@ -27,7 +27,7 @@ class CostViewSet(ModelViewSet):
 
 
     def create(self, request, *args, **kwargs):
-        user_created_the_cost = get_object_or_404(Person, pk=request.user.id)
+        user_created_the_cost = get_object_or_404(Employee, pk=request.user.id)
         
         request.data["user"] = user_created_the_cost
         
@@ -38,8 +38,6 @@ class CostViewSet(ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
 
-    # def destroy(self, request, *args, **kwargs):
-        # return super().destroy(request, *args, **kwargs)
 
 class BenefitsViewSet(APIView):
 

@@ -1,5 +1,6 @@
 from django.db import models
 from products.validators import validate_price
+from employees.models import Employee
 
 from users.models import Person
 
@@ -25,7 +26,7 @@ class Cost(models.Model):
                             default=Types.NORMAL_COST,
                             blank=False,verbose_name="النوع")
 
-    user = models.ForeignKey(Person,
+    user = models.ForeignKey(Employee,
                              verbose_name='مسئول الشيفت',
                              on_delete=models.SET_NULL,
                              null=True)
