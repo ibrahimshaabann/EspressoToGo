@@ -79,7 +79,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         order_type = request.data.get('order_type', None)
         customer_id = request.data.get('customer', None)
         try:
-            customer = Customer.objects.filter(id=customer_id)
+            customer = Customer.objects.filter(id=customer_id).first()
         except Exception as e:
             raise ValidationError(str(e))
         
