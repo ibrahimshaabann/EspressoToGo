@@ -5,7 +5,6 @@ from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from customers.models import Customer
-
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import status
@@ -16,6 +15,7 @@ from employees.permissions import IsAdmin
 from .permissions import IsAdminOrEmployee
 from django.core.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.generics import ListAPIView
 
 class OrderViewSet(viewsets.ModelViewSet):
     """
@@ -125,7 +125,7 @@ class OrderViewSetAdmin(viewsets.ModelViewSet):
     authentication_classes = (JWTAuthentication,)
 
 
-class PendingOrderView(viewsets.ModelViewSet):
+class LastOrderView(viewsets.ModelViewSet):
     queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
     serializer_class = OrderSerializerAdmin
     permission_classes = (permissions.AllowAny,)
@@ -148,4 +148,57 @@ class PendingOrderView(viewsets.ModelViewSet):
             "message": "Order updated successfully",
             "order": OrderSerializerAdmin(last_order).data
         }, status=status.HTTP_200_OK)
+    
+
+
+
+class PendingOrdersView(viewsets.ModelViewSet):
+    queryset = Order.objects.filter(order_status="PENDING").prefetch_related('order_items')
+    permission_classes = [IsEmployee, ]
+    authentication_classes = [JWTAuthentication, ]
+    filter_backends = [DjangoFilterBackend,]
+    filterset_class = OrderFilter
+    
+    def get_serializer_class(self):
+        if self.request.method in ['PATCH', 'PUT']:
+            return OrderCreationSerializer
         
+        elif self.request.method == 'GET':
+            return OrderGetSerializer
+        
+    # def list(self, request, *args, **kwargs):
+    #     return super().list(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        order_id = self.request.query_params.get('id', None)
+
+        if order_id:
+            self.queryset = self.get_queryset().filter(id=order_id)
+        else :
+            self.queryset = self.get_queryset()
+
+
+        # pending_orders_list = Order.objects.filter(order_status = 'PENDING')
+        serializer = self.get_serializer(self.queryset, many = True)
+        return Response(
+            serializer.data, status=status.HTTP_200_OK
+        )
+    
+    def partial_update(self, request, *args, **kwargs):
+        # order_id = self.kwargs.get('pk')
+        order_instance = self.get_object()
+        retreived_order_status = request.data['order_status']
+        order_instance.order_status = retreived_order_status
+        order_instance.save()
+        order_serializer = self.get_serializer(order_instance)
+        return Response(order_serializer.data,status=status.HTTP_200_OK)
+    
+    def retrieve(self, request, *args, **kwargs):
+        order_instance = self.get_object()
+        print(order_instance)
+        order_serializer = self.get_serializer(order_instance)
+        return Response(order_serializer.data,status=status.HTTP_200_OK)
+    
+
+    
+
