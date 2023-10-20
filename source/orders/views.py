@@ -151,7 +151,6 @@ class LastOrderView(viewsets.ModelViewSet):
     
 
 
-
 class PendingOrdersView(viewsets.ModelViewSet):
     queryset = Order.objects.filter(order_status="PENDING").prefetch_related('order_items')
     permission_classes = [IsEmployee, ]
@@ -166,38 +165,31 @@ class PendingOrdersView(viewsets.ModelViewSet):
         elif self.request.method == 'GET':
             return OrderGetSerializer
         
-    # def list(self, request, *args, **kwargs):
-    #     return super().list(request, *args, **kwargs)
-
     def list(self, request, *args, **kwargs):
         order_id = self.request.query_params.get('id', None)
 
-        if order_id:
-            self.queryset = self.get_queryset().filter(id=order_id)
-        else :
-            self.queryset = self.get_queryset()
+        try:
+             # if id queryparam is sent in the url, filter the returned result. else, retrieve all pending orders
+             self.queryset = self.get_queryset().filter(id=order_id) if order_id else self.get_queryset()
+        except Exception as e:
+            print(str(e))
 
-
-        # pending_orders_list = Order.objects.filter(order_status = 'PENDING')
         serializer = self.get_serializer(self.queryset, many = True)
-        return Response(
-            serializer.data, status=status.HTTP_200_OK
-        )
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def partial_update(self, request, *args, **kwargs):
         # order_id = self.kwargs.get('pk')
         order_instance = self.get_object()
         retreived_order_status = request.data['order_status']
-        order_instance.order_status = retreived_order_status
+        order_instance.order_status = retreived_order_status if retreived_order_status else order_instance.order_status
         order_instance.save()
         order_serializer = self.get_serializer(order_instance)
-        return Response(order_serializer.data,status=status.HTTP_200_OK)
+        return Response(order_serializer.data, status=status.HTTP_200_OK)
     
     def retrieve(self, request, *args, **kwargs):
         order_instance = self.get_object()
-        print(order_instance)
         order_serializer = self.get_serializer(order_instance)
-        return Response(order_serializer.data,status=status.HTTP_200_OK)
+        return Response(order_serializer.data, status=status.HTTP_200_OK)
     
 
     
