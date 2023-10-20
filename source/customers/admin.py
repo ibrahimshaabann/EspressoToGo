@@ -13,6 +13,4 @@ class CustomerAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False  # Disables the Delete of the records
 
-
-
 admin.site.register(Customer,CustomerAdmin)

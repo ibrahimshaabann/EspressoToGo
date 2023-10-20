@@ -12,7 +12,7 @@ class Delivery(TimeStampedModel):
     for_order = models.ForeignKey(Order, on_delete=models.CASCADE, null=False, blank=False, related_name='order_deliveries',verbose_name="رقم الاوردر")
     responsible_employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, blank=True, related_name='employee_deliveries',verbose_name="الموظف المسئول")
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False, blank=False, related_name='customer_delivery',verbose_name="العميل")
-    # tax = models.DecimalField(null=True, blank=True, verbose_name="tax", default=0,max_digits=7, decimal_places=2, validators=[validate_price])
+    tax = models.DecimalField(null=True, blank=True, verbose_name="tax", default=0.00,max_digits=7, decimal_places=2, validators=[validate_price])
     
     class Meta:
         db_table = 'deliveries'
