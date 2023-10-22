@@ -4,7 +4,7 @@ from .models import Employee
 
 class EmployeeModelAdmin(admin.ModelAdmin):
 
-    fields = ["full_name", "username", "email", "password", "phone_number", "gender", "birth_date"]
+    fields = ["full_name", "username", "email", "password", "phone_number", "gender", "birth_date", "salary"]
   
     # this function to email field name to arabic 
     def formfield_for_dbfield(self, db_field, **kwargs):
