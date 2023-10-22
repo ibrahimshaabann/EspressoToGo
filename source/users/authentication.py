@@ -19,5 +19,8 @@ class CustomUserAuthenticationBackend(ModelBackend):
         except Person.DoesNotExist:
             return None
         else:
-            if user.check_password(password):
-                return user
+            try:
+                if user.check_password(password):
+                    return user
+            except Exception as e:
+                print(e)
