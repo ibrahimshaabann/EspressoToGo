@@ -31,8 +31,11 @@ class OrderGetSerializer(serializers.ModelSerializer):
     """
     order_items = OrderItemsSerializer(many=True, read_only=True)
     shift = serializers.StringRelatedField()
-    total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
+    
+    # Here we make stringRelated() to retrieve the customer to show it on the customer screen
+    customer = serializers.StringRelatedField()
 
+    total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     created_at = serializers.DateTimeField(format='%d/%m/%Y %H:%M', required=False)
 
     class Meta:
