@@ -14,8 +14,9 @@ from employees.permissions import IsAdmin
 from django.shortcuts import get_object_or_404
 from shifts.models import Shift
 from .permissions import IsAdminOrEmployee
-from users.models import Person
 from employees.models import Employee
+
+
 class CostViewSet(ModelViewSet):
     queryset = Cost.objects.all()
     serializer_class = CostSerializer

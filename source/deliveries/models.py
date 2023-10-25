@@ -22,3 +22,4 @@ class Delivery(TimeStampedModel):
 
     def str(self) -> str:
         return f"{self.id}"
+    

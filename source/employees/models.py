@@ -46,7 +46,8 @@ class Employee(EmployeeBridge):
     salary = models.DecimalField(
         max_digits=10, decimal_places=2, 
         null=False, blank=False, 
-        validators=[valid_salary]
+        validators=[valid_salary],
+        verbose_name='المرتب'
     )
 
 

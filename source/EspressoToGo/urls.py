@@ -19,13 +19,13 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+admin.site.index_template = "admin/index.html"
+
 urlpatterns = [
     # path('admin/', admin.site.urls),
 
     # For Production
     path('0mysecureadminpanelurl1/', admin.site.urls),
-
-
     path('products/',include('products.urls')),
     path('financials/',include('financials.urls')),
     path('employees/', include('employees.urls')),
@@ -36,6 +36,7 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('deliveries/', include('deliveries.urls')),
     path('customers/', include('customers.urls')),
+    path('ajenda/', include('ajenda.urls'))
 
 
 ]
