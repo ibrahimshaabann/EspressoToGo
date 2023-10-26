@@ -11,7 +11,7 @@ class Attendance(models.Model):
     
     class Meta:
         verbose_name_plural = "الحضور والانصراف"
-        db_table = "Attendance"
+        db_table = "attendance"
         ordering = ["-in_time"]
     def __str__(self):
         return f"{self.employee_attended.full_name}"
