@@ -24,8 +24,8 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     queryset = Order.objects.all().prefetch_related('order_items')
     permission_classes = [IsEmployee]
-    filterset_class = OrderFilter
     filter_backends = [DjangoFilterBackend, ]
+    filterset_class = OrderFilter
 
     def get_serializer_class(self):
 
@@ -39,7 +39,16 @@ class OrderViewSet(viewsets.ModelViewSet):
         """
         Overriding list method to get s=the current shif tobjects only
         """
+        # order_id = self.request.query_params.get('id', None)
+        # print("*"*20)
+        # print(order_id)
+
+        # self.queryset = self.get_queryset().filter(id=order_id) if order_id else self.get_queryset()
+        # print(self.queryset)
+
         current_shift_orders_queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
+        order_id = self.request.query_params.get('id', None)
+        current_shift_orders_queryset = current_shift_orders_queryset.filter(id=order_id) if order_id else current_shift_orders_queryset
         shift_orders_serializer = self.get_serializer(current_shift_orders_queryset, many=True)
         return Response(shift_orders_serializer.data, status=status.HTTP_200_OK)
    
@@ -169,8 +178,8 @@ class PendingOrdersView(viewsets.ModelViewSet):
         order_id = self.request.query_params.get('id', None)
 
         try:
-             # if id queryparam is sent in the url, filter the returned result. else, retrieve all pending orders
-             self.queryset = self.get_queryset().filter(id=order_id) if order_id else self.get_queryset()
+            # if id queryparam is sent in the url, filter the returned result. else, retrieve all pending orders
+            self.queryset = self.get_queryset().filter(id=order_id) if order_id else self.get_queryset()
         except Exception as e:
             print(str(e))
 
