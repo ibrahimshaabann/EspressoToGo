@@ -7,7 +7,7 @@ from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 from django_filters.rest_framework import DjangoFilterBackend
-from .filters import DeliveryFilter
+# from .filters import DeliveryFilter
 from .permissions import IsAdminOrEmployee
 from rest_framework.response import Response
 from rest_framework import status
@@ -20,7 +20,7 @@ class DeliveryViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrEmployee,)
     authentication_classes = [JWTAuthentication]
     throttle_classes = (UserRateThrottle, AnonRateThrottle,)
-    filterset_class = DeliveryFilter  
+    # filterset_class = DeliveryFilter  
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter,]
     search_fields = ['description', 'customer__full_name', 'customer__phone_number']
 
