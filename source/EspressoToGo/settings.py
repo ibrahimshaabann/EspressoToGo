@@ -266,6 +266,8 @@ JAZZMIN_SETTINGS = {
 "show_sidebar": True,
 "navigation_expanded": True,
 "show_ui_builder": True,
+"order_with_respect_to": ["shifts","attendance","products","orders","employees","admins","customers"],
+
 "topmenu_links": 
 [
   {'name': 'Espresso to Go | I Will Love You Forever', 'url': 'https://espressotogo-production-0fe0.up.railway.app/0mysecureadminpanelurl1/',},
