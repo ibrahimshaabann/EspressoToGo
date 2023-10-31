@@ -3,7 +3,7 @@ from .models import Customer
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display= ("id","full_name", 'phone_number',)
-    fields = ["full_name","phone_number", "gender","address" ]
+    fields = ["full_name","phone_number", "gender", ]
     
 
     # list_filter = ('full_name', 'phone_number',)  

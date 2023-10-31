@@ -50,7 +50,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False, blank=True, null=True)
 
     phone_number = models.CharField(
-        max_length=20, blank=False, 
+        max_length=20, blank=True, 
         null=True, unique=True, db_index=True,
         validators=[valid_phone_number]
         , verbose_name="رقم التليفون"

@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "attendance", #
     "deliveries", #
     "ajenda",   #
-
+    "address",
     "logEntry" #
 ]
 
@@ -171,7 +171,6 @@ WSGI_APPLICATION = 'EspressoToGo.wsgi.application'
 
 DATABASES = {
     "default": {
-        "DATABASE_URL": os.environ.get("DATABASE_URL"),
         "ENGINE": "django.db.backends.postgresql",
         "DATABASE_URL": str(os.environ.get("DATABASE_URL")),
         "NAME": str(os.environ.get("DATABASE_NAME")),

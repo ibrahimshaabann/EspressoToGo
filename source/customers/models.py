@@ -28,7 +28,7 @@ class Customer(CustomerBridge):
     It is used to create an Customer instance.
     """
 
-    address = models.TextField(blank=True, null=True)
+    # address = models.TextField(blank=True, null=True)
 
 
     class Meta:
