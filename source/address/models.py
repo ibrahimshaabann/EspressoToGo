@@ -6,7 +6,7 @@ from customers.models import Customer
 class Address(models.Model):
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE,verbose_name="العميل")
-    address = models.TextField(default=False,verbose_name="العنوان")
+    address = models.TextField(verbose_name="العنوان")
 
     class Meta:
         verbose_name_plural = "العناوين"
