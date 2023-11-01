@@ -3,7 +3,7 @@ from django.db import models, transaction
 from shifts.models import Shift
 
 from products.models import Menu
-
+from products.validators import validate_price
 from customers.models import Customer
 from address.models import Address
 
@@ -40,12 +40,11 @@ class Order(models.Model):
                             blank=False,
                             related_name='orders',verbose_name="الشيفت")
     
-
     total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True,verbose_name="اجمالي السعر")
+    tax = models.DecimalField(blank=True, null=True,  verbose_name="سعر التوصيل", max_digits=7, decimal_places=2, validators=[validate_price])
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null = True, blank=True,verbose_name="العنوان ")
-
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, related_name='orders', null=True, blank=True,verbose_name="العميل")
-    # address = models.ForeignKey(Address, on_delete=models.SET_NULL, null = True, blank=True,verbose_name="العنوان")
+
     class Meta:
         db_table = 'orders'
         verbose_name = "Order"

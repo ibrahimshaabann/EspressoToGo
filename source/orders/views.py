@@ -38,7 +38,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         
     def list(self, request, *args, **kwargs):
         """
-        Overriding list method to get s=the current shif tobjects only
+        Overriding list method to get the current shift objects only
         """
         # order_id = self.request.query_params.get('id', None)
         # print("*"*20)
@@ -89,6 +89,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         order_type = request.data.get('order_type', None)
         customer_id = request.data.get('customer', None)
         address_id = request.data.get('address', None)
+        tax = request.data.get('tax', None)
         address = None
         try:
             customer = Customer.objects.filter(id=customer_id).first()
@@ -105,6 +106,9 @@ class OrderViewSet(viewsets.ModelViewSet):
             order.customer = customer
         if address:
             order.address = address
+        if tax:
+            order.tax = tax
+        
         order.save()
         
         return Response(
