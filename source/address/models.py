@@ -12,4 +12,4 @@ class Address(models.Model):
         verbose_name_plural = "العناوين"
         db_table = "address"
     def __str__(self):
-        return f"{self.customer.full_name}"
+        return f"{self.address}"

@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework import permissions
+from address.models import Address
 from .filters import OrderFilter
 from .models import Order, OrderItem
 from .serializers import  OrderItemSerializer, OrderSerializerAdmin, OrderCreationSerializer, OrderGetSerializer
@@ -87,8 +88,11 @@ class OrderViewSet(viewsets.ModelViewSet):
         order_status = request.data.get('order_status', None)
         order_type = request.data.get('order_type', None)
         customer_id = request.data.get('customer', None)
+        address_id = request.data.get('address', None)
+
         try:
             customer = Customer.objects.filter(id=customer_id).first()
+            address = Address.objects.get(id=address_id)
         except Exception as e:
             raise ValidationError(str(e))
         
@@ -98,7 +102,10 @@ class OrderViewSet(viewsets.ModelViewSet):
             order.order_type = order_type
         if customer:
             order.customer = customer
+        if address:
+            order.address = address
         order.save()
+        
         return Response(
             {
                 "message": "Order updated successfully",
