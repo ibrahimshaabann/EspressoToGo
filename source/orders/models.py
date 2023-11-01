@@ -5,6 +5,7 @@ from shifts.models import Shift
 from products.models import Menu
 
 from customers.models import Customer
+from address.models import Address
 
 
 class Order(models.Model):
@@ -42,11 +43,8 @@ class Order(models.Model):
 
     total_price_of_order = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True,verbose_name="اجمالي السعر")
 
-    customer = models.ForeignKey(Customer,
-                                 on_delete=models.SET_NULL,
-                                 related_name='orders',
-                                 null=True,
-                                 blank=True,verbose_name="العميل")
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, related_name='orders', null=True, blank=True,verbose_name="العميل")
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null = True, blank=True,verbose_name="العنوان")
     class Meta:
         db_table = 'orders'
         verbose_name = "Order"
