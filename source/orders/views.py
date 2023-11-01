@@ -89,10 +89,11 @@ class OrderViewSet(viewsets.ModelViewSet):
         order_type = request.data.get('order_type', None)
         customer_id = request.data.get('customer', None)
         address_id = request.data.get('address', None)
-
+        address = None
         try:
             customer = Customer.objects.filter(id=customer_id).first()
-            address = Address.objects.get(id=address_id)
+            if address_id:
+                address = Address.objects.get(id=address_id)
         except Exception as e:
             raise ValidationError(str(e))
         
