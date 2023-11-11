@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet,ViewSet
 from rest_framework.filters import SearchFilter
-
+from django.db.models import Q,Count
 from employees.models import Employee
 from employees.serializers import EmployeeSerializerOnAttendance
 from .models import Attendance
@@ -78,8 +78,7 @@ class EmployeeAttendanceViewSet(ViewSet):
 
     authentication_classes = [JWTAuthentication]
     def list(self, request):
-        employees = Employee.objects.exclude(
-            employee_attendance__out_time__isnull=True
-        ).distinct()
+        employees = Employee.objects.filter(Q(employee_attendance__out_time__isnull=False) | Q(employee_attendance__isnull=True))
         serializer = EmployeeSerializerOnAttendance(employees, many=True)
         return Response(serializer.data)
+    
