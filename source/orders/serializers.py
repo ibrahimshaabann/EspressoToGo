@@ -34,7 +34,7 @@ class OrderGetSerializer(serializers.ModelSerializer):
     order_items = OrderItemsSerializer(many=True, read_only=True)
     shift = serializers.StringRelatedField()
     address = serializers.StringRelatedField()
-
+    
     
     # Here we make stringRelated() to retrieve the customer to show it on the customer screen
     
@@ -44,7 +44,8 @@ class OrderGetSerializer(serializers.ModelSerializer):
         if customer_instance:
             representation["customer"] = {
                 "id":customer_instance.id,
-                "name": customer_instance.full_name
+                "name": customer_instance.full_name,
+                "phone_number":customer_instance.phone_number
             }
         return representation
 
