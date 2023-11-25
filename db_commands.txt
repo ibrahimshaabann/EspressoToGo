@@ -1,0 +1,4 @@
+pg_dump -h monorail.proxy.rlwy.net -p 59254 -U postgres -d railway -W -F c -f /home/hefny/EspressoToGo/data_21_11.dump
+
+
+pg_restore -h {host} -p 5432 -U postgres -d {target_database} -W -F c /path/to/backupfile.dump
