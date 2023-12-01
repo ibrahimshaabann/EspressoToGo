@@ -45,6 +45,9 @@ class Order(models.Model):
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null = True, blank=True,verbose_name="العنوان ")
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, related_name='orders', null=True, blank=True,verbose_name="العميل")
 
+    # An alternative for order_id, this attribute is created to start from 1 with each new shift
+    order_number = models.IntegerField(null=False, blank=False, verbose_name='رقم الأوردر' )
+
     class Meta:
         db_table = 'orders'
         verbose_name = "Order"

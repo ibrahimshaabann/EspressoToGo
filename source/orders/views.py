@@ -27,7 +27,8 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = [IsEmployee]
     filter_backends = [DjangoFilterBackend, ]
     filterset_class = OrderFilter
-
+    is_first_in_the_shift = False # this refers to the first order in the shift
+    
     def get_serializer_class(self):
 
         if self.request.method in ["POST", "PUT", "PATCH"]:
@@ -54,9 +55,14 @@ class OrderViewSet(viewsets.ModelViewSet):
         return Response(shift_orders_serializer.data, status=status.HTTP_200_OK)
    
     def create(self, request, *args, **kwargs):
+        print("*"*200)
         # Getting the current shift to assign it to the order object as its related shift
         try:
             request.data["shift"] = Shift.objects.first().id 
+            request.data["order_number"] = 1 if self.is_first_in_the_shift  else Order.objects.first().order_number +1 
+            self.is_first_in_the_shift = False
+            self.save()
+            print(self.is_first_in_the_shift)
         except Exception as e:
             raise ValidationError(str(e))
 

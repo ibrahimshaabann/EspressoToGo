@@ -8,7 +8,7 @@ class OrderItemsInline(admin.StackedInline):  #or admin.TabularInline
     extra = 0 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'order_status', 'order_type', 'total_price_of_order','shift','customer')
+    list_display = ('id', 'order_status', 'order_type', 'total_price_of_order','shift','customer', 'created_at')
     inlines = [OrderItemsInline]
     list_filter = ["created_at","order_status","customer","order_type"]
     search_fields = ["id",]

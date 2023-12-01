@@ -40,3 +40,6 @@ def update_total_price_on_delete(sender, instance, **kwargs):
     total_price = sum(item.total_price_of_order_items for item in order_items)
     order.total_price_of_order = total_price
     order.save()
+
+
+
