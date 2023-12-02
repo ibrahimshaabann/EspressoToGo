@@ -59,10 +59,12 @@ class OrderViewSet(viewsets.ModelViewSet):
         # Getting the current shift to assign it to the order object as its related shift
         try:
             request.data["shift"] = Shift.objects.first().id 
-            request.data["order_number"] = 1 if self.is_first_in_the_shift  else Order.objects.first().order_number +1 
-            self.is_first_in_the_shift = False
-            self.save()
-            print(self.is_first_in_the_shift)
+
+            # If the order is first in the shift, set order number to 1, else: new order num = last order num + 1
+            request.data["order_number"] = 1 if OrderViewSet.is_first_in_the_shift  else Order.objects.first().order_number +1 
+
+            OrderViewSet.is_first_in_the_shift = False
+            
         except Exception as e:
             raise ValidationError(str(e))
 

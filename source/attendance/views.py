@@ -1,8 +1,6 @@
-import json
-from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet,ViewSet
 from rest_framework.filters import SearchFilter
-from django.db.models import Q,Count
+from django.db.models import Q
 from employees.models import Employee
 from employees.serializers import EmployeeSerializerOnAttendance
 from .models import Attendance
