@@ -27,7 +27,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = [IsEmployee]
     filter_backends = [DjangoFilterBackend, ]
     filterset_class = OrderFilter
-    is_first_in_the_shift = False # this refers to the first order in the shift
+    is_order_first_in_the_shift = False # this refers to the first order in the shift
     
     def get_serializer_class(self):
 
@@ -55,19 +55,19 @@ class OrderViewSet(viewsets.ModelViewSet):
         return Response(shift_orders_serializer.data, status=status.HTTP_200_OK)
    
     def create(self, request, *args, **kwargs):
-        print("*"*200)
-        # Getting the current shift to assign it to the order object as its related shift
         try:
+            # Getting the current shift to assign it to the order object as its related shift    
             request.data["shift"] = Shift.objects.first().id 
 
             # If the order is first in the shift, set order number to 1, else: new order num = last order num + 1
-            request.data["order_number"] = 1 if OrderViewSet.is_first_in_the_shift  else Order.objects.first().order_number +1 
-
-            OrderViewSet.is_first_in_the_shift = False
-            
+            try:
+                request.data["order_number"] = 1 if OrderViewSet.is_order_first_in_the_shift  else Order.objects.first().order_number +1 
+            except Exception as e:
+                print(str(e))
+                
+            OrderViewSet.is_order_first_in_the_shift = False # Resetting the boolean to false again to increment the order counter normally 
         except Exception as e:
             raise ValidationError(str(e))
-
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
@@ -76,7 +76,6 @@ class OrderViewSet(viewsets.ModelViewSet):
         
         # GET order_items from request data
         order_items_data = request.data.get('order_items', None)
-        
 
         # Retrieve the Shift instance with the given shift ID (1 in this case)
         shift_id = request.data.get('shift', None)
@@ -87,7 +86,6 @@ class OrderViewSet(viewsets.ModelViewSet):
             order.shift = shift
             order.save()
         
-
         # Continue with the update
         return super().update(request, *args, **kwargs)
     
