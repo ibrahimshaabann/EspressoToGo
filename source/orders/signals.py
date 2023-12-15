@@ -8,6 +8,7 @@ def set_item_price_of_order_item(sender, instance, **kwargs):
     """used
     This signal is  to set the item price of order item when an order item is created or updated
     """
+
     instance.item_price = instance.menu_item.price
 
 

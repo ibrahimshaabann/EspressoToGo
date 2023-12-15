@@ -78,7 +78,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
             # If the order is first in the shift, set order number to 1, else: new order num = last order num + 1
             try:
-                request.data["order_number"] = 1 if OrderViewSet().is_order_first_in_the_shift  else Order.objects.first().order_number + 1 
+                request.data["order_number"] = 1 if OrderViewSet().is_order_first_in_the_shift else Order.objects.first().order_number + 1 
             except Exception as e:
                 print(str(e))
                 
