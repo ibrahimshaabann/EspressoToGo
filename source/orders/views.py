@@ -41,16 +41,25 @@ class OrderViewSet(viewsets.ModelViewSet):
         """
         Overriding list method to get the current shift objects only
         """
-        # order_id = self.request.query_params.get('id', None)
-        # print("*"*20)
-        # print(order_id)
 
-        # self.queryset = self.get_queryset().filter(id=order_id) if order_id else self.get_queryset()
-        # print(self.queryset)
-
+        # Getting the current shift orders
         current_shift_orders_queryset = Order.objects.filter(shift = Shift.objects.first()).prefetch_related('order_items')
+
+        # Getting the order_id query parameters from the requested link
         order_id = self.request.query_params.get('id', None)
+
+        # Getting the requested order based on the order_id query parameter in the link
         current_shift_orders_queryset = current_shift_orders_queryset.filter(id=order_id) if order_id else current_shift_orders_queryset
+
+        # Getting the order_number query parameter to search for from the link
+        order_num_to_search = self.request.query_params.get('order_num', None)
+
+        try: 
+            # Getting the requested order_number object and storing it in current_shift_orders_queryset
+            current_shift_orders_queryset = current_shift_orders_queryset.filter(order_number = order_num_to_search) if order_num_to_search else current_shift_orders_queryset
+        except Exception as e:
+            print(str(e))
+
         shift_orders_serializer = self.get_serializer(current_shift_orders_queryset, many=True)
         return Response(shift_orders_serializer.data, status=status.HTTP_200_OK)
    
