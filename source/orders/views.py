@@ -28,7 +28,11 @@ class OrderViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, ]
     filterset_class = OrderFilter
 
-    is_order_first_in_the_shifts = False # this refers to the first order in the shift
+    # is_order_first_in_the_shifts = False # this refers to the first order in the shift
+
+    is_order_first_in_the_shifts = None # this refers to the first order in the shift
+
+
     
     def get_serializer_class(self):
 
@@ -79,11 +83,12 @@ class OrderViewSet(viewsets.ModelViewSet):
 
             # If the order is first in the shift, set order number to 1, else: new order num = last order num + 1
             try:
-                request.data["order_number"] = 1 if OrderViewSet().is_order_first_in_the_shift else Order.objects.first().order_number + 1 
+                request.data["order_number"] = 1 if OrderViewSet().is_order_first_in_the_shift else Order.objects.first().order_number + 1
+                OrderViewSet().is_order_first_in_the_shift = False # Resetting the boolean to false again to increment the order counter normally
             except Exception as e:
                 print(str(e))
                 
-            OrderViewSet().is_order_first_in_the_shift = False # Resetting the boolean to false again to increment the order counter normally
+            # OrderViewSet().is_order_first_in_the_shift = False # Resetting the boolean to false again to increment the order counter normally
 
         except Exception as e:
             raise ValidationError(str(e))
