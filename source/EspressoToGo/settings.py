@@ -272,7 +272,7 @@ JAZZMIN_SETTINGS = {
 
 "topmenu_links": 
 [
-  {'name': 'Espresso to Go | I Will Love You Forever', 'url': 'https://espressotogo-testing.up.railway.app/0mysecureadminpanelurl1/0mysecureadminpanelurl1/',},
+  {'name': 'Espresso to Go | I Will Love You Forever', 'url': 'https://espressotogo-testing.up.railway.app/0mysecureadminpanelurl1/',},
   {'name':"الكاشير","url":"https://espressotogo-production-6b89.up.railway.app/"},
   {"name":"حساب الارباح","url":"https://espressotogo-production-6b89.up.railway.app/#/loginAdmin",}
 ],
