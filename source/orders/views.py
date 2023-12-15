@@ -27,7 +27,8 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = [IsEmployee]
     filter_backends = [DjangoFilterBackend, ]
     filterset_class = OrderFilter
-    is_order_first_in_the_shift = False # this refers to the first order in the shift
+
+    is_order_first_in_the_shift: bool = False # this refers to the first order in the shift
     
     def get_serializer_class(self):
 
