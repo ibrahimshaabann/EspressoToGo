@@ -34,6 +34,12 @@ class ShiftEmployeeViewSet(ModelViewSet):
                 last_shift.end_time = new_shift.start_time if last_shift and not last_shift.end_time else None
                 last_shift.save()
 
+            from orders.views import OrderViewSet
+            # reset the order counter whith each shift object instantaiting
+            OrderViewSet.is_order_first_in_the_shift = True
+            
+            print(OrderViewSet.is_order_first_in_the_shift)
+
         except Exception as e:
             return Response({'error': str(e)}, status = status.HTTP_400_BAD_REQUEST)
 
