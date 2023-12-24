@@ -280,11 +280,19 @@ JAZZMIN_SETTINGS = {
 
 "topmenu_links": 
 [
-  {'name': 'Espresso to Go | I Will Love You Forever', 'url': 'https://espressotogo-production-0fe0.up.railway.app/0mysecureadminpanelurl1/',},
-  {'name':"الكاشير","url":"https://espressotogo-production-6b89.up.railway.app/"},
-  {"name":"حساب الارباح","url":"https://espressotogo-production-6b89.up.railway.app/#/loginAdmin",},
+  {'name': 'Espresso to Go | I Will Love You Forever', 'url': 'https://espressotogo-production-fac1.up.railway.app/0mysecureadminpanelurl1/',},
+  {'name':"الكاشير","url":"https://coherent-things-production.up.railway.app/"},
+  {"name":"حساب الارباح","url":"https://coherent-things-production.up.railway.app/#/loginAdmin",},
 
 ],
+
+# "topmenu_links": 
+# [
+#   {'name': 'Espresso to Go | I Will Love You Forever', 'url': 'https://espressotogo-production-0fe0.up.railway.app/0mysecureadminpanelurl1/',},
+#   {'name':"الكاشير","url":"https://espressotogo-production-6b89.up.railway.app/"},
+#   {"name":"حساب الارباح","url":"https://espressotogo-production-6b89.up.railway.app/#/loginAdmin",},
+
+# ],
 
 
 "usermenu_links": [
@@ -322,5 +330,7 @@ SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False,
     'JSON_EDITOR': True,
     'api_version': '1.0',
-    'api_path': 'https://espressotogo-production.up.railway.app/swagger/',  
+    # 'api_path': 'https://espressotogo-production.up.railway.app/swagger/',
+    'api_path': 'https://espressotogo-production-fac1.up.railway.app/swagger/',  
+
 }
